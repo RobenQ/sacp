@@ -22,13 +22,19 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <springboot.version>2.3.8.RELEASE</springboot.version>
+    <springboot.version>2.4.0</springboot.version>
     <springboot-mybatis.version>2.1.4</springboot-mybatis.version>
     <mysql.version>8.0.13</mysql.version>
-    <springboot-dubbo.version>2.7.8</springboot-dubbo.version>
+    <springboot-dubbo.version>2.7.7</springboot-dubbo.version>
+    <curator-framework.vetsion>5.1.0</curator-framework.vetsion>
     <shiro.version>1.7.1</shiro.version>
+    <log4j2.version>2.4.2</log4j2.version>
+    <fastjson.version>1.2.75</fastjson.version>
+    <lombok.version>1.18.18</lombok.version>
   </properties>
 
   <dependencies>
@@ -39,17 +45,44 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-<!--    springboot-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot</artifactId>
-      <version>${springboot.version}</version>
-    </dependency>
-<!--    springmvc-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
       <version>${springboot.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <version>${springboot.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit-jupiter-api</artifactId>
+          <groupId>org.junit.jupiter</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
@@ -68,7 +101,18 @@
         <artifactId>dubbo-spring-boot-starter</artifactId>
         <version>${springboot-dubbo.version}</version>
       </dependency>
-<!--      MySQL-->
+<!--     curator framework -->
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+        <version>${curator-framework.vetsion}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-recipes</artifactId>
+        <version>${curator-framework.vetsion}</version>
+      </dependency>
+      <!--      MySQL-->
       <dependency>
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
@@ -80,11 +124,16 @@
         <artifactId>shiro-spring-boot-web-starter</artifactId>
         <version>${shiro.version}</version>
       </dependency>
+<!--      log4j2-->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-log4j2</artifactId>
+        <version>${log4j2.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
   <build>
-    <pluginManagement>
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -97,6 +146,11 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -118,11 +172,6 @@
           <artifactId>maven-site-plugin</artifactId>
           <version>3.7.1</version>
         </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
       </plugins>
-    </pluginManagement>
   </build>
 </project>

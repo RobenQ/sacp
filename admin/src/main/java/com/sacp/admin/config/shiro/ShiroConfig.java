@@ -99,7 +99,6 @@ public class ShiroConfig {
         HashMap<String, String> filterChainDefinition = new LinkedHashMap<>();
 //        filterChainDefinition.put("/logout","logout");
         filterChainDefinition.put("/check*","anon");
-        filterChainDefinition.put("/login*","anon");
         filterChainDefinition.put("/login","anon");
         filterChainDefinition.put("/**","myauthc");
         //把过滤规则放入shiro

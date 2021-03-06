@@ -1,6 +1,6 @@
-com\sacp\admin\member\api\IPTransferApi.class
-com\sacp\admin\member\api\MemberApi.class
-com\sacp\admin\member\request\IpRecordeRequest.class
-com\sacp\admin\member\response\LoginResponse.class
-com\sacp\admin\member\util\SecurityUtil.class
-com\sacp\admin\member\response\AddressResponse.class
+com\sacp\member\client\request\IpRecordeRequest.class
+com\sacp\member\client\response\AddressResponse.class
+com\sacp\member\client\response\LoginResponse.class
+com\sacp\member\client\api\IPTransferApi.class
+com\sacp\member\client\util\SecurityUtil.class
+com\sacp\member\client\api\MemberApi.class

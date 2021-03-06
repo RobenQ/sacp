@@ -8,9 +8,10 @@
     <file url="file://$PROJECT_DIR$/member/member-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member/member-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member/member-core/src/test/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/permission/peimission-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/permission/permission-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/permission/permission-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/permission/permission-core/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/permission/permission-core/src/test/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/src/main/java" charset="UTF-8" />
   </component>
 </project>

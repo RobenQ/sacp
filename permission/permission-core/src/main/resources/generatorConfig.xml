@@ -26,7 +26,7 @@
         </javaTypeResolver>
 
         <!-- 实体类的包名和存放路径 -->
-        <javaModelGenerator targetPackage="com.sacp.member.core.entity" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.sacp.permission.core.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -37,28 +37,36 @@
         </sqlMapGenerator>
 
         <!-- 生成DAO的包名和位置 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sacp.member.core.mapper" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.sacp.permission.core.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <!-- tableName：数据库中的表名或视图名；domainObjectName：生成的实体类的类名-->
-<!--        <table tableName="login_record" domainObjectName="LoginRecord"-->
-<!--               enableCountByExample="false"-->
-<!--               enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false"-->
-<!--               enableSelectByExample="true"-->
-<!--               selectByExampleQueryId="true"/>-->
-<!--        <table tableName="account" domainObjectName="Account"-->
-<!--               enableCountByExample="true"-->
-<!--               enableUpdateByExample="true"-->
-<!--               enableDeleteByExample="true"-->
-<!--               enableSelectByExample="true"-->
-<!--               selectByExampleQueryId="true"/>-->
-<!--        <table tableName="account_classify" domainObjectName="AccountClassify"-->
-<!--               enableCountByExample="true"-->
-<!--               enableUpdateByExample="true"-->
-<!--               enableDeleteByExample="true"-->
-<!--               enableSelectByExample="true"-->
-<!--               selectByExampleQueryId="true"/>-->
+<!--         tableName：数据库中的表名或视图名；domainObjectName：生成的实体类的类名-->
+        <table tableName="member_role" domainObjectName="MemberRole"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"/>
+        <table tableName="permission_info" domainObjectName="Permission_info"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"/>
+        <table tableName="role" domainObjectName="Role"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <table tableName="role_permission" domainObjectName="RolePermission"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"/>
     </context>
 </generatorConfiguration>

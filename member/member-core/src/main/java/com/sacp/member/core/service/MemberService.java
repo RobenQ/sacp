@@ -16,6 +16,11 @@ public class MemberService implements MemberApi {
     @Override
     public LoginResponse getAuthInfo(String nickName) {
         Account account = memberRepository.getInfoByNickName(nickName);
-        return new LoginResponse(account.getNickName(),account.getPassword(),account.getStatus());
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setSacpId(account.getSacpId());
+        loginResponse.setNickName(account.getNickName());
+        loginResponse.setPassword(account.getPassword());
+        loginResponse.setStatusCode(account.getStatus());
+        return loginResponse;
     }
 }

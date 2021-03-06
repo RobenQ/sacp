@@ -3,6 +3,7 @@ package com.sacp.member.client.response;
 import java.io.Serializable;
 
 public class LoginResponse implements Serializable {
+    private String sacpId;
     private String nickName;
     private String password;
     private Integer statusCode;
@@ -19,6 +20,14 @@ public class LoginResponse implements Serializable {
         return nickName;
     }
 
+    public String getSacpId() {
+        return sacpId;
+    }
+
+    public void setSacpId(String sacpId) {
+        this.sacpId = sacpId;
+    }
+
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
@@ -29,11 +38,5 @@ public class LoginResponse implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public LoginResponse(String nickName, String password, Integer statusCode) {
-        this.nickName = nickName;
-        this.password = password;
-        this.statusCode = statusCode;
     }
 }

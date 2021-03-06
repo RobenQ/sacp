@@ -1,73 +1,56 @@
 package com.sacp.admin.response;
 
-import java.io.Serializable;
+import lombok.Data;
 
+import java.io.Serializable;
+import java.util.List;
+
+@Data
 public class AdminResponse<T> implements Serializable {
     private int code;
     private String token;
+    private String sacpId;
+    private String avatar;
+    private String introduction;
+    private List<String> roles;
     private String message;
     private String status;
     private T result;
 
-    public AdminResponse() {
+    public static AdminResponse<Object> buildSuccess(){
+        AdminResponse<Object> response = new AdminResponse<>();
+        response.setCode(200);
+        response.setMessage("success");
+        return response;
     }
 
-    public AdminResponse(int code,String token, String message, String status, T result) {
-        this.code = code;
-        this.token = token;
-        this.message = message;
-        this.status = status;
-        this.result = result;
+    public static AdminResponse<Object> buildSuccess(Object result){
+        AdminResponse<Object> response = new AdminResponse<>();
+        response.setCode(200);
+        response.setMessage("success");
+        response.setResult(result);
+        return response;
     }
 
-    public int getCode() {
-        return code;
+    public static AdminResponse<Object> buildSuccess(String message,Object result){
+        AdminResponse<Object> response = new AdminResponse<>();
+        response.setCode(200);
+        response.setMessage(message);
+        response.setResult(result);
+        return response;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public static AdminResponse buildFaild(){
+        AdminResponse response = new AdminResponse();
+        response.setCode(103);
+        response.setMessage("操作失败");
+        return response;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public T getResult() {
-        return result;
-    }
-
-    public void setResult(T result) {
-        this.result = result;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "AdminResponse{" +
-                "code=" + code +
-                ", token='" + token + '\'' +
-                ", message='" + message + '\'' +
-                ", status='" + status + '\'' +
-                ", result=" + result +
-                '}';
+    public static AdminResponse buildFaild(String message){
+        AdminResponse response = new AdminResponse();
+        response.setCode(103);
+        response.setMessage(message);
+        return response;
     }
 }

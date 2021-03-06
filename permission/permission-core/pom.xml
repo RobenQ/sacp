@@ -20,7 +20,7 @@
   <dependencies>
     <dependency>
       <groupId>com.sacp</groupId>
-      <artifactId>peimission-client</artifactId>
+      <artifactId>permission-client</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

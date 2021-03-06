@@ -11,7 +11,7 @@
 
   <modules>
     <module>permission-core</module>
-    <module>peimission-client</module>
+    <module>permission-client</module>
   </modules>
 
   <artifactId>permission</artifactId>

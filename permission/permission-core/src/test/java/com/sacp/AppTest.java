@@ -3,6 +3,7 @@ package com.sacp;
 import static org.junit.Assert.assertTrue;
 
 import com.alibaba.fastjson.JSON;
+import com.sacp.permission.client.api.PermissionApi;
 import com.sacp.permission.client.api.RoleApi;
 import com.sacp.permission.client.request.RolesRequest;
 import com.sacp.permission.client.response.RolesResponse;
@@ -33,7 +34,7 @@ public class AppTest
     private RoleApi roleApi;
 
     @Autowired
-    private RolePermissionRepository rolePermissionRepository;
+    private PermissionApi permissionApi;
 
     @Test
     public void testInsertRole(){
@@ -59,5 +60,10 @@ public class AppTest
     public void RoleHaveAndNoPermission(){
         System.out.println(JSON.toJSONString(roleApi.getRolePermissionByRoleId(1)));
         System.out.println("finish");
+    }
+
+    @Test
+    public void testGetPermissionBySacpId(){
+        System.out.println(JSON.toJSONString(permissionApi.getPermissionBySacpId("218681613907234457")));
     }
 }

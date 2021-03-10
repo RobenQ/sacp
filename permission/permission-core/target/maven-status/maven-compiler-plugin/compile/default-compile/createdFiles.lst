@@ -8,6 +8,7 @@ com\sacp\permission\core\mapper\Permission_infoMapper.class
 com\sacp\permission\core\entity\RoleExample$Criteria.class
 com\sacp\permission\core\entity\MemberRoleExample$GeneratedCriteria.class
 com\sacp\permission\core\entity\Permission_info.class
+com\sacp\permission\core\repository\MemberRoleRepository.class
 com\sacp\permission\core\service\RoleService.class
 com\sacp\permission\core\entity\Permission_infoExample$Criterion.class
 com\sacp\permission\core\entity\Permission_infoExample$GeneratedCriteria.class

@@ -20,4 +20,20 @@ public class MemberRepository {
         List<Account> accounts = accountMapper.selectByExample(example);
         return accounts.get(0);
     }
+
+    public List<Account> getAccount(Account account){
+        AccountExample example = new AccountExample();
+        AccountExample.Criteria criteria = example.createCriteria();
+        if (account.getId()!=null && account.getId()!=0)
+            criteria.andIdEqualTo(account.getId());
+        if (account.getSacpId()!=null)
+            criteria.andSacpIdEqualTo(account.getSacpId());
+        if (account.getNickName()!=null)
+            criteria.andNickNameEqualTo(account.getNickName());
+        if (account.getGender()!=null)
+            criteria.andGenderEqualTo(account.getGender());
+        if (account.getStatus()!=null)
+            criteria.andStatusEqualTo(account.getStatus());
+        return accountMapper.selectByExample(example);
+    }
 }

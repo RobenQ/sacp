@@ -202,52 +202,52 @@ public class AccountExample {
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdEqualTo(Integer value) {
+        public Criteria andSacpIdEqualTo(String value) {
             addCriterion("sacp_id =", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdNotEqualTo(Integer value) {
+        public Criteria andSacpIdNotEqualTo(String value) {
             addCriterion("sacp_id <>", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdGreaterThan(Integer value) {
+        public Criteria andSacpIdGreaterThan(String value) {
             addCriterion("sacp_id >", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSacpIdGreaterThanOrEqualTo(String value) {
             addCriterion("sacp_id >=", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdLessThan(Integer value) {
+        public Criteria andSacpIdLessThan(String value) {
             addCriterion("sacp_id <", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdLessThanOrEqualTo(Integer value) {
+        public Criteria andSacpIdLessThanOrEqualTo(String value) {
             addCriterion("sacp_id <=", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdIn(List<Integer> values) {
+        public Criteria andSacpIdIn(List<String> values) {
             addCriterion("sacp_id in", values, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdNotIn(List<Integer> values) {
+        public Criteria andSacpIdNotIn(List<String> values) {
             addCriterion("sacp_id not in", values, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdBetween(Integer value1, Integer value2) {
+        public Criteria andSacpIdBetween(String value1, String value2) {
             addCriterion("sacp_id between", value1, value2, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andSacpIdNotBetween(String value1, String value2) {
             addCriterion("sacp_id not between", value1, value2, "sacpId");
             return (Criteria) this;
         }

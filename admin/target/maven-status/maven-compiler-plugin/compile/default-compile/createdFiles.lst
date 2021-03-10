@@ -13,3 +13,4 @@ com\sacp\admin\config\shiro\MyAuthFilter.class
 com\sacp\admin\config\shiro\MyShiroHttpServletResponse.class
 com\sacp\admin\config\shiro\MyWebSessionManager.class
 com\sacp\admin\util\HomeService.class
+com\sacp\admin\response\UserAndRoleResponse.class

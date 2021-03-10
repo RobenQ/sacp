@@ -1,7 +1,9 @@
 package com.sacp.admin.config.shiro;
 
+import com.alibaba.fastjson.JSON;
 import com.sacp.member.client.api.MemberApi;
 import com.sacp.member.client.response.LoginResponse;
+import com.sacp.permission.client.api.PermissionApi;
 import com.sacp.permission.client.api.RoleApi;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,9 @@ public class MyRealm extends AuthorizingRealm {
     @DubboReference(version = "1.0")
     private RoleApi roleApi;
 
+    @DubboReference(version = "1.0")
+    private PermissionApi permissionApi;
+
     @Override
     public String getName() {
         return "sacp-admin";
@@ -31,10 +36,12 @@ public class MyRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String sacId = (String) principals.getPrimaryPrincipal();
-        List<String> roleStringList = roleApi.getRolesBySacpId(sacId);
+        String nickName = (String) principals.getPrimaryPrincipal();
+        String sacpId = memberApi.getAuthInfo(nickName).getSacpId();
+        List<String> roleStringList = roleApi.getRolesBySacpId(sacpId);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addRoles(roleStringList);
+        info.addStringPermissions(permissionApi.getPermissionBySacpId(sacpId));
         return info;
     }
 

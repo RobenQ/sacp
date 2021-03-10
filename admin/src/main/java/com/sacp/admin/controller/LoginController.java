@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sacp.member.client.api.IPTransferApi;
 import com.sacp.member.client.api.MemberApi;
+import com.sacp.member.client.request.MemberRequest;
+import com.sacp.member.client.response.MemberResponse;
 import com.sacp.member.client.util.SecurityUtil;
 import com.sacp.admin.response.AdminResponse;
 import com.sacp.permission.client.api.RoleApi;
@@ -13,9 +15,12 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +30,9 @@ import java.util.Map;
 @RestController
 @Slf4j
 public class LoginController {
+
+    @Resource
+    private HttpServletRequest httpServletRequest;
 
     @DubboReference(version = "1.0")
     private MemberApi memberApi;
@@ -138,7 +146,7 @@ public class LoginController {
     }
 
     //获取用户信息
-//    @RequiresRoles("admin")
+    @RequiresRoles("admin")
     @GetMapping("/admininfo")
     public AdminResponse<Map<String,Object>> adminInfo(@RequestParam String sacpId){
         AdminResponse adminResponse = new AdminResponse();
@@ -147,10 +155,17 @@ public class LoginController {
         adminResponse.setToken(subject.getSession().getId().toString());
         adminResponse.setMessage("success");
         adminResponse.setStatus("OK");
-//        adminResponse.setRoles(roleApi.getRolesBySacpId(sacpId));
-        List<String> roles = new ArrayList<>();
-        roles.add("admin");
-        adminResponse.setRoles(roles);
+        if (sacpId==null || sacpId.equals("")){
+            String nickName = (String) subject.getPrincipal();
+            sacpId = memberApi.getAuthInfo(nickName).getSacpId();
+        }
+        adminResponse.setRoles(roleApi.getRolesBySacpId(sacpId));
+
+        MemberRequest request = new MemberRequest();
+        request.setSacpId(sacpId);
+        MemberResponse memberResponse = memberApi.getAccount(request).get(0);
+        memberResponse.setPassword(null);
+        adminResponse.setResult(memberResponse);
         return adminResponse;
     }
 

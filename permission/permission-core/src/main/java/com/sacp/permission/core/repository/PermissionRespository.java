@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.sacp.permission.client.response.PermissionResponse;
 import com.sacp.permission.core.entity.Permission_info;
 import com.sacp.permission.core.entity.Permission_infoExample;
+import com.sacp.permission.core.entity.RolePermission;
+import com.sacp.permission.core.entity.RolePermissionExample;
 import com.sacp.permission.core.mapper.Permission_infoMapper;
+import com.sacp.permission.core.mapper.RolePermissionMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,9 @@ public class PermissionRespository {
 
     @Autowired
     private Permission_infoMapper permissionInfoMapper;
+
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
     //获取所有权限信息
     public List<Permission_info> getAllPermission(){
@@ -71,4 +76,18 @@ public class PermissionRespository {
         int i = permissionInfoMapper.deleteByPrimaryKey(id);
         return i==1?true:false;
     }
+
+    //根据sacpId获取权限
+    public List<Permission_info> getPermissionsByRoleId(Integer roleId){
+        RolePermissionExample example = new RolePermissionExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        List<RolePermission> rolePermissions = rolePermissionMapper.selectByExample(example);
+        List<Permission_info> permission_infos = new ArrayList<>(rolePermissions.size());
+        for (RolePermission rolePermisison:rolePermissions) {
+            Permission_info info = permissionInfoMapper.selectByPrimaryKey(rolePermisison.getPermissionId());
+            permission_infos.add(info);
+        }
+        return permission_infos;
+    }
+
 }

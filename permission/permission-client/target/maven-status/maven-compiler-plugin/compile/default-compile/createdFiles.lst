@@ -1,5 +1,10 @@
 com\sacp\permission\client\api\RoleApi.class
+com\sacp\permission\client\request\MemberRoleRequest.class
+com\sacp\permission\client\request\RolesRequest.class
+com\sacp\permission\client\response\MemberRoleResponse.class
+com\sacp\permission\client\response\ChangeRolePermissionResponse.class
 com\sacp\permission\client\response\PermissionResponse.class
+com\sacp\permission\client\request\ChangeRolePermissionRequest.class
 com\sacp\permission\client\response\RolePermissionResponse.class
 com\sacp\permission\client\response\RolesResponse.class
 com\sacp\permission\client\api\PermissionApi.class

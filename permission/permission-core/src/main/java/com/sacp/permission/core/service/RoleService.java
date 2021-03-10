@@ -3,9 +3,11 @@ package com.sacp.permission.core.service;
 import com.alibaba.fastjson.JSON;
 import com.sacp.permission.client.api.RoleApi;
 import com.sacp.permission.client.request.ChangeRolePermissionRequest;
+import com.sacp.permission.client.request.MemberRoleRequest;
 import com.sacp.permission.client.request.RolesRequest;
 import com.sacp.permission.client.response.*;
 import com.sacp.permission.core.entity.*;
+import com.sacp.permission.core.repository.MemberRoleRepository;
 import com.sacp.permission.core.repository.PermissionRespository;
 import com.sacp.permission.core.repository.RolePermissionRepository;
 import com.sacp.permission.core.repository.RoleRepository;
@@ -31,6 +33,9 @@ public class RoleService implements RoleApi {
 
     @Autowired
     private RolePermissionRepository rolePermissionRepository;
+
+    @Autowired
+    private MemberRoleRepository memberRoleRepository;
 
     @Override
     public boolean updateRolePermission(ChangeRolePermissionRequest request) {
@@ -62,13 +67,51 @@ public class RoleService implements RoleApi {
     }
 
     @Override
+    public List<MemberRoleResponse> getMemberRoleByRoleId(Integer id) {
+        List<MemberRole> byRoleId = memberRoleRepository.getByRoleId(id);
+        List<MemberRoleResponse> responses = new ArrayList<>(byRoleId.size());
+        for (MemberRole memberRole:byRoleId) {
+            MemberRoleResponse memberRoleResponse = new MemberRoleResponse();
+            BeanUtils.copyProperties(memberRole,memberRoleResponse);
+            responses.add(memberRoleResponse);
+        }
+        return responses;
+    }
+
+    @Override
+    public List<MemberRoleResponse> getAllMemberRole() {
+        List<MemberRole> byRoleId = memberRoleRepository.getAllMemberRole();
+        List<MemberRoleResponse> responses = new ArrayList<>(byRoleId.size());
+        for (MemberRole memberRole:byRoleId) {
+            MemberRoleResponse memberRoleResponse = new MemberRoleResponse();
+            BeanUtils.copyProperties(memberRole,memberRoleResponse);
+            responses.add(memberRoleResponse);
+        }
+        return responses;
+    }
+
+    @Override
+    public boolean updateMemberRole(MemberRoleRequest request) {
+        MemberRole memberRole = new MemberRole();
+        memberRole.setRoleId(request.getRoleId());
+        return memberRoleRepository.updateMemberRole(memberRole,request.getSacpId());
+    }
+
+    @Override
     public List<String> getRolesBySacpId(String sacpId) {
         List<String> roles = new ArrayList<>(2);
-        if (roles.size()==0)
-            return null;
         int memberRoleId = roleRepository.getRolesBySacpId(sacpId).get(0).getRoleId();
-        roles.add(roleRepository.getRoleById(memberRoleId).getRoleName());
+        roles.add(roleRepository.getRoleById(memberRoleId).getExpression());
         return roles;
+    }
+
+    @Override
+    public RolesResponse getRoleBySacpId(String sacpId) {
+        int roleId = memberRoleRepository.getRoleIdBySacpId(sacpId);
+        Role role = roleRepository.getRoleById(roleId);
+        RolesResponse response = new RolesResponse();
+        BeanUtils.copyProperties(role,response);
+        return response;
     }
 
     @Override
@@ -111,6 +154,14 @@ public class RoleService implements RoleApi {
         }
         log.info(JSON.toJSONString(roleNameList));
         return roleNameList;
+    }
+
+    @Override
+    public RolesResponse getRoleById(Integer id) {
+        Role roleById = roleRepository.getRoleById(id);
+        RolesResponse response = new RolesResponse();
+        BeanUtils.copyProperties(roleById,response);
+        return response;
     }
 
     @Override

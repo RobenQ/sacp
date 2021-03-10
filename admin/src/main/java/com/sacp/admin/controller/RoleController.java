@@ -1,9 +1,16 @@
 package com.sacp.admin.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sacp.admin.response.AdminResponse;
+import com.sacp.admin.response.UserAndRoleResponse;
+import com.sacp.member.client.api.MemberApi;
+import com.sacp.member.client.request.MemberRequest;
+import com.sacp.member.client.response.MemberResponse;
+import com.sacp.permission.client.response.MemberRoleResponse;
 import com.sacp.permission.client.api.PermissionApi;
 import com.sacp.permission.client.api.RoleApi;
+import com.sacp.permission.client.request.MemberRoleRequest;
 import com.sacp.permission.client.request.PermissionRequest;
 import com.sacp.permission.client.request.RolesRequest;
 import com.sacp.permission.client.request.ChangeRolePermissionRequest;
@@ -13,6 +20,7 @@ import com.sacp.permission.client.response.RolesResponse;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,6 +31,9 @@ public class RoleController {
 
     @DubboReference(version = "1.0")
     private PermissionApi permissionApi;
+
+    @DubboReference(version = "1.0")
+    private MemberApi memberApi;
 
     //获取所有角色信息
     @RequestMapping("getallrole")
@@ -92,14 +103,14 @@ public class RoleController {
     }
 
     //删除一个权限
-    @RequestMapping("deletepermission")
+    @GetMapping("deletepermission")
     public AdminResponse<Object> deletePermission(@RequestParam(name = "id") int permissionId){
         permissionApi.deletePermission(permissionId);
         return AdminResponse.buildSuccess();
     }
 
     //获取某个角色的全部权限
-    @RequestMapping("getrolepermission")
+    @GetMapping("getrolepermission")
     public AdminResponse<Object> getRolePermission(@RequestParam(name = "roleId") int roleId){
         AdminResponse<ChangeRolePermissionResponse> response = new AdminResponse<>();
         response.setCode(200);
@@ -108,7 +119,7 @@ public class RoleController {
     }
 
     //修改某个角色的全部权限
-    @RequestMapping("confirmrolepermission")
+    @PostMapping("confirmrolepermission")
     public AdminResponse<Object> confirmRolePermission(@RequestBody JSONObject jsonObject){
         List<Integer> permissionList = (List<Integer>)(jsonObject.get("permissions"));
         Integer roleId = jsonObject.getInteger("roleId");
@@ -120,7 +131,57 @@ public class RoleController {
         return roleApi.updateRolePermission(request)?AdminResponse.buildSuccess():AdminResponse.buildFaild("修改失败");
     }
 
-    //按条件获取所有的用户及其权限信息
+    //按条件获取所有的用户及其角色信息
+    @PostMapping("getmemberandrole")
+    public AdminResponse<Object> getMemberAndRole(@RequestBody MemberRoleRequest request){
+        if (request.getSacpId()!=null){
+            MemberRequest memberRequest = new MemberRequest();
+            memberRequest.setSacpId(request.getSacpId());
+            List<MemberResponse> account = memberApi.getAccount(memberRequest);
 
+            List<UserAndRoleResponse> response = new ArrayList<>(account.size());
+            for (MemberResponse member:account) {
+                UserAndRoleResponse userAndRoleResponse = new UserAndRoleResponse();
+                RolesResponse role = roleApi.getRoleBySacpId(member.getSacpId());
+                userAndRoleResponse.setMember(member);
+                userAndRoleResponse.setRole(role);
+                response.add(userAndRoleResponse);
+            }
+            return AdminResponse.buildSuccess(response);
+        }else if (request.getRoleId()!=null){
+            List<MemberRoleResponse> memberRoleByRoleId = roleApi.getMemberRoleByRoleId(request.getRoleId());
+
+            List<UserAndRoleResponse> response = new ArrayList<>(memberRoleByRoleId.size());
+            for (MemberRoleResponse memberRole:memberRoleByRoleId) {
+                UserAndRoleResponse userAndRoleResponse = new UserAndRoleResponse();
+                userAndRoleResponse.setRole(roleApi.getRoleById(memberRole.getRoleId()));
+                MemberRequest memberRequest = new MemberRequest();
+                memberRequest.setSacpId(request.getSacpId());
+                userAndRoleResponse.setMember(memberApi.getAccount(memberRequest).get(0));
+                response.add(userAndRoleResponse);
+            }
+            return AdminResponse.buildSuccess(response);
+        }else{
+            List<MemberRoleResponse> memberRoleByRoleId = roleApi.getAllMemberRole();
+
+            List<UserAndRoleResponse> response = new ArrayList<>(memberRoleByRoleId.size());
+            for (MemberRoleResponse memberRole:memberRoleByRoleId) {
+                UserAndRoleResponse userAndRoleResponse = new UserAndRoleResponse();
+                userAndRoleResponse.setRole(roleApi.getRoleById(memberRole.getRoleId()));
+                MemberRequest memberRequest = new MemberRequest();
+                memberRequest.setSacpId(request.getSacpId());
+                userAndRoleResponse.setMember(memberApi.getAccount(memberRequest).get(0));
+                response.add(userAndRoleResponse);
+            }
+            return AdminResponse.buildSuccess(response);
+        }
+    }
+
+    //修改某个用户的角色
+    @PostMapping("changeuserrole")
+    public AdminResponse<Object> changeUserRole(@RequestBody MemberRoleRequest request){
+        boolean b = roleApi.updateMemberRole(request);
+        return AdminResponse.buildSuccess(b);
+    }
 
 }

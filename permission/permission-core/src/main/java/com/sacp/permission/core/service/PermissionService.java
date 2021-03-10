@@ -4,6 +4,7 @@ import com.sacp.permission.client.api.PermissionApi;
 import com.sacp.permission.client.request.PermissionRequest;
 import com.sacp.permission.client.response.PermissionResponse;
 import com.sacp.permission.core.entity.Permission_info;
+import com.sacp.permission.core.repository.MemberRoleRepository;
 import com.sacp.permission.core.repository.PermissionRespository;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.BeanUtils;
@@ -17,6 +18,21 @@ public class PermissionService implements PermissionApi {
 
     @Autowired
     private PermissionRespository permissionRespository;
+
+    @Autowired
+    private MemberRoleRepository memberRoleRepository;
+
+    @Override
+    public List<String> getPermissionBySacpId(String sacpId) {
+        List<String> permissions = new ArrayList<>();
+        int roleId = memberRoleRepository.getRoleIdBySacpId(sacpId);
+        List<Permission_info> permissionsByRoleId = permissionRespository.getPermissionsByRoleId(roleId);
+        List<String> permissionStringList = new ArrayList<>(permissionsByRoleId.size());
+        for (Permission_info info:permissionsByRoleId) {
+            permissionStringList.add(info.getExpression());
+        }
+        return permissionStringList;
+    }
 
     @Override
     public List<PermissionResponse> getAllPermission() {

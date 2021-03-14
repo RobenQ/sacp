@@ -16,4 +16,10 @@ public class CheckOkController {
         return modelAndView;
     }
 
+    @RequestMapping("/test")
+    @ResponseBody
+    public String test(){
+        return "Ok";
+    }
+
 }

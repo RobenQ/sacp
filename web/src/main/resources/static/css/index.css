@@ -17,9 +17,11 @@
     width: 100%;
     min-width: 960px;
     height: 60px;
+    background-color: #fff;
     /*overflow: hidden;*/
     position: fixed;
     box-shadow: 2px 2px 10px #DCDFE6;
+    z-index: 28;
 }
 #header-main{
     width: 60%;
@@ -54,6 +56,9 @@
     align-items: center;
     box-sizing: border-box;
 }
+#header-main .is-login:hover{
+    cursor: pointer;
+}
 
 #space{
     margin-left: 5px;
@@ -77,6 +82,7 @@
 /*main*/
 #main-container{
     width: 100%;
+    min-width: 1080px;
     min-height: 400px;
     margin-top: 60px;
 }
@@ -107,3 +113,7 @@
 #footer-main img{
     width: 200px;
 }
+
+/*.top{*/
+/*    z-index: 9999;*/
+/*}*/

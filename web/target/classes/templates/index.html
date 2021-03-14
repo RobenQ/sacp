@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <title>SACP：让每个人都能享受学习带来的乐趣！</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico" th:href="@{/static/favicon.ico}"/>
+<!--    vue-->
     <script th:src="@{/static/vue.global.js}" src="/static/vue.global.js" type="text/javascript"></script>
+<!--    vue-router-->
     <script th:src="@{/static/vue-router.global.js}" src="/static/vue-router.global.js" type="text/javascript"></script>
+<!--    vue component loader-->
     <script th:src="@{/static/vue3-sfc-loader.js}" src="/static/vue3-sfc-loader.js" type="text/javascript"></script>
+<!--    index.html css-->
     <link th:href="@{/static/css/index.css}" href="/static/css/index.css" type="text/css" rel="stylesheet"/>
+<!--    elementUI css-->
     <link th:href="@{/static/css/element.css}" href="/static/css/element.css" type="text/css" rel="stylesheet"/>
+<!--    elementUI js-->
     <script th:src="@{/static/index.full.js}" src="/static/index.full.js" type="text/javascript"></script>
+<!--    index.html js-->
     <script th:src="@{/static/js/index.js}" src="/static/js/index.js" type="text/javascript"></script>
 </head>
 <body>
-<div id="app">
+<div id="app" class="app">
 <!--    头部-->
     <div id="header">
         <div id="header-main">
@@ -24,13 +31,12 @@
                 <el-menu
                         class="el-menu-demo"
                         mode="horizontal"
-                        @select="handleSelect"
                         background-color="#fff"
                         text-color="#303133"
                         router="true"
                         active-text-color="#409EFF">
-                    <el-menu-item index="1" route="/study" >学习中心</el-menu-item>
-                    <el-menu-item index="2" route="/communicate">互动社区</el-menu-item>
+                    <el-menu-item index="/study" route="/study" >学习中心</el-menu-item>
+                    <el-menu-item index="/communicate" route="/communicate">互动社区</el-menu-item>
                 </el-menu>
             </div>
             <div class="right">
@@ -41,14 +47,15 @@
                 </div>
                 <div class="is-login" v-if="!login">
                     <el-avatar size="50" src="http://scap.moeneko.top/face.gif"></el-avatar>
-                    <el-dropdown>
+                    <el-dropdown @command="handleCommand">
                       <span class="el-dropdown-link">哎coding
                           <i class="el-icon-arrow-down el-icon--right"></i>
                       </span>
                         <template #dropdown>
                             <el-dropdown-menu>
-                                <el-dropdown-item icon="el-icon-user">个人中心</el-dropdown-item>
-                                <el-dropdown-item icon="el-icon-s-release">退出登录</el-dropdown-item>
+                                <el-dropdown-item command="/home" icon="el-icon-s-home">首页</el-dropdown-item>
+                                <el-dropdown-item command="/mySpace" icon="el-icon-user">个人中心</el-dropdown-item>
+                                <el-dropdown-item command="/logout" icon="el-icon-switch-button" @click="logout">退出登录</el-dropdown-item>
                             </el-dropdown-menu>
                         </template>
                     </el-dropdown>
@@ -70,6 +77,9 @@
             <div style="margin-top: 10px">Powered by 周庆(zhouqing)</div>
         </div>
     </div>
+    <el-backtop target="#main-container">
+        <i class="el-icon-caret-top"></i>
+    </el-backtop>
 </div>
 </body>
 </html>

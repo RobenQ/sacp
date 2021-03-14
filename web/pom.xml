@@ -153,6 +153,8 @@
           <include>*/*/**.css</include>
           <include>*/**.js</include>
           <include>*/*/**.js</include>
+          <include>*/**.mjs</include>
+          <include>*/*/**.mjs</include>
           <include>*.ico</include>
           <include>*/**.ico</include>
           <include>*/*.vue</include>

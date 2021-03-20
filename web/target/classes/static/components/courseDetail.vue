@@ -24,9 +24,9 @@
 <!--  信息部分-->
   <div class="course-datail">
     <el-tabs type="border-card">
-      <el-tab-pane label="课程简介">课程简介</el-tab-pane>
-      <el-tab-pane label="学习视频">视频列表</el-tab-pane>
-      <el-tab-pane label="资源下载">资源下载</el-tab-pane>
+      <el-tab-pane label="课程简介"><div style="width: 100%" v-html="courseDetail"></div></el-tab-pane>
+      <el-tab-pane label="学习视频"><courseVideo></courseVideo></el-tab-pane>
+      <el-tab-pane label="资源下载"><courseResource></courseResource></el-tab-pane>
       <el-tab-pane label="评论">评论</el-tab-pane>
     </el-tabs>
   </div>
@@ -34,12 +34,27 @@
 </template>
 
 <script>
+import {test} from '../mjs/course.mjs'
+import courseVideo from "./courseVideo.vue";
+import courseResource from "./courseResource.vue";
 export default {
   name: "courseDetail",
   data(){
     return{
-      study:2617
+      study:2617,
+      courseDetail:''
     }
+  },
+  components:{
+    courseVideo,
+    courseResource
+  },
+  created(){
+    // test().then(res=>{
+    //   this.courseDetail = res
+    // }).catch(error => {
+    //   console.log(error);
+    // })
   },
   methods:{
     goCommunicate(){

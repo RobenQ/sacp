@@ -1,8 +1,9 @@
 import request from "./request.mjs";
 
-export function test(){
+export function login(data){
     return request({
-        url:"/test",
-        method:"get"
+        url:"/login",
+        method:"post",
+        data
     })
 }

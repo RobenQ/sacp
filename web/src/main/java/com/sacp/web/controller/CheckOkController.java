@@ -8,14 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CheckOkController {
 
-    @RequestMapping("/login")
-    public ModelAndView checkOk(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("zq","周庆");
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
-
     @RequestMapping("/test")
     @ResponseBody
     public String test(){

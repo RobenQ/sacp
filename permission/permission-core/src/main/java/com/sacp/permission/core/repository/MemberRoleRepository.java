@@ -42,4 +42,9 @@ public class MemberRoleRepository {
         int i = memberRoleMapper.updateByExampleSelective(memberRole, example);
         return i==1?true:false;
     }
+
+    public boolean insertMemberRole(MemberRole memberRole){
+        int i = memberRoleMapper.insertSelective(memberRole);
+        return i==1?true:false;
+    }
 }

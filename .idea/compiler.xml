@@ -9,11 +9,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="forum" />
         <module name="member-client" />
+        <module name="course-client" />
         <module name="member-core" />
         <module name="web" />
+        <module name="course-core" />
         <module name="permission-client" />
         <module name="admin" />
-        <module name="course" />
         <module name="permission-core" />
       </profile>
     </annotationProcessing>

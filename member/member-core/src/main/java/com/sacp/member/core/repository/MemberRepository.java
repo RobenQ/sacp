@@ -3,9 +3,11 @@ package com.sacp.member.core.repository;
 import com.sacp.member.core.entity.Account;
 import com.sacp.member.core.entity.AccountExample;
 import com.sacp.member.core.mapper.AccountMapper;
+import com.sacp.member.core.util.SacpIdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -18,6 +20,8 @@ public class MemberRepository {
         AccountExample example = new AccountExample();
         example.createCriteria().andNickNameEqualTo(nickName);
         List<Account> accounts = accountMapper.selectByExample(example);
+        if (accounts.size()==0)
+            return null;
         return accounts.get(0);
     }
 
@@ -35,5 +39,10 @@ public class MemberRepository {
         if (account.getStatus()!=null)
             criteria.andStatusEqualTo(account.getStatus());
         return accountMapper.selectByExample(example);
+    }
+
+    public boolean insertMemebrt(Account account){
+        int i = accountMapper.insertSelective(account);
+        return i==1?true:false;
     }
 }

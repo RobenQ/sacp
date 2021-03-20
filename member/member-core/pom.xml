@@ -23,6 +23,11 @@
       <artifactId>member-client</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.sacp</groupId>
+      <artifactId>permission-client</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
     <!-- geoip2 -->
     <dependency>
       <groupId>com.maxmind.geoip2</groupId>

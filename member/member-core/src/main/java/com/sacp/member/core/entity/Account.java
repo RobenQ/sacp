@@ -1,6 +1,6 @@
 package com.sacp.member.core.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Account {
     private Integer id;

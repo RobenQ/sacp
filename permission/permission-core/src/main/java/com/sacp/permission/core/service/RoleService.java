@@ -98,10 +98,20 @@ public class RoleService implements RoleApi {
     }
 
     @Override
+    public boolean addMemberRole(MemberRoleRequest request) {
+        MemberRole memberRole = new MemberRole();
+        BeanUtils.copyProperties(request,memberRole);
+        return memberRoleRepository.insertMemberRole(memberRole);
+    }
+
+    @Override
     public List<String> getRolesBySacpId(String sacpId) {
         List<String> roles = new ArrayList<>(2);
-        int memberRoleId = roleRepository.getRolesBySacpId(sacpId).get(0).getRoleId();
-        roles.add(roleRepository.getRoleById(memberRoleId).getExpression());
+        List<MemberRole> rolesBySacpId = roleRepository.getRolesBySacpId(sacpId);
+        if (rolesBySacpId.size()>0){
+            int memberRoleId = roleRepository.getRolesBySacpId(sacpId).get(0).getRoleId();
+            roles.add(roleRepository.getRoleById(memberRoleId).getExpression());
+        }
         return roles;
     }
 

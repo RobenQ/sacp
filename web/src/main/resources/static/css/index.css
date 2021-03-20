@@ -60,6 +60,11 @@
     cursor: pointer;
 }
 
+.sign:hover{
+    color: #409EFF;
+    cursor: pointer;
+}
+
 #space{
     margin-left: 5px;
     margin-right: 5px;

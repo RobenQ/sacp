@@ -18,18 +18,18 @@ import java.util.List;
 
 public class MyRealm extends AuthorizingRealm {
 
-    @DubboReference(version = "1.0",check = false)
+    @DubboReference(version = "1.0")
     private MemberApi memberApi;
 
-    @DubboReference(version = "1.0",check = false)
+    @DubboReference(version = "1.0")
     private RoleApi roleApi;
 
-    @DubboReference(version = "1.0",check = false)
+    @DubboReference(version = "1.0")
     private PermissionApi permissionApi;
 
     @Override
     public String getName() {
-        return "sacp-admin";
+        return "sacp-web";
     }
 
     @Override

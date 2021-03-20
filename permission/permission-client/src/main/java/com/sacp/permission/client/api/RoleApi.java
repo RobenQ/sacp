@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface RoleApi {
 
-    public List<String> getRolesBySacpId(String sacpId);
+    public List<String> getRolesBySacpId(String sacpId);//根据sacpId查询用户角色字符串
     public RolesResponse getRoleBySacpId(String sacpId);
     public List<RolesResponse> getAllRole();
     public RolesResponse getRoleById(Integer id);
@@ -23,5 +23,6 @@ public interface RoleApi {
     public List<MemberRoleResponse> getMemberRoleByRoleId(Integer id);
     public List<MemberRoleResponse> getAllMemberRole();
     public boolean updateMemberRole(MemberRoleRequest request);
+    public boolean addMemberRole(MemberRoleRequest request);
 
 }

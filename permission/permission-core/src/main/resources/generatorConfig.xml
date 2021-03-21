@@ -16,7 +16,7 @@
         <!--数据库连接参数 -->
         <jdbcConnection
                 driverClass="com.mysql.cj.jdbc.Driver"
-                connectionURL="jdbc:mysql://sacp.com:3306/sacp_member?serverTimezone=GMT%2B8&amp;useSSL=true"
+                connectionURL="jdbc:mysql://sacp.com:3306/sacp_permission?serverTimezone=GMT%2B8&amp;useSSL=true"
                 userId="root"
                 password="ZQ1419276383..">
         </jdbcConnection>

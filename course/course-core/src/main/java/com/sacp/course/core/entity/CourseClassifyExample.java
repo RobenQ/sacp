@@ -235,72 +235,72 @@ public class CourseClassifyExample {
         }
 
         public Criteria andDescIsNull() {
-            addCriterion("desc is null");
+            addCriterion("descr is null");
             return (Criteria) this;
         }
 
         public Criteria andDescIsNotNull() {
-            addCriterion("desc is not null");
+            addCriterion("descr is not null");
             return (Criteria) this;
         }
 
         public Criteria andDescEqualTo(String value) {
-            addCriterion("desc =", value, "desc");
+            addCriterion("descr =", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescNotEqualTo(String value) {
-            addCriterion("desc <>", value, "desc");
+            addCriterion("descr <>", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescGreaterThan(String value) {
-            addCriterion("desc >", value, "desc");
+            addCriterion("descr >", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescGreaterThanOrEqualTo(String value) {
-            addCriterion("desc >=", value, "desc");
+            addCriterion("descr >=", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescLessThan(String value) {
-            addCriterion("desc <", value, "desc");
+            addCriterion("descr <", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescLessThanOrEqualTo(String value) {
-            addCriterion("desc <=", value, "desc");
+            addCriterion("descr <=", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescLike(String value) {
-            addCriterion("desc like", value, "desc");
+            addCriterion("descr like", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescNotLike(String value) {
-            addCriterion("desc not like", value, "desc");
+            addCriterion("descr not like", value, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescIn(List<String> values) {
-            addCriterion("desc in", values, "desc");
+            addCriterion("descr in", values, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescNotIn(List<String> values) {
-            addCriterion("desc not in", values, "desc");
+            addCriterion("descr not in", values, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescBetween(String value1, String value2) {
-            addCriterion("desc between", value1, value2, "desc");
+            addCriterion("descr between", value1, value2, "descr");
             return (Criteria) this;
         }
 
         public Criteria andDescNotBetween(String value1, String value2) {
-            addCriterion("desc not between", value1, value2, "desc");
+            addCriterion("descr not between", value1, value2, "descr");
             return (Criteria) this;
         }
     }

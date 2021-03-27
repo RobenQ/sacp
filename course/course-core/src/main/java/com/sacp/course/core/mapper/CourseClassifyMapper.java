@@ -3,8 +3,11 @@ package com.sacp.course.core.mapper;
 import com.sacp.course.core.entity.CourseClassify;
 import com.sacp.course.core.entity.CourseClassifyExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface CourseClassifyMapper {
     long countByExample(CourseClassifyExample example);
 

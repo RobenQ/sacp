@@ -3,8 +3,11 @@ package com.sacp.course.core.mapper;
 import com.sacp.course.core.entity.CourseInfo;
 import com.sacp.course.core.entity.CourseInfoExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface CourseInfoMapper {
     long countByExample(CourseInfoExample example);
 
@@ -27,4 +30,8 @@ public interface CourseInfoMapper {
     int updateByPrimaryKeySelective(CourseInfo record);
 
     int updateByPrimaryKey(CourseInfo record);
+
+    List<CourseInfo> selectByPage(@Param("sacpId")String sacpId,@Param("start") int start,@Param("pageSize") int pageSize);
+
+    List<CourseInfo> selectByClassifyAndPage(@Param("classifyId")Integer classifyId,@Param("start") int start,@Param("pageSize") int pageSize);
 }

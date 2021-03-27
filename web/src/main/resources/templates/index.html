@@ -21,11 +21,14 @@
 <!--    index.html js-->
     <script th:src="@{/static/js/index.js}" src="/static/js/index.js" type="text/javascript"></script>
 <!--    七牛sdk-->
-    <script type="text/javascript" th:src="@{/static/js/qiniu.min.js}"src="/static/js/qiniu.min.js" ></script>
-    <script type="text/javascript" th:src="@{/static/axios.min.js}"src="/static/axios.min.js" ></script>
-<!--    <script type="module">-->
-<!--        import Cookies from '../static/mjs/js.cookie.mjs'-->
-<!--    </script>-->
+    <script type="text/javascript" th:src="@{/static/js/qiniu.min.js}" src="/static/js/qiniu.min.js" ></script>
+<!--    axios ajax-->
+    <script type="text/javascript" th:src="@{/static/axios.min.js}" src="/static/axios.min.js" ></script>
+    <!--    vConsole-->
+<!--    <script type="text/javascript" th:src="@{/static/js/vconsole.js}" src="/static/js/vconsole.js" ></script>-->
+    <!--    ckplayer 视频播放器-->
+    <script type="text/javascript" th:src="@{/static/ckplayer/ckplayer/ckplayer.min.js}" src="/static/ckplayer/ckplayer/ckplayer.min.js" charset="utf-8" data-name="ckplayer"></script>
+<!--    cookiejs cookie工具-->
     <script type="module">
         import Cookies from '../static/mjs/js.cookie.mjs'
         window.Cookies = Cookies
@@ -38,7 +41,7 @@
         <div id="header-main">
             <div class="left">
                 <a th:href="@{/}">
-                    <img th:title="让每个人都能享受学习带来的乐趣" id="logo" src="http://scap.moeneko.top/%E6%97%A0%E6%A0%87%E9%A2%98.png">
+                    <img th:title="让每个人都能享受学习带来的乐趣" id="logo" src="http://sacp.moeneko.top/%E6%97%A0%E6%A0%87%E9%A2%98.png">
                 </a>
                 <el-menu
                         class="el-menu-demo"
@@ -84,7 +87,7 @@
 <!--底部-->
     <div id="footer">
         <div id="footer-main">
-            <img src="http://scap.moeneko.top/%E6%97%A0%E6%A0%87%E9%A2%982.png">
+            <img src="http://sacp.moeneko.top/%E6%97%A0%E6%A0%87%E9%A2%982.png">
             <div>让每个人都能享受学习带来的乐趣！</div>
             <div style="margin-top: 10px">Powered by 周庆(zhouqing)</div>
         </div>

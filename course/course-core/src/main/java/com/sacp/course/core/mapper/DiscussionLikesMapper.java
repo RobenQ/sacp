@@ -3,8 +3,11 @@ package com.sacp.course.core.mapper;
 import com.sacp.course.core.entity.DiscussionLikes;
 import com.sacp.course.core.entity.DiscussionLikesExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface DiscussionLikesMapper {
     long countByExample(DiscussionLikesExample example);
 

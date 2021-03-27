@@ -3,8 +3,11 @@ package com.sacp.forum.core.mapper;
 import com.sacp.forum.core.entity.BlockInfo;
 import com.sacp.forum.core.entity.BlockInfoExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface BlockInfoMapper {
     long countByExample(BlockInfoExample example);
 

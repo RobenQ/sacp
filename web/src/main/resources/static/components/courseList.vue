@@ -1,62 +1,17 @@
 <template>
   <div id="courseList-wrap">
     <div id="course-container">
-      <div class="card-wrap">
+      <div class="card-wrap" v-for="item in courseList">
         <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">
-          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+          <img :src="item.courseAvatar" class="image">
           <div style="padding: 14px;">
-            <span>Java进阶</span>
+            <span>{{ item.courseName }}</span>
             <div class="bottom">
               <div>
                 <span class="el-icon-user" style="margin-right: 5px"></span>
-                <time class="time">{{ currentDate }}</time>
+                <time class="time">{{ item.memberName }}</time>
               </div>
-              <el-button type="primary" class="button" size="mini" @click="courseDetail">课程详情</el-button>
-            </div>
-          </div>
-        </el-card>
-      </div>
-      <div class="card-wrap">
-        <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">
-          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-          <div style="padding: 14px;">
-            <span>Java进阶</span>
-            <div class="bottom">
-              <div>
-                <span class="el-icon-user" style="margin-right: 5px"></span>
-                <time class="time">{{ currentDate }}</time>
-              </div>
-              <el-button type="primary" class="button" size="mini">课程详情</el-button>
-            </div>
-          </div>
-        </el-card>
-      </div>
-      <div class="card-wrap">
-        <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">
-          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-          <div style="padding: 14px;">
-            <span>Java进阶</span>
-            <div class="bottom">
-              <div>
-                <span class="el-icon-user" style="margin-right: 5px"></span>
-                <time class="time">{{ currentDate }}</time>
-              </div>
-              <el-button type="primary" class="button" size="mini">课程详情</el-button>
-            </div>
-          </div>
-        </el-card>
-      </div>
-      <div class="card-wrap">
-        <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">
-          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-          <div style="padding: 14px;">
-            <span>Java进阶</span>
-            <div class="bottom">
-              <div>
-                <span class="el-icon-user" style="margin-right: 5px"></span>
-                <time class="time">{{ currentDate }}</time>
-              </div>
-              <el-button type="primary" class="button" size="mini">课程详情</el-button>
+              <el-button type="primary" class="button" size="mini" @click="courseDetail(item.id)">课程详情</el-button>
             </div>
           </div>
         </el-card>
@@ -65,25 +20,69 @@
     <div id="page">
       <el-pagination
           background
-          page-size="6"
+          :page-size="pageSize"
           layout="prev, pager, next"
-          :total="120">
+          :total="totalPage"
+          :current-page="currentPage"
+          hide-on-single-page="true"
+          @prev-click="change"
+          @next-click="change">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import {getTotalPage2, getUserCourse2} from "../mjs/course.mjs";
+
 export default {
   name: "courseList",
   data(){
     return{
-      currentDate: '周老师'
+      currentDate: '周老师',
+      pageSize:12,
+      currentPage:1,
+      totalPage: 1,
+      courseList:[]
     }
   },
+  created(){
+    this.init()
+  },
   methods:{
-    courseDetail(){
-      const newPage = this.$router.resolve({path: '/courseDetail'})
+    async init(){
+      const classifyId = this.$route.params.classifyId
+      const res2 = await getTotalPage2(classifyId)
+      const res3 = res2.result
+      console.log(res3)
+      const a = res2/this.pageSize
+      const b = res2%this.pageSize
+      if (b!=0)
+        this.totalPage = a+1
+      else
+        this.totalPage = a
+      const data = {
+        classifyId:this.$route.params.classifyId,
+        currentPage:this.currentPage,
+        pageSize:this.pageSize
+      }
+      this.getCourse(data)
+    },
+    async getCourse(data){
+      const courses = await getUserCourse2(data)
+      this.courseList = courses.result
+      console.log(this.courseList)
+    },
+    change(){
+      const data = {
+        classifyId:this.$route.params.classifyId,
+        currentPage:this.currentPage,
+        pageSize:this.pageSize
+      }
+      this.getCourse(data)
+    },
+    courseDetail(data){
+      const newPage = this.$router.resolve({path: '/courseDetail/'+data})
       window.open(newPage.href,'_blank')
       // this.$router.push({path: '/courseDetail'})
 
@@ -108,7 +107,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   box-sizing: border-box;
 }

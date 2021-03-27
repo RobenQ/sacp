@@ -42,41 +42,41 @@
         </javaClientGenerator>
 
         <!-- tableName：数据库中的表名或视图名；domainObjectName：生成的实体类的类名-->
-        <table tableName="course_classify" domainObjectName="CourseClassify"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
+<!--        <table tableName="course_classify" domainObjectName="CourseClassify"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="true"/>-->
         <table tableName="course_info" domainObjectName="CourseInfo"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"
                selectByExampleQueryId="true"/>
-        <table tableName="course_resource" domainObjectName="CourseResource"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
-        <table tableName="course_video" domainObjectName="CourseVideo"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
-        <table tableName="discussion" domainObjectName="Discussion"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
-        <table tableName="discussion_likes" domainObjectName="DiscussionLikes"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
+<!--        <table tableName="course_resource" domainObjectName="CourseResource"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="true"/>-->
+<!--        <table tableName="course_video" domainObjectName="CourseVideo"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="true"/>-->
+<!--        <table tableName="discussion" domainObjectName="Discussion"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="true"/>-->
+<!--        <table tableName="discussion_likes" domainObjectName="DiscussionLikes"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="true"/>-->
     </context>
 </generatorConfiguration>

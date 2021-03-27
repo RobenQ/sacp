@@ -1,0 +1,3 @@
+com\sacp\forum\client\request\BlockRequest.class
+com\sacp\forum\client\response\BlockResponse.class
+com\sacp\forum\client\api\ForumApi.class

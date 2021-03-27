@@ -6,7 +6,7 @@
     <result column="course_id" jdbcType="INTEGER" property="courseId" />
     <result column="video_name" jdbcType="VARCHAR" property="videoName" />
     <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
-    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="orders" jdbcType="INTEGER" property="orders" />
     <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, course_id, video_name, video_url, order, upload_time, is_delete
+    id, course_id, video_name, video_url, orders, upload_time, is_delete
   </sql>
   <select id="selectByExample" parameterType="com.sacp.course.core.entity.CourseVideoExample" resultMap="BaseResultMap">
     select
@@ -104,10 +104,10 @@
   </delete>
   <insert id="insert" parameterType="com.sacp.course.core.entity.CourseVideo">
     insert into course_video (id, course_id, video_name, 
-      video_url, order, upload_time, 
+      video_url, orders, upload_time,
       is_delete)
     values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{videoName,jdbcType=VARCHAR}, 
-      #{videoUrl,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, #{uploadTime,jdbcType=TIMESTAMP}, 
+      #{videoUrl,jdbcType=VARCHAR}, #{orders,jdbcType=INTEGER}, #{uploadTime,jdbcType=TIMESTAMP},
       #{isDelete,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.sacp.course.core.entity.CourseVideo">
@@ -125,8 +125,8 @@
       <if test="videoUrl != null">
         video_url,
       </if>
-      <if test="order != null">
-        order,
+      <if test="orders != null">
+        orders,
       </if>
       <if test="uploadTime != null">
         upload_time,
@@ -148,8 +148,8 @@
       <if test="videoUrl != null">
         #{videoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="order != null">
-        #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        #{orders,jdbcType=INTEGER},
       </if>
       <if test="uploadTime != null">
         #{uploadTime,jdbcType=TIMESTAMP},
@@ -180,8 +180,8 @@
       <if test="record.videoUrl != null">
         video_url = #{record.videoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.order != null">
-        order = #{record.order,jdbcType=INTEGER},
+      <if test="record.orders != null">
+        orders = #{record.orders,jdbcType=INTEGER},
       </if>
       <if test="record.uploadTime != null">
         upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
@@ -200,7 +200,7 @@
       course_id = #{record.courseId,jdbcType=INTEGER},
       video_name = #{record.videoName,jdbcType=VARCHAR},
       video_url = #{record.videoUrl,jdbcType=VARCHAR},
-      order = #{record.order,jdbcType=INTEGER},
+      orders = #{record.orders,jdbcType=INTEGER},
       upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=TINYINT}
     <if test="_parameter != null">
@@ -219,8 +219,8 @@
       <if test="videoUrl != null">
         video_url = #{videoUrl,jdbcType=VARCHAR},
       </if>
-      <if test="order != null">
-        order = #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        orders = #{orders,jdbcType=INTEGER},
       </if>
       <if test="uploadTime != null">
         upload_time = #{uploadTime,jdbcType=TIMESTAMP},
@@ -236,9 +236,12 @@
     set course_id = #{courseId,jdbcType=INTEGER},
       video_name = #{videoName,jdbcType=VARCHAR},
       video_url = #{videoUrl,jdbcType=VARCHAR},
-      order = #{order,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
       upload_time = #{uploadTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByCourseIdAndPage" resultMap="BaseResultMap">
+    select * from course_video where course_id = #{courseId} and is_delete=0 order by orders desc limit #{start}, #{pageSize}
+  </select>
 </mapper>

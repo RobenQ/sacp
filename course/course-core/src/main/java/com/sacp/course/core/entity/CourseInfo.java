@@ -5,11 +5,13 @@ import java.util.Date;
 public class CourseInfo {
     private Integer id;
 
+    private String sacpId;
+
     private String courseName;
 
     private String courseAvatar;
 
-    private String desc;
+    private String descr;
 
     private Integer classifyId;
 
@@ -25,12 +27,22 @@ public class CourseInfo {
 
     private Integer replyNumber;
 
+    private Integer isDelete;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getSacpId() {
+        return sacpId;
+    }
+
+    public void setSacpId(String sacpId) {
+        this.sacpId = sacpId == null ? null : sacpId.trim();
     }
 
     public String getCourseName() {
@@ -49,12 +61,12 @@ public class CourseInfo {
         this.courseAvatar = courseAvatar == null ? null : courseAvatar.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescr() {
+        return descr;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescr(String descr) {
+        this.descr = descr == null ? null : descr.trim();
     }
 
     public Integer getClassifyId() {
@@ -111,5 +123,13 @@ public class CourseInfo {
 
     public void setReplyNumber(Integer replyNumber) {
         this.replyNumber = replyNumber;
+    }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
     }
 }

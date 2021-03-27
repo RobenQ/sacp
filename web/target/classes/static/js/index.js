@@ -77,7 +77,8 @@ window.onload = function (){
                             this.form1.nickName = ''
                             this.form1.password = ''
                             this.login = false
-                            this.$router.go(0)
+                            this.$router.go(-history.length)
+                            this.$router.replace('/')
                         }
                     })
                     this.$message({
@@ -87,7 +88,9 @@ window.onload = function (){
                         duration:3000
                     })
                 } else if (command === '/mySpace'){
-                    this.$router.push({path: command})
+                    // this.$router.push({path: command})
+                    const newPage = this.$router.resolve({path: command})
+                    window.open(newPage.href,'_blank')
                 }else if (command === '/home'){
                     this.$router.push({path: '/'})
                 } else {
@@ -126,7 +129,7 @@ window.onload = function (){
                         complete=>{
                             let hash = complete.hash;
                             let key = complete.key;
-                            this.form2.avatar = "http://scap.moeneko.top/" + key;
+                            this.form2.avatar = "http://sacp.moeneko.top/" + key;
                             console.log(this.form2.avatar)
                         })
                     return true
@@ -252,10 +255,21 @@ window.onload = function (){
     //路由配置
     const routes = [
         { path: '', component:()=> loadModule('static/study.vue', options)},
-        { path: '/study', component:()=> loadModule('/static/study.vue', options) },
+        { path: '/study', component:()=> loadModule('/static/study.vue', options),
+            children: [
+                {
+                    path: '',
+                    component: ()=> loadModule('/static/components/courseList.vue',options)
+                },
+                {
+                    path: 'myCourse/:classifyId',
+                    component: ()=> loadModule('/static/components/courseList.vue',options)
+                }
+            ]
+        },
         { path: '/communicate', component:()=> loadModule('/static/communicate.vue', options) },
-        { path: '/courseDetail', component:()=> loadModule('/static/components/courseDetail.vue', options) },
-        { path: '/courseBlock', component:()=> loadModule('/static/components/courseBlock.vue', options) },
+        { path: '/courseDetail/:courseId', component:()=> loadModule('/static/components/courseDetail.vue', options) },
+        { path: '/courseBlock/:blockId', component:()=> loadModule('/static/components/courseBlock.vue', options) },
         { path: '/postDetail', component:()=> loadModule('/static/components/postDetail.vue', options) },
         { path: '/mySpace', component:()=> loadModule('/static/components/mySpace.vue', options),
             children: [
@@ -329,7 +343,6 @@ window.onload = function (){
     app.use(store)
     app.use(ElementPlus);
     app.mount('#app');
-
 
 
 

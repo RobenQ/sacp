@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.sacp.course.core.entity.CourseClassify">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="classify_name" jdbcType="VARCHAR" property="classifyName" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="descr" jdbcType="VARCHAR" property="descr" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, classify_name, desc
+    id, classify_name, descr
   </sql>
   <select id="selectByExample" parameterType="com.sacp.course.core.entity.CourseClassifyExample" resultMap="BaseResultMap">
     select
@@ -99,9 +99,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.sacp.course.core.entity.CourseClassify">
-    insert into course_classify (id, classify_name, desc
+    insert into course_classify (id, classify_name, descr
       )
-    values (#{id,jdbcType=INTEGER}, #{classifyName,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{classifyName,jdbcType=VARCHAR}, #{descr,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.sacp.course.core.entity.CourseClassify">
@@ -113,8 +113,8 @@
       <if test="classifyName != null">
         classify_name,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="descr != null">
+        descr,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -124,8 +124,8 @@
       <if test="classifyName != null">
         #{classifyName,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="descr != null">
+        #{descr,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -144,8 +144,8 @@
       <if test="record.classifyName != null">
         classify_name = #{record.classifyName,jdbcType=VARCHAR},
       </if>
-      <if test="record.desc != null">
-        desc = #{record.desc,jdbcType=VARCHAR},
+      <if test="record.descr != null">
+        descr = #{record.descr,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -156,7 +156,7 @@
     update course_classify
     set id = #{record.id,jdbcType=INTEGER},
       classify_name = #{record.classifyName,jdbcType=VARCHAR},
-      desc = #{record.desc,jdbcType=VARCHAR}
+      descr = #{record.descr,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -167,8 +167,8 @@
       <if test="classifyName != null">
         classify_name = #{classifyName,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="descr != null">
+        descr = #{descr,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -176,7 +176,7 @@
   <update id="updateByPrimaryKey" parameterType="com.sacp.course.core.entity.CourseClassify">
     update course_classify
     set classify_name = #{classifyName,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR}
+      descr = #{descr,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

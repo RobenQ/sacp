@@ -5,7 +5,7 @@ public class CourseClassify {
 
     private String classifyName;
 
-    private String desc;
+    private String descr;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class CourseClassify {
         this.classifyName = classifyName == null ? null : classifyName.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescr() {
+        return descr;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescr(String descr) {
+        this.descr = descr == null ? null : descr.trim();
     }
 }

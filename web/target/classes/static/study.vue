@@ -8,29 +8,21 @@
   <div class="course-wrap">
     <el-card class="box-card">
       <el-menu
-          default-active="2"
+          :default-active="defaultAvtive"
           style="border: none"
           text-color="#303133"
           class="el-menu-vertical-demo course-menu">
-        <el-menu-item index="1" route="" disabled="true">
+        <el-menu-item index="999" route="" disabled="true">
           <template #title><span style="color:#e60a0a;font-size: 18px;font-weight: 800">课程分类</span></template>
         </el-menu-item>
-        <el-menu-item index="2" route="">
-          <i class="el-icon-cpu"></i>
-          <template #title>计算机</template>
-        </el-menu-item>
-        <el-menu-item index="3" route="">
-          <i class="el-icon-document"></i>
-          <template #title>英语</template>
-        </el-menu-item>
-        <el-menu-item index="4" route="">
-          <i class="el-icon-sell"></i>
-          <template #title>经济</template>
+        <el-menu-item v-for="(item, index) in classifyList" :key="index" :index="item.id" @click="queryCourse(item.id)">
+<!--          <i class="el-icon-cpu"></i>-->
+          <template #title>{{ item.classifyName }}</template>
         </el-menu-item>
       </el-menu>
     </el-card>
     <div class="course-list">
-      <courseList></courseList>
+      <router-view :key="$route.fullPath"></router-view>
     </div>
   </div>
 </div>
@@ -38,6 +30,7 @@
 
 <script>
 import courseList from './components/courseList.vue'
+import {getAllClassify} from './mjs/course.mjs'
 export default {
   name: "study",
   data(){
@@ -58,22 +51,38 @@ export default {
         {
           id:4,
           img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E4%B8%8B%E5%B1%B1.a2153639.jpg"
-        },
-      ]
+        }
+      ],
+      classifyList:[],
+      classifyId: ''
     }
   },
   components:{
     courseList
   },
+  computed:{
+    defaultAvtive(){
+      if (this.classifyList.length!==0)
+        return this.classifyList[0].id
+    }
+  },
   created(){
     this.init()
   },
   methods:{
-    init(){
-      // test().then(res=>{
-      //   console.log(res)
-      //   this.msg = res
-      // })
+    async init(){
+      const res = await getAllClassify()
+      this.classifyList = res.result
+      const path = '/study/myCourse/'+this.classifyList[0].id
+      this.$router.replace({
+        path: path
+      })
+    },
+    queryCourse(data){
+      const path = '/study/myCourse/'+data
+      this.$router.replace({
+        path: path
+      })
     }
   }
 }

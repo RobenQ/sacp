@@ -8,7 +8,7 @@
           <div class="post-wrap">
             <div class="post-header">
               <div>
-                <el-avatar :size="40" src="http://scap.moeneko.top/face.gif"></el-avatar>
+                <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
               </div>
               <div class="poster">
                 <div class="poster-name">哎Coding</div>
@@ -51,7 +51,7 @@
             <div class="post-wrap2">
               <div class="post-header">
                 <div>
-                  <el-avatar :size="40" src="http://scap.moeneko.top/face.gif"></el-avatar>
+                  <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
                 </div>
                 <div class="poster">
                   <div class="poster-name">哎Coding</div>
@@ -74,7 +74,7 @@
             <div class="post-wrap2">
               <div class="post-header">
                 <div>
-                  <el-avatar :size="40" src="http://scap.moeneko.top/face.gif"></el-avatar>
+                  <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
                 </div>
                 <div class="poster">
                   <div class="poster-name">哎Coding</div>
@@ -96,7 +96,7 @@
             <div class="post-wrap2">
               <div class="post-header">
                 <div>
-                  <el-avatar :size="40" src="http://scap.moeneko.top/face.gif"></el-avatar>
+                  <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
                 </div>
                 <div class="poster">
                   <div class="poster-name">哎Coding</div>
@@ -120,7 +120,7 @@
       <div class="post-detail-right">
         <el-card class="box-card course-card" shadow="hover">
           <div class="course-info">
-            <div class="block"><el-avatar :size="90" src="http://scap.moeneko.top/face.gif"></el-avatar></div>
+            <div class="block"><el-avatar :size="90" src="http://sacp.moeneko.top/face.gif"></el-avatar></div>
             <div class="d1">Java进阶</div>
             <div class="d2">2617人加入学习</div>
             <div class="d3"><el-button type="primary" round @click="goCourse">课程详情</el-button></div>

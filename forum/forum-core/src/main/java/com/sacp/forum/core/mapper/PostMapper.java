@@ -3,8 +3,11 @@ package com.sacp.forum.core.mapper;
 import com.sacp.forum.core.entity.Post;
 import com.sacp.forum.core.entity.PostExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface PostMapper {
     long countByExample(PostExample example);
 

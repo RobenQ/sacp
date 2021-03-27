@@ -3,8 +3,11 @@ package com.sacp.course.core.mapper;
 import com.sacp.course.core.entity.Discussion;
 import com.sacp.course.core.entity.DiscussionExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface DiscussionMapper {
     long countByExample(DiscussionExample example);
 

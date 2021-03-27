@@ -4,28 +4,30 @@
     <div class="course-face">
       <el-image
           style="width: 100%; height: 100%"
-          src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+          :src="courseInfo.course.courseAvatar"
           fit="cover">
       </el-image>
     </div>
     <div class="course-info">
-      <div id="course-name">Java进阶</div>
+      <div id="course-name">{{courseInfo.course.courseName}}</div>
       <div id="course-teacher">
-        <span class="el-icon-user" style="margin-right: 5px"></span>周老师
+        <span class="el-icon-user" style="margin-right: 5px"></span>{{courseInfo.course.memberName}}
       </div>
       <div>
         <el-button class="btn" type="primary">学习课程</el-button>
-        <el-button class="btn" type="warning" @click="goCommunicate">讨论区</el-button>
+        <el-button class="btn" type="warning" @click="goCommunicate(courseInfo.course.forumId)">讨论区</el-button>
       </div>
-      <div id="course-study">已有 {{study}} 人在学习</div>
+      <div id="course-study">已有 {{courseInfo.course.learnerNumber}} 人在学习</div>
     </div>
   </div>
 
 <!--  信息部分-->
   <div class="course-datail">
     <el-tabs type="border-card">
-      <el-tab-pane label="课程简介"><div style="width: 100%" v-html="courseDetail"></div></el-tab-pane>
-      <el-tab-pane label="学习视频"><courseVideo></courseVideo></el-tab-pane>
+      <el-tab-pane label="课程简介"><div style="width: 100%" v-html="courseInfo.course.descr"></div></el-tab-pane>
+      <el-tab-pane label="学习视频">
+        <courseVideo :courseId="courseInfo.course.id" :face="courseInfo.course.courseAvatar"></courseVideo>
+      </el-tab-pane>
       <el-tab-pane label="资源下载"><courseResource></courseResource></el-tab-pane>
       <el-tab-pane label="评论">评论</el-tab-pane>
     </el-tabs>
@@ -34,15 +36,14 @@
 </template>
 
 <script>
-import {test} from '../mjs/course.mjs'
+import {getCourseById} from '../mjs/course.mjs'
 import courseVideo from "./courseVideo.vue";
 import courseResource from "./courseResource.vue";
 export default {
   name: "courseDetail",
   data(){
     return{
-      study:2617,
-      courseDetail:''
+      courseInfo:{}
     }
   },
   components:{
@@ -50,17 +51,18 @@ export default {
     courseResource
   },
   created(){
-    // test().then(res=>{
-    //   this.courseDetail = res
-    // }).catch(error => {
-    //   console.log(error);
-    // })
+    this.init()
   },
   methods:{
-    goCommunicate(){
-      const newPage = this.$router.resolve({path: '/courseBlock'})
+    async init(){
+      const courseId = this.$route.params.courseId
+      console.log(courseId)
+      const res = await getCourseById({courseId:courseId})
+      this.courseInfo = res.result
+    },
+    goCommunicate(data){
+      const newPage = this.$router.resolve({path: '/courseBlock/'+data})
       window.open(newPage.href,'_blank')
-      // this.$router.push({path: '/courseDetail'})
     }
   }
 }
@@ -120,5 +122,9 @@ export default {
   margin-top: 50px;
   min-height: 200px;
 
+}
+
+.el-dialog__body{
+  word-break: keep-all;
 }
 </style>

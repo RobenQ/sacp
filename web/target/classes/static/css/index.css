@@ -119,6 +119,6 @@
     width: 200px;
 }
 
-/*.top{*/
-/*    z-index: 9999;*/
-/*}*/
+.course-video-container .el-dialog .el-dialog__body,.course-video-container .el-dialog .el-dialog__header{
+    padding: 0px !important;
+}

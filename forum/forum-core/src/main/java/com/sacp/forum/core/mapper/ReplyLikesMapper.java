@@ -3,8 +3,11 @@ package com.sacp.forum.core.mapper;
 import com.sacp.forum.core.entity.ReplyLikes;
 import com.sacp.forum.core.entity.ReplyLikesExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ReplyLikesMapper {
     long countByExample(ReplyLikesExample example);
 

@@ -2,7 +2,7 @@
   <div class="page-not-found">
     <el-image
         style="width: 300px; height: 300px"
-        src="http://scap.moeneko.top/404.png"
+        src="http://sacp.moeneko.top/404.png"
         fit="contain">
     </el-image>
   </div>

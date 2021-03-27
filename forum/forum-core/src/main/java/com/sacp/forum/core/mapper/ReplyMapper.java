@@ -3,8 +3,11 @@ package com.sacp.forum.core.mapper;
 import com.sacp.forum.core.entity.Reply;
 import com.sacp.forum.core.entity.ReplyExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ReplyMapper {
     long countByExample(ReplyExample example);
 

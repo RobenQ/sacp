@@ -3,9 +3,10 @@
 <mapper namespace="com.sacp.course.core.mapper.CourseInfoMapper">
   <resultMap id="BaseResultMap" type="com.sacp.course.core.entity.CourseInfo">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sacp_id" jdbcType="VARCHAR" property="sacpId" />
     <result column="course_name" jdbcType="VARCHAR" property="courseName" />
     <result column="course_avatar" jdbcType="VARCHAR" property="courseAvatar" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="descr" jdbcType="VARCHAR" property="descr" />
     <result column="classify_id" jdbcType="INTEGER" property="classifyId" />
     <result column="classify_name" jdbcType="VARCHAR" property="classifyName" />
     <result column="forum_id" jdbcType="INTEGER" property="forumId" />
@@ -13,6 +14,7 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
     <result column="learner_number" jdbcType="INTEGER" property="learnerNumber" />
     <result column="reply_number" jdbcType="INTEGER" property="replyNumber" />
+    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, course_name, course_avatar, desc, classify_id, classify_name, forum_id, create_time, 
-    modify_time, learner_number, reply_number
+    id, sacp_id, course_name, course_avatar, descr, classify_id, classify_name, forum_id, 
+    create_time, modify_time, learner_number, reply_number, is_delete
   </sql>
   <select id="selectByExample" parameterType="com.sacp.course.core.entity.CourseInfoExample" resultMap="BaseResultMap">
     select
@@ -108,20 +110,25 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.sacp.course.core.entity.CourseInfo">
-    insert into course_info (id, course_name, course_avatar, 
-      desc, classify_id, classify_name, 
-      forum_id, create_time, modify_time, 
-      learner_number, reply_number)
-    values (#{id,jdbcType=INTEGER}, #{courseName,jdbcType=VARCHAR}, #{courseAvatar,jdbcType=VARCHAR}, 
-      #{desc,jdbcType=VARCHAR}, #{classifyId,jdbcType=INTEGER}, #{classifyName,jdbcType=VARCHAR}, 
-      #{forumId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, 
-      #{learnerNumber,jdbcType=INTEGER}, #{replyNumber,jdbcType=INTEGER})
+    insert into course_info (id, sacp_id, course_name, 
+      course_avatar, descr, classify_id, 
+      classify_name, forum_id, create_time, 
+      modify_time, learner_number, reply_number, 
+      is_delete)
+    values (#{id,jdbcType=INTEGER}, #{sacpId,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
+      #{courseAvatar,jdbcType=VARCHAR}, #{descr,jdbcType=VARCHAR}, #{classifyId,jdbcType=INTEGER}, 
+      #{classifyName,jdbcType=VARCHAR}, #{forumId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{learnerNumber,jdbcType=INTEGER}, #{replyNumber,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.sacp.course.core.entity.CourseInfo">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.sacp.course.core.entity.CourseInfo">
     insert into course_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="sacpId != null">
+        sacp_id,
       </if>
       <if test="courseName != null">
         course_name,
@@ -129,8 +136,8 @@
       <if test="courseAvatar != null">
         course_avatar,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="descr != null">
+        descr,
       </if>
       <if test="classifyId != null">
         classify_id,
@@ -153,10 +160,16 @@
       <if test="replyNumber != null">
         reply_number,
       </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sacpId != null">
+        #{sacpId,jdbcType=VARCHAR},
       </if>
       <if test="courseName != null">
         #{courseName,jdbcType=VARCHAR},
@@ -164,8 +177,8 @@
       <if test="courseAvatar != null">
         #{courseAvatar,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="descr != null">
+        #{descr,jdbcType=VARCHAR},
       </if>
       <if test="classifyId != null">
         #{classifyId,jdbcType=INTEGER},
@@ -188,6 +201,9 @@
       <if test="replyNumber != null">
         #{replyNumber,jdbcType=INTEGER},
       </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.sacp.course.core.entity.CourseInfoExample" resultType="java.lang.Long">
@@ -202,14 +218,17 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.sacpId != null">
+        sacp_id = #{record.sacpId,jdbcType=VARCHAR},
+      </if>
       <if test="record.courseName != null">
         course_name = #{record.courseName,jdbcType=VARCHAR},
       </if>
       <if test="record.courseAvatar != null">
         course_avatar = #{record.courseAvatar,jdbcType=VARCHAR},
       </if>
-      <if test="record.desc != null">
-        desc = #{record.desc,jdbcType=VARCHAR},
+      <if test="record.descr != null">
+        descr = #{record.descr,jdbcType=VARCHAR},
       </if>
       <if test="record.classifyId != null">
         classify_id = #{record.classifyId,jdbcType=INTEGER},
@@ -232,6 +251,9 @@
       <if test="record.replyNumber != null">
         reply_number = #{record.replyNumber,jdbcType=INTEGER},
       </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -240,16 +262,18 @@
   <update id="updateByExample" parameterType="map">
     update course_info
     set id = #{record.id,jdbcType=INTEGER},
+      sacp_id = #{record.sacpId,jdbcType=VARCHAR},
       course_name = #{record.courseName,jdbcType=VARCHAR},
       course_avatar = #{record.courseAvatar,jdbcType=VARCHAR},
-      desc = #{record.desc,jdbcType=VARCHAR},
+      descr = #{record.descr,jdbcType=VARCHAR},
       classify_id = #{record.classifyId,jdbcType=INTEGER},
       classify_name = #{record.classifyName,jdbcType=VARCHAR},
       forum_id = #{record.forumId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
       learner_number = #{record.learnerNumber,jdbcType=INTEGER},
-      reply_number = #{record.replyNumber,jdbcType=INTEGER}
+      reply_number = #{record.replyNumber,jdbcType=INTEGER},
+      is_delete = #{record.isDelete,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,14 +281,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.sacp.course.core.entity.CourseInfo">
     update course_info
     <set>
+      <if test="sacpId != null">
+        sacp_id = #{sacpId,jdbcType=VARCHAR},
+      </if>
       <if test="courseName != null">
         course_name = #{courseName,jdbcType=VARCHAR},
       </if>
       <if test="courseAvatar != null">
         course_avatar = #{courseAvatar,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="descr != null">
+        descr = #{descr,jdbcType=VARCHAR},
       </if>
       <if test="classifyId != null">
         classify_id = #{classifyId,jdbcType=INTEGER},
@@ -287,21 +314,32 @@
       <if test="replyNumber != null">
         reply_number = #{replyNumber,jdbcType=INTEGER},
       </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sacp.course.core.entity.CourseInfo">
     update course_info
-    set course_name = #{courseName,jdbcType=VARCHAR},
+    set sacp_id = #{sacpId,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
       course_avatar = #{courseAvatar,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      descr = #{descr,jdbcType=VARCHAR},
       classify_id = #{classifyId,jdbcType=INTEGER},
       classify_name = #{classifyName,jdbcType=VARCHAR},
       forum_id = #{forumId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       learner_number = #{learnerNumber,jdbcType=INTEGER},
-      reply_number = #{replyNumber,jdbcType=INTEGER}
+      reply_number = #{replyNumber,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select * from course_info where sacp_id = #{sacpId} and is_delete=0 order by create_time desc limit #{start}, #{pageSize}
+  </select>
+  <select id="selectByClassifyAndPage" resultMap="BaseResultMap">
+    select * from course_info where classify_id = #{classifyId} and is_delete=0 order by create_time desc limit #{start}, #{pageSize}
+  </select>
 </mapper>

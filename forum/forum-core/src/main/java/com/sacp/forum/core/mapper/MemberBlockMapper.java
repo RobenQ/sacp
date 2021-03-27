@@ -3,8 +3,11 @@ package com.sacp.forum.core.mapper;
 import com.sacp.forum.core.entity.MemberBlock;
 import com.sacp.forum.core.entity.MemberBlockExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface MemberBlockMapper {
     long countByExample(MemberBlockExample example);
 

@@ -9,9 +9,9 @@ public class BlockInfo {
 
     private String blockAvatar;
 
-    private String desc;
+    private String descr;
 
-    private Byte isDelete;
+    private Integer isDelete;
 
     public Integer getId() {
         return id;
@@ -45,19 +45,19 @@ public class BlockInfo {
         this.blockAvatar = blockAvatar == null ? null : blockAvatar.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescr() {
+        return descr;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescr(String descr) {
+        this.descr = descr == null ? null : descr.trim();
     }
 
-    public Byte getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Byte isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 }

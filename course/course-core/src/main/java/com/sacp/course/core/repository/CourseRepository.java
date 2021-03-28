@@ -1,11 +1,13 @@
 package com.sacp.course.core.repository;
 
-import com.sacp.course.core.entity.CourseInfo;
-import com.sacp.course.core.entity.CourseInfoExample;
+import com.sacp.course.core.entity.*;
 import com.sacp.course.core.mapper.CourseInfoMapper;
+import com.sacp.course.core.mapper.MemberCourseMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -13,6 +15,48 @@ public class CourseRepository {
 
     @Autowired
     private CourseInfoMapper courseInfoMapper;
+
+    @Autowired
+    private MemberCourseMapper memberCourseMapper;
+
+    public boolean addOneReplyNum(Integer courseId){
+        CourseInfo courseById = this.getCourseById(courseId);
+        CourseInfo courseInfo = new CourseInfo();
+        courseInfo.setReplyNumber(courseById.getReplyNumber()+1);
+        CourseInfoExample example = new CourseInfoExample();
+        example.createCriteria().andIdEqualTo(courseId);
+        int i = courseInfoMapper.updateByExampleSelective(courseInfo, example);
+        return i==1?true:false;
+    }
+
+    public MemberCourse getMcByCourseIdAndSacpId(Integer courseId,String sacpId){
+        MemberCourseExample example = new MemberCourseExample();
+        example.createCriteria().andCourseIdEqualTo(courseId).andSacpIdEqualTo(sacpId);
+        List<MemberCourse> memberCourses = memberCourseMapper.selectByExample(example);
+        if (memberCourses.size()!=0)
+            return memberCourses.get(0);
+        else
+            return null;
+    }
+
+    public boolean updateMcStatus(Integer courseId,String sacpId){
+        MemberCourseExample example = new MemberCourseExample();
+        example.createCriteria().andCourseIdEqualTo(courseId).andSacpIdEqualTo(sacpId);
+        MemberCourse memberCourse = new MemberCourse();
+        memberCourse.setIsDelete(0);
+        int i = memberCourseMapper.updateByExampleSelective(memberCourse, example);
+        return i==1?true:false;
+    }
+
+    public boolean insertMc(Integer courseId,String sacpId){
+        MemberCourse memberCourse = new MemberCourse();
+        memberCourse.setCourseId(courseId);
+        memberCourse.setSacpId(sacpId);
+        memberCourse.setCreateTime(new Date());
+        memberCourse.setIsDelete(0);
+        int i = memberCourseMapper.insertSelective(memberCourse);
+        return i==1?true:false;
+    }
 
     public List<CourseInfo> getAllCourse(){
         CourseInfoExample example = new CourseInfoExample();

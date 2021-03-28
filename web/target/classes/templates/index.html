@@ -33,6 +33,8 @@
         import Cookies from '../static/mjs/js.cookie.mjs'
         window.Cookies = Cookies
     </script>
+<!--    axios ajax-->
+    <script type="text/javascript" th:src="@{/static/axios.min.js}" src="/static/js/wangEditor.min.js" ></script>
 </head>
 <body>
 <div id="app" class="app">
@@ -48,10 +50,9 @@
                         mode="horizontal"
                         background-color="#fff"
                         text-color="#303133"
-                        router="true"
                         active-text-color="#409EFF">
-                    <el-menu-item index="/study" route="/study" >学习中心</el-menu-item>
-                    <el-menu-item index="/communicate" route="/communicate">互动社区</el-menu-item>
+                    <el-menu-item index="/study" @click="go(1)" >学习中心</el-menu-item>
+                    <el-menu-item index="/communicate" @click="go(2)">互动社区</el-menu-item>
                 </el-menu>
             </div>
             <div class="right">

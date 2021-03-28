@@ -2,16 +2,11 @@ package com.sacp.course.core.service;
 
 import com.alibaba.fastjson.JSON;
 import com.sacp.course.client.api.CourseApi;
-import com.sacp.course.client.request.CourseClassifyRequest;
-import com.sacp.course.client.request.CourseRequest;
-import com.sacp.course.client.request.CourseVideoRequest;
-import com.sacp.course.client.response.CourseResponse;
-import com.sacp.course.client.response.CourseClassifyResponse;
-import com.sacp.course.client.response.CourseVideoResponse;
-import com.sacp.course.core.entity.CourseClassify;
-import com.sacp.course.core.entity.CourseInfo;
-import com.sacp.course.core.entity.CourseVideo;
+import com.sacp.course.client.request.*;
+import com.sacp.course.client.response.*;
+import com.sacp.course.core.entity.*;
 import com.sacp.course.core.repository.CourseClassifyRepository;
+import com.sacp.course.core.repository.CourseDiscussionRepository;
 import com.sacp.course.core.repository.CourseRepository;
 import com.sacp.course.core.repository.CourseResourcesRepository;
 import com.sacp.forum.client.api.ForumApi;
@@ -37,12 +32,63 @@ public class CourseService implements CourseApi {
     private CourseClassifyRepository courseClassifyRepository;
     @Autowired
     private CourseResourcesRepository courseResourcesRepository;
+    @Autowired
+    private CourseDiscussionRepository discussionRepository;
 
     @DubboReference(version = "1.0")
     private ForumApi forumApi;
 
     @DubboReference(version = "1.0")
     private MemberApi memberApi;
+
+    @Override
+    public List<DiscussionResponse> getreplybyCourseId(Integer courseId) {
+        List<Discussion> replyByCourseId = discussionRepository.getReplyByCourseId(courseId);
+        List<DiscussionResponse> responses = new ArrayList<>(replyByCourseId.size());
+        for (Discussion discussion:replyByCourseId) {
+            DiscussionResponse response = new DiscussionResponse();
+            BeanUtils.copyProperties(discussion,response);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    @Override
+    public boolean isJoinCourse(Integer courseId, String sacpId) {
+        MemberCourse mcByCourseIdAndSacpId = courseRepository.getMcByCourseIdAndSacpId(courseId, sacpId);
+        if (mcByCourseIdAndSacpId!=null && mcByCourseIdAndSacpId.getIsDelete()==0)
+            return true;
+        else
+            return false;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean joinCourse(Integer courseId, String sacpId) {
+        MemberCourse memberCourse = courseRepository.getMcByCourseIdAndSacpId(courseId,sacpId);
+        if (memberCourse==null){
+            forumApi.joinBlock(courseRepository.getCourseById(courseId).getForumId(),sacpId);
+            return courseRepository.insertMc(courseId,sacpId);
+        }else {
+            forumApi.joinBlock(courseRepository.getCourseById(courseId).getForumId(),sacpId);
+            return courseRepository.updateMcStatus(courseId,sacpId);
+        }
+    }
+
+    @Override
+    public boolean addDiscussion(DiscussionRequest request) {
+        Discussion discussion = new Discussion();
+        BeanUtils.copyProperties(request,discussion);
+
+        MemberRequest memberRequest = new MemberRequest();
+        memberRequest.setSacpId(request.getSacpId());
+        MemberResponse member = memberApi.getAccount(memberRequest).get(0);
+
+        discussion.setMemberNickname(member.getNickName());
+        discussion.setMemberAvatar(member.getAvatar());
+        discussion.setCreateTime(new Date());
+        return discussionRepository.insertDiscussion(discussion) && courseRepository.addOneReplyNum(request.getCourseId());
+    }
 
     @Override
     public List<CourseVideoResponse> getAllVideoByCourseId(Integer courseId) {
@@ -57,13 +103,35 @@ public class CourseService implements CourseApi {
     }
 
     @Override
+    public List<CourseResResponse> getAllResByCourseId(Integer courseId) {
+        List<CourseResource> byCourseId = courseResourcesRepository.getAllResByCourseId(courseId);
+        List<CourseResResponse> responses = new ArrayList<>(byCourseId.size());
+        for (CourseResource resource:byCourseId) {
+            CourseResResponse response = new CourseResResponse();
+            BeanUtils.copyProperties(resource,response);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    @Override
     public boolean deleteVideoByAuthor(Integer videoId) {
         return courseResourcesRepository.deleteVideoById(videoId);
     }
 
     @Override
+    public boolean deleteResByAuthor(Integer resourceId) {
+        return courseResourcesRepository.deleteResById(resourceId);
+    }
+
+    @Override
     public long getTotalVideoByCourseId(Integer courseId) {
         return courseResourcesRepository.getVideoCountByCourseId(courseId);
+    }
+
+    @Override
+    public long getTotalResByCourseId(Integer courseId) {
+        return courseResourcesRepository.getResCountByCourseId(courseId);
     }
 
     @Override
@@ -75,6 +143,14 @@ public class CourseService implements CourseApi {
     }
 
     @Override
+    public boolean addRes(CourseResRequest request) {
+        CourseResource resource = new CourseResource();
+        BeanUtils.copyProperties(request,resource);
+        resource.setUploadTime(new Date());
+        return courseResourcesRepository.insertCourseRes(resource);
+    }
+
+    @Override
     public List<CourseVideoResponse> getVideoByCourseId(CourseVideoRequest request) {
         List<CourseVideo> byCourseId = courseResourcesRepository.getByCourseIdAndPage(request.getCourseId()
                 ,request.getPageSize(),request.getCurrentPage());
@@ -82,6 +158,19 @@ public class CourseService implements CourseApi {
         for (CourseVideo video:byCourseId) {
             CourseVideoResponse response = new CourseVideoResponse();
             BeanUtils.copyProperties(video,response);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    @Override
+    public List<CourseResResponse> getResByCourseId(CourseResRequest request) {
+        List<CourseResource> byCourseId = courseResourcesRepository.getResByCourseIdAndPage(request.getCourseId()
+                ,request.getPageSize(),request.getCurrentPage());
+        List<CourseResResponse> responses = new ArrayList<>(byCourseId.size());
+        for (CourseResource resource:byCourseId) {
+            CourseResResponse response = new CourseResResponse();
+            BeanUtils.copyProperties(resource,response);
             responses.add(response);
         }
         return responses;

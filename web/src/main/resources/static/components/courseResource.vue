@@ -1,12 +1,12 @@
 <template>
   <div class="course-resource-container">
-    <div class="video-list-wrap" v-for="(o,index) in 4" :key="o">
+    <div class="video-list-wrap" v-for="(res,index) in resourceList" :key="res">
       <el-card class="box-card list" shadow="hover" style="width: 100%">
         <div class="video-list">
           <div class="index">{{index+1}}</div>
-          <div class="video-name">java基础</div>
+          <div class="video-name">{{ res.resourceName }}</div>
 <!--          <div class="player"><i class="el-icon-video-camera"></i></div>-->
-          <div class="download"><i class="el-icon-download"></i></div>
+          <div class="download" @click="downloadRes({url:res.resourceUrl,name:res.resourceName})"><i class="el-icon-download"></i></div>
         </div>
       </el-card>
     </div>
@@ -15,8 +15,30 @@
 </template>
 
 <script>
+import {getAllRes} from "../mjs/course.mjs";
+
 export default {
-  name: "courseResource"
+  name: "courseResource",
+  props:['courseId'],
+  data(){
+    return{
+      resourceList:[]
+    }
+  },
+  created(){
+    this.init()
+  },
+  methods:{
+    async init(){
+      const res = await getAllRes(this.courseId)
+      this.resourceList = res.result
+    },
+    downloadRes(data){
+      const str = data.url.split(".")
+      const ext = str[str.length-1]
+      window.location.href = data.url+"?attname="+data.name+"."+ext
+    }
+  }
 }
 </script>
 
@@ -70,5 +92,9 @@ export default {
 
 .download{
   margin-left: 20px;
+}
+
+.download:hover{
+  cursor: pointer;
 }
 </style>

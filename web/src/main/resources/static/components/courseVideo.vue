@@ -48,7 +48,6 @@ export default {
     async init(){
       const res = await getAllVideo(this.courseId)
       this.videoList = res.result
-      console.log(this.videoList)
     },
     play(data){
       this.videoUrl = data

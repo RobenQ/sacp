@@ -48,12 +48,12 @@
 <!--               enableDeleteByExample="true"-->
 <!--               enableSelectByExample="true"-->
 <!--               selectByExampleQueryId="true"/>-->
-        <table tableName="course_info" domainObjectName="CourseInfo"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
+<!--        <table tableName="course_info" domainObjectName="CourseInfo"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true"-->
+<!--               selectByExampleQueryId="true"/>-->
 <!--        <table tableName="course_resource" domainObjectName="CourseResource"-->
 <!--               enableCountByExample="true"-->
 <!--               enableUpdateByExample="true"-->
@@ -66,13 +66,19 @@
 <!--               enableDeleteByExample="true"-->
 <!--               enableSelectByExample="true"-->
 <!--               selectByExampleQueryId="true"/>-->
-<!--        <table tableName="discussion" domainObjectName="Discussion"-->
+        <table tableName="discussion" domainObjectName="Discussion"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"/>
+<!--        <table tableName="discussion_likes" domainObjectName="DiscussionLikes"-->
 <!--               enableCountByExample="true"-->
 <!--               enableUpdateByExample="true"-->
 <!--               enableDeleteByExample="true"-->
 <!--               enableSelectByExample="true"-->
 <!--               selectByExampleQueryId="true"/>-->
-<!--        <table tableName="discussion_likes" domainObjectName="DiscussionLikes"-->
+<!--        <table tableName="member_course" domainObjectName="MemberCourse"-->
 <!--               enableCountByExample="true"-->
 <!--               enableUpdateByExample="true"-->
 <!--               enableDeleteByExample="true"-->

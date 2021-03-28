@@ -11,11 +11,11 @@ public class CourseResource {
 
     private String resourceUrl;
 
-    private Integer order;
+    private Integer orders;
 
     private Date uploadTime;
 
-    private Byte isDelete;
+    private Integer isDelete;
 
     public Integer getId() {
         return id;
@@ -49,12 +49,12 @@ public class CourseResource {
         this.resourceUrl = resourceUrl == null ? null : resourceUrl.trim();
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrders() {
+        return orders;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrders(Integer orders) {
+        this.orders = orders;
     }
 
     public Date getUploadTime() {
@@ -65,11 +65,11 @@ public class CourseResource {
         this.uploadTime = uploadTime;
     }
 
-    public Byte getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Byte isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 }

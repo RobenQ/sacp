@@ -8,4 +8,8 @@ public interface ForumApi {
     public Integer createBlock(BlockRequest request);
     public boolean fullBlockCourseId(Integer blockId,Integer courseId);
     public BlockResponse getById(Integer id);
+
+
+    //memberBlock
+    public boolean joinBlock(Integer blockId,String sacpId);
 }

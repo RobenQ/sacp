@@ -84,7 +84,7 @@ export default {
     courseDetail(data){
       const newPage = this.$router.resolve({path: '/courseDetail/'+data})
       window.open(newPage.href,'_blank')
-      // this.$router.push({path: '/courseDetail'})
+      // this.$router.push({path: '/courseDetail/'+data})
 
     }
   }

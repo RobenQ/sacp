@@ -78,7 +78,10 @@ window.onload = function (){
                             this.form1.password = ''
                             this.login = false
                             this.$router.go(-history.length)
-                            this.$router.replace('/')
+                            // this.$router.replace('/')
+                            window.close()
+                            const newPage = this.$router.resolve({path: '/'})
+                            window.open(newPage.href,'_blank')
                         }
                     })
                     this.$message({
@@ -92,7 +95,10 @@ window.onload = function (){
                     const newPage = this.$router.resolve({path: command})
                     window.open(newPage.href,'_blank')
                 }else if (command === '/home'){
-                    this.$router.push({path: '/'})
+                    // this.$router.push({path: '/'})
+                    window.close()
+                    const newPage = this.$router.resolve({path: '/'})
+                    window.open(newPage.href,'_blank')
                 } else {
                     this.$router.push({path: command})
                 }
@@ -193,6 +199,7 @@ window.onload = function (){
                         Cookies.set("sacpId",res2.result.sacpId,{ expires: 7 })
                         this.login = true
                         this.loginFormVisible = false
+                        this.$router.go(0)
                     }else {
                         this.$message.error('登录失败!');
                     }
@@ -248,6 +255,18 @@ window.onload = function (){
                     }
                 })
 
+            },
+            go(data){
+                if (data === 1){
+                    window.close()
+                    const newPage = this.$router.resolve({path: '/'})
+                    window.open(newPage.href,'_blank')
+                }else if (data ===2){
+                    // window.close()
+                    // const newPage = this.$router.resolve({path: '/communicate'})
+                    // window.open(newPage.href,'_blank')
+                    this.$router.push('/communicate')
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 import axios from '../axios.min.js'
 
+const message = window.ElementPlus.ElMessage
+
 // create an axios instance
 const service = axios.create({
   baseURL: "http://sacp.com", // url = base url + request url
@@ -23,10 +25,16 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    return res
+      if (res.code !==200){
+          console.log(ElementPlus)
+          message.error('请求失败！')
+      }else {
+          return res
+      }
   },
   error => {
     console.log('err' + error) // for debug
+    message.error('系统异常！')
     return Promise.reject(error)
   }
 )

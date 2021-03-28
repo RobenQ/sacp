@@ -6,7 +6,7 @@
     <result column="course_id" jdbcType="INTEGER" property="courseId" />
     <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
     <result column="resource_url" jdbcType="VARCHAR" property="resourceUrl" />
-    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="orders" jdbcType="INTEGER" property="orders" />
     <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, course_id, resource_name, resource_url, order, upload_time, is_delete
+    id, course_id, resource_name, resource_url, orders, upload_time, is_delete
   </sql>
   <select id="selectByExample" parameterType="com.sacp.course.core.entity.CourseResourceExample" resultMap="BaseResultMap">
     select
@@ -104,10 +104,10 @@
   </delete>
   <insert id="insert" parameterType="com.sacp.course.core.entity.CourseResource">
     insert into course_resource (id, course_id, resource_name, 
-      resource_url, order, upload_time, 
+      resource_url, orders, upload_time,
       is_delete)
     values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{resourceName,jdbcType=VARCHAR}, 
-      #{resourceUrl,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, #{uploadTime,jdbcType=TIMESTAMP}, 
+      #{resourceUrl,jdbcType=VARCHAR}, #{orders,jdbcType=INTEGER}, #{uploadTime,jdbcType=TIMESTAMP},
       #{isDelete,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.sacp.course.core.entity.CourseResource">
@@ -125,8 +125,8 @@
       <if test="resourceUrl != null">
         resource_url,
       </if>
-      <if test="order != null">
-        order,
+      <if test="orders != null">
+        orders,
       </if>
       <if test="uploadTime != null">
         upload_time,
@@ -148,8 +148,8 @@
       <if test="resourceUrl != null">
         #{resourceUrl,jdbcType=VARCHAR},
       </if>
-      <if test="order != null">
-        #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        #{orders,jdbcType=INTEGER},
       </if>
       <if test="uploadTime != null">
         #{uploadTime,jdbcType=TIMESTAMP},
@@ -180,8 +180,8 @@
       <if test="record.resourceUrl != null">
         resource_url = #{record.resourceUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.order != null">
-        order = #{record.order,jdbcType=INTEGER},
+      <if test="record.orders != null">
+        orders = #{record.orders,jdbcType=INTEGER},
       </if>
       <if test="record.uploadTime != null">
         upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
@@ -200,7 +200,7 @@
       course_id = #{record.courseId,jdbcType=INTEGER},
       resource_name = #{record.resourceName,jdbcType=VARCHAR},
       resource_url = #{record.resourceUrl,jdbcType=VARCHAR},
-      order = #{record.order,jdbcType=INTEGER},
+      orders = #{record.orders,jdbcType=INTEGER},
       upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=TINYINT}
     <if test="_parameter != null">
@@ -219,8 +219,8 @@
       <if test="resourceUrl != null">
         resource_url = #{resourceUrl,jdbcType=VARCHAR},
       </if>
-      <if test="order != null">
-        order = #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        orders = #{orders,jdbcType=INTEGER},
       </if>
       <if test="uploadTime != null">
         upload_time = #{uploadTime,jdbcType=TIMESTAMP},
@@ -236,9 +236,12 @@
     set course_id = #{courseId,jdbcType=INTEGER},
       resource_name = #{resourceName,jdbcType=VARCHAR},
       resource_url = #{resourceUrl,jdbcType=VARCHAR},
-      order = #{order,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
       upload_time = #{uploadTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByCourseIdAndPage" resultMap="BaseResultMap">
+    select * from course_resource where course_id = #{courseId} and is_delete=0 order by orders desc limit #{start}, #{pageSize}
+  </select>
 </mapper>

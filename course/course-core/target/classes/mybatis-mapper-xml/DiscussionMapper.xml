@@ -3,14 +3,16 @@
 <mapper namespace="com.sacp.course.core.mapper.DiscussionMapper">
   <resultMap id="BaseResultMap" type="com.sacp.course.core.entity.Discussion">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="sacp_id" jdbcType="INTEGER" property="sacpId" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="sacp_id" jdbcType="VARCHAR" property="sacpId" />
     <result column="member_nickName" jdbcType="VARCHAR" property="memberNickname" />
+    <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar" />
     <result column="likes_number" jdbcType="INTEGER" property="likesNumber" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.sacp.course.core.entity.Discussion">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="context" jdbcType="LONGVARCHAR" property="context" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,10 +73,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, sacp_id, member_nickName, likes_number, create_time, is_delete
+    id, course_id, sacp_id, member_nickName, member_avatar, likes_number, create_time, 
+    is_delete
   </sql>
   <sql id="Blob_Column_List">
-    content
+    context
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="com.sacp.course.core.entity.DiscussionExample" resultMap="ResultMapWithBLOBs">
     select
@@ -127,12 +130,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.sacp.course.core.entity.Discussion">
-    insert into discussion (id, sacp_id, member_nickName, 
-      likes_number, create_time, is_delete, 
-      content)
-    values (#{id,jdbcType=INTEGER}, #{sacpId,jdbcType=INTEGER}, #{memberNickname,jdbcType=VARCHAR}, 
-      #{likesNumber,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into discussion (id, course_id, sacp_id, 
+      member_nickName, member_avatar, likes_number, 
+      create_time, is_delete, context
+      )
+    values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{sacpId,jdbcType=VARCHAR}, 
+      #{memberNickname,jdbcType=VARCHAR}, #{memberAvatar,jdbcType=VARCHAR}, #{likesNumber,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=TINYINT}, #{context,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.sacp.course.core.entity.Discussion">
     insert into discussion
@@ -140,11 +145,17 @@
       <if test="id != null">
         id,
       </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
       <if test="sacpId != null">
         sacp_id,
       </if>
       <if test="memberNickname != null">
         member_nickName,
+      </if>
+      <if test="memberAvatar != null">
+        member_avatar,
       </if>
       <if test="likesNumber != null">
         likes_number,
@@ -155,19 +166,25 @@
       <if test="isDelete != null">
         is_delete,
       </if>
-      <if test="content != null">
-        content,
+      <if test="context != null">
+        context,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
       <if test="sacpId != null">
-        #{sacpId,jdbcType=INTEGER},
+        #{sacpId,jdbcType=VARCHAR},
       </if>
       <if test="memberNickname != null">
         #{memberNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="memberAvatar != null">
+        #{memberAvatar,jdbcType=VARCHAR},
       </if>
       <if test="likesNumber != null">
         #{likesNumber,jdbcType=INTEGER},
@@ -178,8 +195,8 @@
       <if test="isDelete != null">
         #{isDelete,jdbcType=TINYINT},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
+      <if test="context != null">
+        #{context,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -195,11 +212,17 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=INTEGER},
+      </if>
       <if test="record.sacpId != null">
-        sacp_id = #{record.sacpId,jdbcType=INTEGER},
+        sacp_id = #{record.sacpId,jdbcType=VARCHAR},
       </if>
       <if test="record.memberNickname != null">
         member_nickName = #{record.memberNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberAvatar != null">
+        member_avatar = #{record.memberAvatar,jdbcType=VARCHAR},
       </if>
       <if test="record.likesNumber != null">
         likes_number = #{record.likesNumber,jdbcType=INTEGER},
@@ -210,8 +233,8 @@
       <if test="record.isDelete != null">
         is_delete = #{record.isDelete,jdbcType=TINYINT},
       </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=LONGVARCHAR},
+      <if test="record.context != null">
+        context = #{record.context,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -221,12 +244,14 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update discussion
     set id = #{record.id,jdbcType=INTEGER},
-      sacp_id = #{record.sacpId,jdbcType=INTEGER},
+      course_id = #{record.courseId,jdbcType=INTEGER},
+      sacp_id = #{record.sacpId,jdbcType=VARCHAR},
       member_nickName = #{record.memberNickname,jdbcType=VARCHAR},
+      member_avatar = #{record.memberAvatar,jdbcType=VARCHAR},
       likes_number = #{record.likesNumber,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=TINYINT},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+      context = #{record.context,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -234,8 +259,10 @@
   <update id="updateByExample" parameterType="map">
     update discussion
     set id = #{record.id,jdbcType=INTEGER},
-      sacp_id = #{record.sacpId,jdbcType=INTEGER},
+      course_id = #{record.courseId,jdbcType=INTEGER},
+      sacp_id = #{record.sacpId,jdbcType=VARCHAR},
       member_nickName = #{record.memberNickname,jdbcType=VARCHAR},
+      member_avatar = #{record.memberAvatar,jdbcType=VARCHAR},
       likes_number = #{record.likesNumber,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=TINYINT}
@@ -246,11 +273,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.sacp.course.core.entity.Discussion">
     update discussion
     <set>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
       <if test="sacpId != null">
-        sacp_id = #{sacpId,jdbcType=INTEGER},
+        sacp_id = #{sacpId,jdbcType=VARCHAR},
       </if>
       <if test="memberNickname != null">
         member_nickName = #{memberNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="memberAvatar != null">
+        member_avatar = #{memberAvatar,jdbcType=VARCHAR},
       </if>
       <if test="likesNumber != null">
         likes_number = #{likesNumber,jdbcType=INTEGER},
@@ -261,26 +294,30 @@
       <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=TINYINT},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
+      <if test="context != null">
+        context = #{context,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sacp.course.core.entity.Discussion">
     update discussion
-    set sacp_id = #{sacpId,jdbcType=INTEGER},
+    set course_id = #{courseId,jdbcType=INTEGER},
+      sacp_id = #{sacpId,jdbcType=VARCHAR},
       member_nickName = #{memberNickname,jdbcType=VARCHAR},
+      member_avatar = #{memberAvatar,jdbcType=VARCHAR},
       likes_number = #{likesNumber,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT},
-      content = #{content,jdbcType=LONGVARCHAR}
+      context = #{context,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sacp.course.core.entity.Discussion">
     update discussion
-    set sacp_id = #{sacpId,jdbcType=INTEGER},
+    set course_id = #{courseId,jdbcType=INTEGER},
+      sacp_id = #{sacpId,jdbcType=VARCHAR},
       member_nickName = #{memberNickname,jdbcType=VARCHAR},
+      member_avatar = #{memberAvatar,jdbcType=VARCHAR},
       likes_number = #{likesNumber,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT}

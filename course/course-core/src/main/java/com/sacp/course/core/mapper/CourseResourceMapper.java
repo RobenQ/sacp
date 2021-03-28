@@ -4,6 +4,7 @@ import com.sacp.course.core.entity.CourseResource;
 import com.sacp.course.core.entity.CourseResourceExample;
 import java.util.List;
 
+import com.sacp.course.core.entity.CourseVideo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,6 @@ public interface CourseResourceMapper {
     int updateByPrimaryKeySelective(CourseResource record);
 
     int updateByPrimaryKey(CourseResource record);
+
+    List<CourseResource> selectByCourseIdAndPage(@Param("courseId")Integer courseId, @Param("start") int start, @Param("pageSize") int pageSize);
 }

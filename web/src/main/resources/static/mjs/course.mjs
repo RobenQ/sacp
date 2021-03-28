@@ -69,6 +69,14 @@ export function addVideo(data){
     })
 }
 
+export function addRes(data){
+    return request({
+        url:"/addRes",
+        method:"post",
+        data
+    })
+}
+
 export function getVideoByCourseId(data){
     return request({
         url:"/getVideoByCourseId",
@@ -77,9 +85,27 @@ export function getVideoByCourseId(data){
     })
 }
 
+export function getResByCourseId(data){
+    return request({
+        url:"/getResByCourseId",
+        method:"post",
+        data
+    })
+}
+
 export function getTotalVideoPage(data){
     return request({
         url:"/getTotalVideoPage",
+        method:"get",
+        params:{
+            courseId:data
+        }
+    })
+}
+
+export function getTotalResPage(data){
+    return request({
+        url:"/getTotalResPage",
         method:"get",
         params:{
             courseId:data
@@ -97,9 +123,65 @@ export function deleteVideo(data){
     })
 }
 
+export function deleteRes(data){
+    return request({
+        url:"/deleteRes",
+        method:"get",
+        params:{
+            resId:data
+        }
+    })
+}
+
 export function getAllVideo(data){
     return request({
         url:"/getAllVideo",
+        method:"get",
+        params:{
+            courseId:data
+        }
+    })
+}
+
+export function getAllRes(data){
+    return request({
+        url:"/getAllRes",
+        method:"get",
+        params:{
+            courseId:data
+        }
+    })
+}
+
+export function downloadRes(data){
+    return request({
+        url:data.url,
+        method:"get",
+        params:{
+            attname:data.name
+        }
+    })
+}
+
+export function joinCourse(data){
+    return request({
+        url:"/joinCourse",
+        method:"post",
+        data
+    })
+}
+
+export function addDiscussion(data){
+    return request({
+        url:"/addDiscussion",
+        method:"post",
+        data
+    })
+}
+
+export function getReply(data){
+    return request({
+        url:"getReply",
         method:"get",
         params:{
             courseId:data

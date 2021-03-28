@@ -3,14 +3,41 @@ package com.sacp.forum.core.repository;
 import com.alibaba.fastjson.JSON;
 import com.sacp.forum.core.entity.BlockInfo;
 import com.sacp.forum.core.entity.BlockInfoExample;
+import com.sacp.forum.core.entity.MemberBlock;
+import com.sacp.forum.core.entity.MemberBlockExample;
 import com.sacp.forum.core.mapper.BlockInfoMapper;
+import com.sacp.forum.core.mapper.MemberBlockMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.List;
 
 @Component
 public class BlockRepository {
     @Autowired
     private BlockInfoMapper blockInfoMapper;
+    @Autowired
+    private MemberBlockMapper memberBlockMapper;
+
+    public MemberBlock getMbByBlockIdAndSacpId(Integer blockId,String sacpId){
+        MemberBlockExample example = new MemberBlockExample();
+        example.createCriteria().andBlockIdEqualTo(blockId).andSacpIdEqualTo(sacpId);
+        List<MemberBlock> memberBlocks = memberBlockMapper.selectByExample(example);
+        if (memberBlocks.size()!=0)
+            return memberBlocks.get(0);
+        else
+            return null;
+    }
+
+    public boolean insertMb(Integer blockId,String sacpId){
+        MemberBlock memberBlock = new MemberBlock();
+        memberBlock.setBlockId(blockId);
+        memberBlock.setSacpId(sacpId);
+        memberBlock.setCreateTime(new Date());
+        int i = memberBlockMapper.insertSelective(memberBlock);
+        return i==1?true:false;
+    }
 
     public boolean insertBlock(BlockInfo blockInfo){
         int i = blockInfoMapper.insertSelective(blockInfo);

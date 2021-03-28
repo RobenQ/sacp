@@ -165,6 +165,66 @@ public class DiscussionExample {
             return (Criteria) this;
         }
 
+        public Criteria andCourseIdIsNull() {
+            addCriterion("course_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdIsNotNull() {
+            addCriterion("course_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdEqualTo(Integer value) {
+            addCriterion("course_id =", value, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdNotEqualTo(Integer value) {
+            addCriterion("course_id <>", value, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdGreaterThan(Integer value) {
+            addCriterion("course_id >", value, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("course_id >=", value, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdLessThan(Integer value) {
+            addCriterion("course_id <", value, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdLessThanOrEqualTo(Integer value) {
+            addCriterion("course_id <=", value, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdIn(List<Integer> values) {
+            addCriterion("course_id in", values, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdNotIn(List<Integer> values) {
+            addCriterion("course_id not in", values, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdBetween(Integer value1, Integer value2) {
+            addCriterion("course_id between", value1, value2, "courseId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCourseIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("course_id not between", value1, value2, "courseId");
+            return (Criteria) this;
+        }
+
         public Criteria andSacpIdIsNull() {
             addCriterion("sacp_id is null");
             return (Criteria) this;
@@ -175,52 +235,62 @@ public class DiscussionExample {
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdEqualTo(Integer value) {
+        public Criteria andSacpIdEqualTo(String value) {
             addCriterion("sacp_id =", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdNotEqualTo(Integer value) {
+        public Criteria andSacpIdNotEqualTo(String value) {
             addCriterion("sacp_id <>", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdGreaterThan(Integer value) {
+        public Criteria andSacpIdGreaterThan(String value) {
             addCriterion("sacp_id >", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSacpIdGreaterThanOrEqualTo(String value) {
             addCriterion("sacp_id >=", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdLessThan(Integer value) {
+        public Criteria andSacpIdLessThan(String value) {
             addCriterion("sacp_id <", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdLessThanOrEqualTo(Integer value) {
+        public Criteria andSacpIdLessThanOrEqualTo(String value) {
             addCriterion("sacp_id <=", value, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdIn(List<Integer> values) {
+        public Criteria andSacpIdLike(String value) {
+            addCriterion("sacp_id like", value, "sacpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSacpIdNotLike(String value) {
+            addCriterion("sacp_id not like", value, "sacpId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSacpIdIn(List<String> values) {
             addCriterion("sacp_id in", values, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdNotIn(List<Integer> values) {
+        public Criteria andSacpIdNotIn(List<String> values) {
             addCriterion("sacp_id not in", values, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdBetween(Integer value1, Integer value2) {
+        public Criteria andSacpIdBetween(String value1, String value2) {
             addCriterion("sacp_id between", value1, value2, "sacpId");
             return (Criteria) this;
         }
 
-        public Criteria andSacpIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andSacpIdNotBetween(String value1, String value2) {
             addCriterion("sacp_id not between", value1, value2, "sacpId");
             return (Criteria) this;
         }
@@ -292,6 +362,76 @@ public class DiscussionExample {
 
         public Criteria andMemberNicknameNotBetween(String value1, String value2) {
             addCriterion("member_nickName not between", value1, value2, "memberNickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarIsNull() {
+            addCriterion("member_avatar is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarIsNotNull() {
+            addCriterion("member_avatar is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarEqualTo(String value) {
+            addCriterion("member_avatar =", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarNotEqualTo(String value) {
+            addCriterion("member_avatar <>", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarGreaterThan(String value) {
+            addCriterion("member_avatar >", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarGreaterThanOrEqualTo(String value) {
+            addCriterion("member_avatar >=", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarLessThan(String value) {
+            addCriterion("member_avatar <", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarLessThanOrEqualTo(String value) {
+            addCriterion("member_avatar <=", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarLike(String value) {
+            addCriterion("member_avatar like", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarNotLike(String value) {
+            addCriterion("member_avatar not like", value, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarIn(List<String> values) {
+            addCriterion("member_avatar in", values, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarNotIn(List<String> values) {
+            addCriterion("member_avatar not in", values, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarBetween(String value1, String value2) {
+            addCriterion("member_avatar between", value1, value2, "memberAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberAvatarNotBetween(String value1, String value2) {
+            addCriterion("member_avatar not between", value1, value2, "memberAvatar");
             return (Criteria) this;
         }
 
@@ -425,52 +565,52 @@ public class DiscussionExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteEqualTo(Byte value) {
+        public Criteria andIsDeleteEqualTo(Integer value) {
             addCriterion("is_delete =", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotEqualTo(Byte value) {
+        public Criteria andIsDeleteNotEqualTo(Integer value) {
             addCriterion("is_delete <>", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteGreaterThan(Byte value) {
+        public Criteria andIsDeleteGreaterThan(Integer value) {
             addCriterion("is_delete >", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsDeleteGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_delete >=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteLessThan(Byte value) {
+        public Criteria andIsDeleteLessThan(Integer value) {
             addCriterion("is_delete <", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteLessThanOrEqualTo(Byte value) {
+        public Criteria andIsDeleteLessThanOrEqualTo(Integer value) {
             addCriterion("is_delete <=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteIn(List<Byte> values) {
+        public Criteria andIsDeleteIn(List<Integer> values) {
             addCriterion("is_delete in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotIn(List<Byte> values) {
+        public Criteria andIsDeleteNotIn(List<Integer> values) {
             addCriterion("is_delete not in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteBetween(Byte value1, Byte value2) {
+        public Criteria andIsDeleteBetween(Integer value1, Integer value2) {
             addCriterion("is_delete between", value1, value2, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsDeleteNotBetween(Integer value1, Integer value2) {
             addCriterion("is_delete not between", value1, value2, "isDelete");
             return (Criteria) this;
         }

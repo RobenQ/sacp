@@ -23,7 +23,7 @@
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item>资源管理</el-dropdown-item>
+                    <el-dropdown-item @click="resOp((item.id))">资源管理</el-dropdown-item>
                     <el-dropdown-item @click="videoOp((item.id))">视频管理</el-dropdown-item>
                     <el-dropdown-item @click="gocCourse(item.id)">进入课程</el-dropdown-item>
                     <el-dropdown-item>课程详情</el-dropdown-item>
@@ -171,7 +171,7 @@
         <template #footer>
           <span class="dialog-footer">
             <el-button @click="uploadVideo = false">取 消</el-button>
-            <el-button type="primary" @click="sureVideo">确 定</el-button>
+            <el-button :disabled="disableVideo" type="primary" @click="sureVideo">确 定</el-button>
           </span>
         </template>
       </el-dialog>
@@ -182,23 +182,117 @@
         </div>
       </template>
     </el-dialog>
+
+<!--课程资源对话框-->
+    <el-dialog title="课程资源管理" v-model="resManage" :fullscreen="true" center>
+      <el-button @click="resManage = false">关 闭</el-button>
+      <el-button type="primary" @click="uploadRes = true">上传资源</el-button>
+      <el-table style="width: 100% !important;" :data="resList" empty-text="没有数据">
+        <el-table-column width="200px" property="resourceName" label="资源名称" width="150"></el-table-column>
+        <el-table-column width="700px" property="resourceUrl" label="资源链接" width="200"></el-table-column>
+        <el-table-column width="200px" property="uploadTime" label="上传时间" width="200"></el-table-column>
+        <el-table-column width="100px" property="orders" label="显示排序"></el-table-column>
+        <el-table-column width="200px" label="操作">
+          <template #default="scope">
+            <el-button type="danger" @click="deleteRes(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+          background
+          :page-size="pageSize"
+          layout="prev, pager, next"
+          :total="totalPage3"
+          :current-page="currentPage3"
+          hide-on-single-page="false"
+          @prev-click="change3"
+          @next-click="change3">
+      </el-pagination>
+      <!--      资源上传-->
+      <el-dialog
+          width="40%"
+          title="上传资源"
+          v-model="uploadRes"
+          :close-on-click-modal="false"
+          append-to-body>
+        <el-form :model="form4">
+          <el-form-item label="资源名称：" label-width="90px">
+            <el-input placeholder="请输入资源名称" v-model="form4.resourceName" clearable autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="展示排序：" label-width="90px" show-password>
+            <el-input
+                type="number"
+                show-word-limit="true"
+                maxlength="20"
+                minlength="1"
+                placeholder="数字越大排序越靠前"
+                v-model="form4.orders">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="上传资源：" label-width="90px">
+            <el-upload
+                class="upload-demo"
+                ref="resUpload"
+                :multiple="false"
+                action="https://upload-z1.qiniup.com"
+                :data="datas"
+                :on-progress="uploadProcess2"
+                :show-file-list="false"
+                :on-success="handleResSuccess"
+                :on-error="handleError"
+                :before-upload="resBeforeUpload">
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+            <el-progress style="margin-top: 10px" :text-inside="true" :stroke-width="26" :percentage="progress2"></el-progress>
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="uploadRes = false">取 消</el-button>
+            <el-button :disabled="disableRes" type="primary" @click="sureRes">确 定</el-button>
+          </span>
+        </template>
+      </el-dialog>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="resManage = false">关 闭</el-button>
+          <el-button type="primary" @click="uploadRes = true">上传资源</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import {deleteVideo,getAllClassify,createCourse,getUserCourse,getTotalPage,addVideo,getVideoByCourseId,getTotalVideoPage} from "../mjs/course.mjs";
+import {
+  deleteRes,
+  getResByCourseId,
+  getTotalResPage,
+  deleteVideo,
+  getAllClassify,
+  createCourse,
+  getUserCourse,
+  getTotalPage,
+  addVideo,
+  getVideoByCourseId,
+  getTotalVideoPage,
+  addRes
+} from "../mjs/course.mjs";
 
 export default {
   name: "createCourse",
   data(){
     return{
-      currentDate: new Date().format("yyyy-MM-dd"),
+      disableVideo:true,
+      disableRes:true,
       createVisible:false,
       pageSize:12,
       currentPage:1,
       totalPage: 1,
       currentPage2:1,
       totalPage2: 1,
+      currentPage3:1,
+      totalPage3: 1,
       form2:{
         courseAvatar:'http://scap.moeneko.top/face.gif',
         sacpId:'',
@@ -214,16 +308,37 @@ export default {
         videoUrl:'',
         orders:''
       },
+      form4:{
+        sacpId:'',
+        courseId:'',
+        resourceName:'',
+        resourceUrl:'',
+        orders:''
+      },
       classifyList: [],
       courseList: [],
       videoList:[],
+      resList:[],
       datas:{
         token:'',
         key:''
       },
       videoManage:false,
       uploadVideo:false,
-      progress1:0
+      progress1:0,
+      resManage:false,
+      uploadRes:false,
+      progress2:0
+    }
+  },
+  watch:{
+    form3:{
+      handler:'isVideoUpdate',
+      deep:true
+    },
+    form4:{
+      handler:'isResUpdate',
+      deep:true
     }
   },
   created(){
@@ -251,6 +366,52 @@ export default {
       this.totalPage = res3
 
     },
+    isResUpdate(){
+      // if (!this.form4.sacpId || this.form4.sacpId === ''){
+      //   this.disableRes = true
+      //   return
+      // }
+      if (!this.form4.courseId || this.form4.courseId === ''){
+        this.disableRes = true
+        return
+      }
+      if (!this.form4.resourceName || this.form4.resourceName === ''){
+        this.disableRes = true
+        return
+      }
+      if (!this.form4.resourceUrl || this.form4.resourceUrl === ''){
+        this.disableRes = true
+        return
+      }
+      if (!this.form4.orders || this.form4.orders === ''){
+        this.disableRes = true
+        return
+      }
+      this.disableRes = false
+    },
+    isVideoUpdate(){
+      if (!this.form3.sacpId || this.form3.sacpId === ''){
+        this.disableVideo = true
+        return
+      }
+      if (!this.form3.courseId || this.form3.courseId === ''){
+        this.disableVideo = true
+        return
+      }
+      if (!this.form3.videoName || this.form3.videoName === ''){
+        this.disableVideo = true
+        return
+      }
+      if (!this.form3.videoUrl || this.form3.videoUrl === ''){
+        this.disableVideo = true
+        return
+      }
+      if (!this.form3.orders || this.form3.orders === ''){
+        this.disableVideo = true
+        return
+      }
+      this.disableVideo = false
+    },
     async getCourse(data) {
       const sacpIds = this.$store.state.sacpId
       if (!sacpIds || sacpIds === '') {
@@ -267,6 +428,15 @@ export default {
         pageSize: this.pageSize
       }
       this.getCourse(data)
+    },
+    change2() {
+      const req = {
+        courseId:this.form3.courseId,
+        currentPage:this.currentPage2,
+        pageSize:this.pageSize
+      }
+      const res = getVideoByCourseId(req)
+      this.videoList = res.result
     },
     async createCourse() {
       this.form2.sacpId = this.$store.state.sacpId
@@ -373,6 +543,20 @@ export default {
       console.log(res)
       this.videoManage = true
     },
+    async resOp(data) {
+      this.form4.courseId = data
+      const total = await getTotalResPage(data)
+      this.totalPage3 = total.result
+      const req = {
+        courseId:data,
+        currentPage:this.currentPage3,
+        pageSize:this.pageSize
+      }
+      const res = await getResByCourseId(req)
+      this.resList = res.result
+      console.log(res)
+      this.resManage = true
+    },
     videoBeforeUpload(file) {
       const that = this;
       const isVideo = file.type === 'video/mp4' || file.type === 'video/ogg' || file.type === 'video/flv' || file.type === 'video/avi' || file.type === 'video/wmv' || file.type === 'video/rmvb';
@@ -398,6 +582,25 @@ export default {
         })
       });
     },
+    resBeforeUpload(file) {
+      const that = this;
+      const isLt100M = file.size / 1024 / 1024 < 100;
+      if (!isLt100M) {
+        this.$message.warning('上传视频文件大小不能超过 100MB!')
+        return false
+      }
+      this.datas.key = new Date().format("yyyyMMddHHmmss") + file.name
+      return new Promise((resolve, reject) => {
+        axios.post("/upload/avatar").then(res => {
+          this.datas.token = res.data
+          resolve(true);
+        }).catch(e => {
+          that.$message.error('获取上传凭证失败!');
+          console.log(err);
+          reject(false);
+        })
+      });
+    },
     handleError(err, file, fileList) {
       // 上传失败异常处理
       const error = JSON.parse(JSON.stringify(err));
@@ -405,12 +608,19 @@ export default {
       console.log(error)
       this.$message.error(error.status.toString());
       this.progress1 = 0;
+      this.progress2 = 0;
     },
     uploadProcess(event, file, fileList){
       this.progress1 = Math.floor(event.percent);
     },
+    uploadProcess2(event, file, fileList){
+      this.progress2 = Math.floor(event.percent);
+    },
     handleVideoSuccess(response){
       this.form3.videoUrl = "http://sacpvideo.moeneko.top/"+response.key
+    },
+    handleResSuccess(response){
+      this.form4.resourceUrl = "http://sacpdoc.moeneko.top/"+response.key
     },
     async sureVideo(){
       const res = await addVideo(this.form3)
@@ -418,6 +628,23 @@ export default {
         this.uploadVideo = false
         this.videoOp(this.form3.courseId)
         this.$message.success("上传成功")
+        this.form3.videoName = ''
+        this.form3.videoUrl = ''
+        this.form3.orders = ''
+        this.progress1 = 0
+      }else {
+        this.$message.error("上传失败")
+      }
+    },
+    async sureRes(){
+      const res = await addRes(this.form4)
+      if (res.code === 200){
+        this.uploadRes = false
+        this.resOp(this.form4.courseId)
+        this.$message.success("上传成功")
+        this.form4.resourceName = ''
+        this.form4.resourceUrl = ''
+        this.form4.orders = ''
       }else {
         this.$message.error("上传失败")
       }
@@ -426,6 +653,15 @@ export default {
       const res = await deleteVideo(data.id)
       if (res.code ===200){
         this.videoOp(this.form3.courseId)
+        this.$message.success("删除成功!")
+      }else {
+        this.$message.error("删除失败!")
+      }
+    },
+    async deleteRes(data){
+      const res = await deleteRes(data.id)
+      if (res.code ===200){
+        this.resOp(this.form4.courseId)
         this.$message.success("删除成功!")
       }else {
         this.$message.error("删除失败!")

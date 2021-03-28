@@ -5,17 +5,21 @@ import java.util.Date;
 public class Discussion {
     private Integer id;
 
-    private Integer sacpId;
+    private Integer courseId;
+
+    private String sacpId;
 
     private String memberNickname;
+
+    private String memberAvatar;
 
     private Integer likesNumber;
 
     private Date createTime;
 
-    private Byte isDelete;
+    private Integer isDelete;
 
-    private String content;
+    private String context;
 
     public Integer getId() {
         return id;
@@ -25,12 +29,20 @@ public class Discussion {
         this.id = id;
     }
 
-    public Integer getSacpId() {
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getSacpId() {
         return sacpId;
     }
 
-    public void setSacpId(Integer sacpId) {
-        this.sacpId = sacpId;
+    public void setSacpId(String sacpId) {
+        this.sacpId = sacpId == null ? null : sacpId.trim();
     }
 
     public String getMemberNickname() {
@@ -39,6 +51,14 @@ public class Discussion {
 
     public void setMemberNickname(String memberNickname) {
         this.memberNickname = memberNickname == null ? null : memberNickname.trim();
+    }
+
+    public String getMemberAvatar() {
+        return memberAvatar;
+    }
+
+    public void setMemberAvatar(String memberAvatar) {
+        this.memberAvatar = memberAvatar == null ? null : memberAvatar.trim();
     }
 
     public Integer getLikesNumber() {
@@ -57,19 +77,19 @@ public class Discussion {
         this.createTime = createTime;
     }
 
-    public Byte getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Byte isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 
-    public String getContent() {
-        return content;
+    public String getContext() {
+        return context;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setContext(String context) {
+        this.context = context == null ? null : context.trim();
     }
 }

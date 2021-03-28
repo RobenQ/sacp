@@ -1,11 +1,7 @@
 package com.sacp.course.client.api;
 
-import com.sacp.course.client.request.CourseClassifyRequest;
-import com.sacp.course.client.request.CourseRequest;
-import com.sacp.course.client.request.CourseVideoRequest;
-import com.sacp.course.client.response.CourseResponse;
-import com.sacp.course.client.response.CourseClassifyResponse;
-import com.sacp.course.client.response.CourseVideoResponse;
+import com.sacp.course.client.request.*;
+import com.sacp.course.client.response.*;
 
 import java.util.List;
 
@@ -29,6 +25,10 @@ public interface CourseApi {
 
     public List<CourseResponse> getCourseByClassifyIdAndPage(CourseRequest request);
 
+    public boolean joinCourse(Integer courseId,String sacpId);
+
+    public boolean isJoinCourse(Integer courseId,String sacpId);
+
 
     //courseClassify==========================================================================
     public List<CourseClassifyResponse> getAllClassify();
@@ -39,10 +39,25 @@ public interface CourseApi {
     public boolean modifyClassify(CourseClassifyRequest request);
 
 
-    //courseClassify==========================================================================
+    //courseVideo==========================================================================
     public boolean addVideo(CourseVideoRequest request);
+    //分页
     public List<CourseVideoResponse> getVideoByCourseId(CourseVideoRequest request);
+    //无分页
     public List<CourseVideoResponse> getAllVideoByCourseId(Integer courseId);
     public long getTotalVideoByCourseId(Integer courseId);
     public boolean deleteVideoByAuthor(Integer videoId);
+
+
+    //courseResource==========================================================================
+    public boolean addRes(CourseResRequest request);
+    public long getTotalResByCourseId(Integer courseId);
+    public List<CourseResResponse> getResByCourseId(CourseResRequest request);
+    public boolean deleteResByAuthor(Integer resourceId);
+    public List<CourseResResponse> getAllResByCourseId(Integer courseId);
+
+
+    //discussion==========================================================================
+    public boolean addDiscussion(DiscussionRequest request);
+    public List<DiscussionResponse> getreplybyCourseId(Integer courseId);
 }

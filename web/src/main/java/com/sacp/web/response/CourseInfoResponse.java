@@ -9,6 +9,15 @@ public class CourseInfoResponse implements Serializable {
 
     private CourseResponse course;
     private BlockResponse block;
+    private boolean isJoin;
+
+    public boolean isJoin() {
+        return isJoin;
+    }
+
+    public void setJoin(boolean join) {
+        isJoin = join;
+    }
 
     public CourseResponse getCourse() {
         return course;

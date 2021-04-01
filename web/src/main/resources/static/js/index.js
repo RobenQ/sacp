@@ -262,10 +262,10 @@ window.onload = function (){
                     const newPage = this.$router.resolve({path: '/'})
                     window.open(newPage.href,'_blank')
                 }else if (data ===2){
-                    // window.close()
-                    // const newPage = this.$router.resolve({path: '/communicate'})
-                    // window.open(newPage.href,'_blank')
-                    this.$router.push('/communicate')
+                    window.close()
+                    const newPage = this.$router.resolve({path: '/communicate'})
+                    window.open(newPage.href,'_blank')
+                    // this.$router.push('/communicate')
                 }
             }
         }
@@ -289,7 +289,7 @@ window.onload = function (){
         { path: '/communicate', component:()=> loadModule('/static/communicate.vue', options) },
         { path: '/courseDetail/:courseId', component:()=> loadModule('/static/components/courseDetail.vue', options) },
         { path: '/courseBlock/:blockId', component:()=> loadModule('/static/components/courseBlock.vue', options) },
-        { path: '/postDetail', component:()=> loadModule('/static/components/postDetail.vue', options) },
+        { path: '/postDetail/:postId', component:()=> loadModule('/static/components/postDetail.vue', options) },
         { path: '/mySpace', component:()=> loadModule('/static/components/mySpace.vue', options),
             children: [
                 {

@@ -13,6 +13,7 @@ E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\mapper\Rep
 E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\mapper\ReplyMapper.java
 E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\entity\MemberBlock.java
 E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\repository\BlockRepository.java
+E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\repository\PostRepository.java
 E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\entity\PostLikes.java
 E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\entity\PostWithBLOBs.java
 E:\bishe\code\sacp\forum\forum-core\src\main\java\com\sacp\forum\core\mapper\MemberBlockMapper.java

@@ -190,4 +190,39 @@ public class CourseController {
         List<DiscussionResponse> responses = courseApi.getreplybyCourseId(Integer.valueOf(courseId));
         return UserResponse.buildSuccess(responses);
     }
+
+    @GetMapping("getJoinMb")
+    public UserResponse getJoinMb(@RequestParam String sacpId){
+        List<BlockResponse> responses = forumApi.getMbBySacpIdLimit(sacpId);
+        for (BlockResponse block:responses) {
+            if (courseApi.getCourseById(block.getCourseId()).getIsDelete()!=0)
+                block = null;
+        }
+        return UserResponse.buildSuccess(responses);
+    }
+
+    //sacpId分页查询用户加入的课程
+    @GetMapping("getJoinTotalPage")
+    public UserResponse getJoinTotalPage(@RequestParam String sacpId){
+        long res = courseApi.getMcTotalPage(sacpId);
+        return UserResponse.buildSuccess(res);
+    }
+
+    @PostMapping("getJoinCourse")
+    public UserResponse getJoinCourse(@RequestBody CourseRequest request){
+        List<CourseResponse> courseByPage = courseApi.getJoinCourseByPage(request);
+        return UserResponse.buildSuccess(courseByPage);
+    }
+
+    @PostMapping("outCourse")
+    public UserResponse outCourse(@RequestBody JSONObject request){
+        String sacpId = request.getString("sacpId");
+        Integer courseId = request.getIntValue("courseId");
+        boolean b = courseApi.outCourse(sacpId, courseId);
+        if (b)
+            return UserResponse.buildSuccess("已退出课程！");
+        else
+            return UserResponse.buildSuccess("退出课程失败！");
+    }
+
 }

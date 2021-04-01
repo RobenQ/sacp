@@ -29,6 +29,10 @@ public interface CourseApi {
 
     public boolean isJoinCourse(Integer courseId,String sacpId);
 
+    public List<CourseResponse> getJoinCourseByPage(CourseRequest request);
+
+    public boolean outCourse(String sacpId,Integer courseId);
+
 
     //courseClassify==========================================================================
     public List<CourseClassifyResponse> getAllClassify();
@@ -60,4 +64,8 @@ public interface CourseApi {
     //discussion==========================================================================
     public boolean addDiscussion(DiscussionRequest request);
     public List<DiscussionResponse> getreplybyCourseId(Integer courseId);
+
+
+    //discussion==========================================================================
+    public long getMcTotalPage(String sacpId);
 }

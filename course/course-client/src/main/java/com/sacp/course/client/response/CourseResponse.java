@@ -22,11 +22,21 @@ public class CourseResponse implements Serializable {
 
     private Integer forumId;
 
+    private Integer isDelete;
+
     private long totalPage;
 
     private Integer pageSize;
 
     private Integer currentPage;
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
 
     public String getMemberName() {
         return memberName;

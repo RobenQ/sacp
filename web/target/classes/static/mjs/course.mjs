@@ -188,3 +188,39 @@ export function getReply(data){
         }
     })
 }
+
+export function getJoinMb(data){
+    return request({
+        url:"getJoinMb",
+        method:"get",
+        params:{
+            sacpId:data
+        }
+    })
+}
+
+export function getJoinTotalPage(data){
+    return request({
+        url:"/getJoinTotalPage",
+        method:"get",
+        params:{
+            sacpId:data
+        }
+    })
+}
+
+export function getJoinCourse(data){
+    return request({
+        url:"/getJoinCourse",
+        method:"post",
+        data
+    })
+}
+
+export function outCourse(data){
+    return request({
+        url:"/outCourse",
+        method:"post",
+        data
+    })
+}

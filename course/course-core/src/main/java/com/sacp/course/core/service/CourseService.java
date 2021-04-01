@@ -42,6 +42,29 @@ public class CourseService implements CourseApi {
     private MemberApi memberApi;
 
     @Override
+    public boolean outCourse(String sacpId, Integer courseId) {
+        courseRepository.subOneLearnerNum(courseId);
+        forumApi.outBlock(this.getCourseById(courseId).getForumId(),sacpId);
+        return courseRepository.deleteMcNoFact(sacpId,courseId);
+    }
+
+    @Override
+    public List<CourseResponse> getJoinCourseByPage(CourseRequest request) {
+        List<MemberCourse> mcByPage = courseRepository.getMcByPage(request.getSacpId(),
+                request.getPageSize(), request.getCurrentPage());
+        List<CourseResponse> responses = new ArrayList<>(mcByPage.size());
+        for (MemberCourse mc:mcByPage) {
+            responses.add(this.getCourseById(mc.getCourseId()));
+        }
+        return responses;
+    }
+
+    @Override
+    public long getMcTotalPage(String sacpId) {
+        return courseRepository.getMcTotalPage(sacpId);
+    }
+
+    @Override
     public List<DiscussionResponse> getreplybyCourseId(Integer courseId) {
         List<Discussion> replyByCourseId = discussionRepository.getReplyByCourseId(courseId);
         List<DiscussionResponse> responses = new ArrayList<>(replyByCourseId.size());
@@ -68,9 +91,11 @@ public class CourseService implements CourseApi {
         MemberCourse memberCourse = courseRepository.getMcByCourseIdAndSacpId(courseId,sacpId);
         if (memberCourse==null){
             forumApi.joinBlock(courseRepository.getCourseById(courseId).getForumId(),sacpId);
+            courseRepository.addOneLearnerNum(courseId);
             return courseRepository.insertMc(courseId,sacpId);
         }else {
             forumApi.joinBlock(courseRepository.getCourseById(courseId).getForumId(),sacpId);
+            courseRepository.addOneLearnerNum(courseId);
             return courseRepository.updateMcStatus(courseId,sacpId);
         }
     }

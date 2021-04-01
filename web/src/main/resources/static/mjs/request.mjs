@@ -26,8 +26,8 @@ service.interceptors.response.use(
   response => {
     const res = response.data
       if (res.code !==200){
-          console.log(ElementPlus)
           message.error('请求失败！')
+          return Promise.reject('请求失败！')
       }else {
           return res
       }

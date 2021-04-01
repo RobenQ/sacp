@@ -11,11 +11,11 @@ public class Reply {
 
     private Integer likesNumber;
 
-    private Integer order;
+    private Integer orders;
 
     private Date createTime;
 
-    private Byte isDelete;
+    private Integer isDelete;
 
     private String context;
 
@@ -51,12 +51,12 @@ public class Reply {
         this.likesNumber = likesNumber;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrders() {
+        return orders;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrders(Integer orders) {
+        this.orders = orders;
     }
 
     public Date getCreateTime() {
@@ -67,11 +67,11 @@ public class Reply {
         this.createTime = createTime;
     }
 
-    public Byte getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Byte isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 

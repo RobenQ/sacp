@@ -6,7 +6,7 @@
     <result column="post_id" jdbcType="INTEGER" property="postId" />
     <result column="sacp_id" jdbcType="VARCHAR" property="sacpId" />
     <result column="likes_number" jdbcType="INTEGER" property="likesNumber" />
-    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="orders" jdbcType="INTEGER" property="orders" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
   </resultMap>
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, post_id, sacp_id, likes_number, order, create_time, is_delete
+    id, post_id, sacp_id, likes_number, orders, create_time, is_delete
   </sql>
   <sql id="Blob_Column_List">
     context
@@ -129,10 +129,10 @@
   </delete>
   <insert id="insert" parameterType="com.sacp.forum.core.entity.Reply">
     insert into reply (id, post_id, sacp_id, 
-      likes_number, order, create_time, 
+      likes_number, orders, create_time,
       is_delete, context)
     values (#{id,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{sacpId,jdbcType=VARCHAR}, 
-      #{likesNumber,jdbcType=INTEGER}, #{order,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{likesNumber,jdbcType=INTEGER}, #{orders,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
       #{isDelete,jdbcType=TINYINT}, #{context,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sacp.forum.core.entity.Reply">
@@ -150,8 +150,8 @@
       <if test="likesNumber != null">
         likes_number,
       </if>
-      <if test="order != null">
-        order,
+      <if test="orders != null">
+        orders,
       </if>
       <if test="createTime != null">
         create_time,
@@ -176,8 +176,8 @@
       <if test="likesNumber != null">
         #{likesNumber,jdbcType=INTEGER},
       </if>
-      <if test="order != null">
-        #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        #{orders,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -211,8 +211,8 @@
       <if test="record.likesNumber != null">
         likes_number = #{record.likesNumber,jdbcType=INTEGER},
       </if>
-      <if test="record.order != null">
-        order = #{record.order,jdbcType=INTEGER},
+      <if test="record.orders != null">
+        orders = #{record.orders,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -234,7 +234,7 @@
       post_id = #{record.postId,jdbcType=INTEGER},
       sacp_id = #{record.sacpId,jdbcType=VARCHAR},
       likes_number = #{record.likesNumber,jdbcType=INTEGER},
-      order = #{record.order,jdbcType=INTEGER},
+      orders = #{record.orders,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=TINYINT},
       context = #{record.context,jdbcType=LONGVARCHAR}
@@ -248,7 +248,7 @@
       post_id = #{record.postId,jdbcType=INTEGER},
       sacp_id = #{record.sacpId,jdbcType=VARCHAR},
       likes_number = #{record.likesNumber,jdbcType=INTEGER},
-      order = #{record.order,jdbcType=INTEGER},
+      orders = #{record.orders,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       is_delete = #{record.isDelete,jdbcType=TINYINT}
     <if test="_parameter != null">
@@ -267,8 +267,8 @@
       <if test="likesNumber != null">
         likes_number = #{likesNumber,jdbcType=INTEGER},
       </if>
-      <if test="order != null">
-        order = #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        orders = #{orders,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -287,7 +287,7 @@
     set post_id = #{postId,jdbcType=INTEGER},
       sacp_id = #{sacpId,jdbcType=VARCHAR},
       likes_number = #{likesNumber,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT},
       context = #{context,jdbcType=LONGVARCHAR}
@@ -298,7 +298,7 @@
     set post_id = #{postId,jdbcType=INTEGER},
       sacp_id = #{sacpId,jdbcType=VARCHAR},
       likes_number = #{likesNumber,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}

@@ -7,13 +7,23 @@ public class BlockResponse implements Serializable {
 
     private Integer courseId;
 
+    private Integer learnerNumber;
+
     private String blockName;
 
     private String blockAvatar;
 
     private String desc;
 
-    private Byte isDelete;
+    private Integer isDelete;
+
+    public Integer getLearnerNumber() {
+        return learnerNumber;
+    }
+
+    public void setLearnerNumber(Integer learnerNumber) {
+        this.learnerNumber = learnerNumber;
+    }
 
     public Integer getId() {
         return id;
@@ -55,11 +65,11 @@ public class BlockResponse implements Serializable {
         this.desc = desc;
     }
 
-    public Byte getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Byte isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 }

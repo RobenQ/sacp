@@ -1,5 +1,5 @@
-com\sacp\course\client\api\CourseApi.class
 com\sacp\course\client\response\CourseResponse.class
 com\sacp\course\client\request\CourseClassifyRequest.class
 com\sacp\course\client\request\CourseRequest.class
+com\sacp\course\client\api\CourseApi.class
 com\sacp\course\client\response\CourseClassifyResponse.class

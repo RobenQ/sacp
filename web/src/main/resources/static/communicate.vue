@@ -14,7 +14,7 @@
         <div class="post-wrap">
           <div class="post-header">
             <div>
-              <el-avatar :size="40" src="http://scap.moeneko.top/face.gif"></el-avatar>
+              <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
             </div>
             <div class="poster">
               <div class="poster-name">哎Coding</div>
@@ -80,7 +80,7 @@
         <div class="post-wrap">
           <div class="post-header">
             <div>
-              <el-avatar :size="40" src="http://scap.moeneko.top/face.gif"></el-avatar>
+              <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
             </div>
             <div class="poster">
               <div class="poster-name">哎Coding</div>
@@ -115,22 +115,17 @@
 
     <div class="co-right">
       <el-card class="box-card post-card">
-        <el-menu
+        <el-menu v-if="islogin"
             style="border: none"
             class="el-menu-vertical-demo">
           <el-menu-item index="1" disabled>
             <template #title><span style="color:#e60a0a;font-size: 18px;font-weight: 800">我加入的课程</span></template>
           </el-menu-item>
-          <el-menu-item index="2" @click="goBlock">
-            <template #title>Java进阶</template>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <template #title>OKR工作法</template>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <template #title>商务英语</template>
+          <el-menu-item v-for="(item,index) in mbList" index="index+1" @click="goBlock(item.id)">
+            <template #title>{{ item.blockName }}</template>
           </el-menu-item>
         </el-menu>
+        <div class="more">要查看已加入课程版块请前往个人中心</div>
       </el-card>
     </div>
   </div>
@@ -138,11 +133,13 @@
 </template>
 
 <script>
+
+import {getJoinMb} from "./mjs/course.mjs";
+
 export default {
   name: "communicate",
   data(){
     return{
-      postTime:new Date().format("yyyy-MM-dd HH:mm:ss"),
       urls:[
         {
           id:1,
@@ -160,12 +157,27 @@ export default {
           id:4,
           img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E4%B8%8B%E5%B1%B1.a2153639.jpg"
         },
-      ]
+      ],
+      islogin:false,
+      mbList:[]
     }
   },
+  created(){
+    this.init()
+  },
   methods:{
-    goBlock(){
-      const newPage = this.$router.resolve({path: '/courseBlock'})
+    async init(){
+      if (this.$store.state.sacpId === ''){
+        this.islogin = false;
+        return
+      }else {
+        const res = await getJoinMb(this.$store.state.sacpId)
+        this.mbList = res.result
+        this.islogin = true;
+      }
+    },
+    goBlock(data){
+      const newPage = this.$router.resolve({path: '/courseBlock/'+data})
       window.open(newPage.href,'_blank')
       // this.$router.push({path: '/courseDetail'})
     }
@@ -174,6 +186,16 @@ export default {
 </script>
 
 <style scoped>
+.more{
+  font-size: 10px;
+  padding-top: 5px;
+  border-top: 1px solid #00A8F3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
 #co-container{
   width: 100%;
   min-height: 400px;

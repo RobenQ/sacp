@@ -44,41 +44,41 @@
         </javaClientGenerator>
 
         <!-- tableName：数据库中的表名或视图名；domainObjectName：生成的实体类的类名-->
-        <table tableName="block_info" domainObjectName="BlockInfo"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
-        <table tableName="member_block" domainObjectName="MemberBlock"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
+        <!--<table tableName="block_info" domainObjectName="BlockInfo"-->
+        <!--       enableCountByExample="true"-->
+        <!--       enableUpdateByExample="true"-->
+        <!--       enableDeleteByExample="true"-->
+        <!--       enableSelectByExample="true"-->
+        <!--       selectByExampleQueryId="true"/>-->
+        <!--<table tableName="member_block" domainObjectName="MemberBlock"-->
+        <!--       enableCountByExample="true"-->
+        <!--       enableUpdateByExample="true"-->
+        <!--       enableDeleteByExample="true"-->
+        <!--       enableSelectByExample="true"-->
+        <!--       selectByExampleQueryId="true"/>-->
         <table tableName="post" domainObjectName="Post"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true"
                selectByExampleQueryId="true"/>
-        <table tableName="post_likes" domainObjectName="PostLikes"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
-        <table tableName="reply" domainObjectName="Reply"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
-        <table tableName="reply_likes" domainObjectName="ReplyLikes"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
+        <!--<table tableName="post_likes" domainObjectName="PostLikes"-->
+        <!--       enableCountByExample="true"-->
+        <!--       enableUpdateByExample="true"-->
+        <!--       enableDeleteByExample="true"-->
+        <!--       enableSelectByExample="true"-->
+        <!--       selectByExampleQueryId="true"/>-->
+        <!--<table tableName="reply" domainObjectName="Reply"-->
+        <!--       enableCountByExample="true"-->
+        <!--       enableUpdateByExample="true"-->
+        <!--       enableDeleteByExample="true"-->
+        <!--       enableSelectByExample="true"-->
+        <!--       selectByExampleQueryId="true"/>-->
+        <!--<table tableName="reply_likes" domainObjectName="ReplyLikes"-->
+        <!--       enableCountByExample="true"-->
+        <!--       enableUpdateByExample="true"-->
+        <!--       enableDeleteByExample="true"-->
+        <!--       enableSelectByExample="true"-->
+        <!--       selectByExampleQueryId="true"/>-->
     </context>
 </generatorConfiguration>

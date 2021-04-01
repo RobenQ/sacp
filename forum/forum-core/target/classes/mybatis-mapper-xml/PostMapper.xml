@@ -7,16 +7,34 @@
     <result column="block_id" jdbcType="INTEGER" property="blockId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="classify_id" jdbcType="INTEGER" property="classifyId" />
-    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="orders" jdbcType="INTEGER" property="orders" />
     <result column="viewer_number" jdbcType="INTEGER" property="viewerNumber" />
     <result column="reply_number" jdbcType="INTEGER" property="replyNumber" />
     <result column="likes_number" jdbcType="INTEGER" property="likesNumber" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="id_delete" jdbcType="TINYINT" property="idDelete" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.sacp.forum.core.entity.Post">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.sacp.forum.core.entity.PostWithBLOBs">
+    <result column="txt" jdbcType="LONGVARCHAR" property="txt" />
     <result column="context" jdbcType="LONGVARCHAR" property="context" />
   </resultMap>
+
+  <resultMap id="BaseResultMap2" type="com.sacp.forum.core.entity.Post">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sacp_id" jdbcType="VARCHAR" property="sacpId" />
+    <result column="block_id" jdbcType="INTEGER" property="blockId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="classify_id" jdbcType="INTEGER" property="classifyId" />
+    <result column="orders" jdbcType="INTEGER" property="orders" />
+    <result column="viewer_number" jdbcType="INTEGER" property="viewerNumber" />
+    <result column="reply_number" jdbcType="INTEGER" property="replyNumber" />
+    <result column="likes_number" jdbcType="INTEGER" property="likesNumber" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="id_delete" jdbcType="TINYINT" property="idDelete" />
+    <result column="txt" jdbcType="LONGVARCHAR" property="txt" />
+    <result column="context" jdbcType="LONGVARCHAR" property="context" />
+  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -76,11 +94,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, sacp_id, block_id, title, classify_id, order, viewer_number, reply_number, likes_number, 
+    id, sacp_id, block_id, title, classify_id, orders, viewer_number, reply_number, likes_number,
     create_time, id_delete
   </sql>
   <sql id="Blob_Column_List">
-    context
+    txt, context
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="com.sacp.forum.core.entity.PostExample" resultMap="ResultMapWithBLOBs">
     select
@@ -132,19 +150,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.sacp.forum.core.entity.Post">
+  <insert id="insert" parameterType="com.sacp.forum.core.entity.PostWithBLOBs">
     insert into post (id, sacp_id, block_id, 
-      title, classify_id, order, 
+      title, classify_id, orders,
       viewer_number, reply_number, likes_number, 
-      create_time, id_delete, context
-      )
+      create_time, id_delete, txt, 
+      context)
     values (#{id,jdbcType=INTEGER}, #{sacpId,jdbcType=VARCHAR}, #{blockId,jdbcType=INTEGER}, 
-      #{title,jdbcType=VARCHAR}, #{classifyId,jdbcType=INTEGER}, #{order,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{classifyId,jdbcType=INTEGER}, #{orders,jdbcType=INTEGER},
       #{viewerNumber,jdbcType=INTEGER}, #{replyNumber,jdbcType=INTEGER}, #{likesNumber,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{idDelete,jdbcType=TINYINT}, #{context,jdbcType=LONGVARCHAR}
-      )
+      #{createTime,jdbcType=TIMESTAMP}, #{idDelete,jdbcType=TINYINT}, #{txt,jdbcType=LONGVARCHAR}, 
+      #{context,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.sacp.forum.core.entity.Post">
+  <insert id="insertSelective" parameterType="com.sacp.forum.core.entity.PostWithBLOBs">
     insert into post
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -162,8 +180,8 @@
       <if test="classifyId != null">
         classify_id,
       </if>
-      <if test="order != null">
-        order,
+      <if test="orders != null">
+        orders,
       </if>
       <if test="viewerNumber != null">
         viewer_number,
@@ -179,6 +197,9 @@
       </if>
       <if test="idDelete != null">
         id_delete,
+      </if>
+      <if test="txt != null">
+        txt,
       </if>
       <if test="context != null">
         context,
@@ -200,8 +221,8 @@
       <if test="classifyId != null">
         #{classifyId,jdbcType=INTEGER},
       </if>
-      <if test="order != null">
-        #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        #{orders,jdbcType=INTEGER},
       </if>
       <if test="viewerNumber != null">
         #{viewerNumber,jdbcType=INTEGER},
@@ -217,6 +238,9 @@
       </if>
       <if test="idDelete != null">
         #{idDelete,jdbcType=TINYINT},
+      </if>
+      <if test="txt != null">
+        #{txt,jdbcType=LONGVARCHAR},
       </if>
       <if test="context != null">
         #{context,jdbcType=LONGVARCHAR},
@@ -247,8 +271,8 @@
       <if test="record.classifyId != null">
         classify_id = #{record.classifyId,jdbcType=INTEGER},
       </if>
-      <if test="record.order != null">
-        order = #{record.order,jdbcType=INTEGER},
+      <if test="record.orders != null">
+        orders = #{record.orders,jdbcType=INTEGER},
       </if>
       <if test="record.viewerNumber != null">
         viewer_number = #{record.viewerNumber,jdbcType=INTEGER},
@@ -265,6 +289,9 @@
       <if test="record.idDelete != null">
         id_delete = #{record.idDelete,jdbcType=TINYINT},
       </if>
+      <if test="record.txt != null">
+        txt = #{record.txt,jdbcType=LONGVARCHAR},
+      </if>
       <if test="record.context != null">
         context = #{record.context,jdbcType=LONGVARCHAR},
       </if>
@@ -280,12 +307,13 @@
       block_id = #{record.blockId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       classify_id = #{record.classifyId,jdbcType=INTEGER},
-      order = #{record.order,jdbcType=INTEGER},
+      orders = #{record.orders,jdbcType=INTEGER},
       viewer_number = #{record.viewerNumber,jdbcType=INTEGER},
       reply_number = #{record.replyNumber,jdbcType=INTEGER},
       likes_number = #{record.likesNumber,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       id_delete = #{record.idDelete,jdbcType=TINYINT},
+      txt = #{record.txt,jdbcType=LONGVARCHAR},
       context = #{record.context,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -298,7 +326,7 @@
       block_id = #{record.blockId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       classify_id = #{record.classifyId,jdbcType=INTEGER},
-      order = #{record.order,jdbcType=INTEGER},
+      orders = #{record.orders,jdbcType=INTEGER},
       viewer_number = #{record.viewerNumber,jdbcType=INTEGER},
       reply_number = #{record.replyNumber,jdbcType=INTEGER},
       likes_number = #{record.likesNumber,jdbcType=INTEGER},
@@ -308,7 +336,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.sacp.forum.core.entity.Post">
+  <update id="updateByPrimaryKeySelective" parameterType="com.sacp.forum.core.entity.PostWithBLOBs">
     update post
     <set>
       <if test="sacpId != null">
@@ -323,8 +351,8 @@
       <if test="classifyId != null">
         classify_id = #{classifyId,jdbcType=INTEGER},
       </if>
-      <if test="order != null">
-        order = #{order,jdbcType=INTEGER},
+      <if test="orders != null">
+        orders = #{orders,jdbcType=INTEGER},
       </if>
       <if test="viewerNumber != null">
         viewer_number = #{viewerNumber,jdbcType=INTEGER},
@@ -341,24 +369,28 @@
       <if test="idDelete != null">
         id_delete = #{idDelete,jdbcType=TINYINT},
       </if>
+      <if test="txt != null">
+        txt = #{txt,jdbcType=LONGVARCHAR},
+      </if>
       <if test="context != null">
         context = #{context,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sacp.forum.core.entity.Post">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sacp.forum.core.entity.PostWithBLOBs">
     update post
     set sacp_id = #{sacpId,jdbcType=VARCHAR},
       block_id = #{blockId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       classify_id = #{classifyId,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
       viewer_number = #{viewerNumber,jdbcType=INTEGER},
       reply_number = #{replyNumber,jdbcType=INTEGER},
       likes_number = #{likesNumber,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       id_delete = #{idDelete,jdbcType=TINYINT},
+      txt = #{txt,jdbcType=LONGVARCHAR},
       context = #{context,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -368,7 +400,7 @@
       block_id = #{blockId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       classify_id = #{classifyId,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
+      orders = #{orders,jdbcType=INTEGER},
       viewer_number = #{viewerNumber,jdbcType=INTEGER},
       reply_number = #{replyNumber,jdbcType=INTEGER},
       likes_number = #{likesNumber,jdbcType=INTEGER},
@@ -376,4 +408,16 @@
       id_delete = #{idDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getPostTop5" resultMap="BaseResultMap2">
+    select * from post where block_id=#{blockId} and id_delete=0 order by create_time desc limit 5;
+  </select>
+  <select id="getPostTop5BySacpId" resultMap="BaseResultMap2">
+    select * from post where sacp_id=#{sacpId} and id_delete=0 order by create_time desc limit 5;
+  </select>
+  <select id="getPostByPage" resultMap="BaseResultMap2">
+    select * from post where block_id=#{blockId} and id_delete=0 order by create_time desc limit #{start},#{pageSize};
+  </select>
+  <select id="getPostByPage2" resultMap="BaseResultMap2">
+    select * from post where sacp_id=#{sacpId} and id_delete=0 order by create_time desc limit #{start},#{pageSize};
+  </select>
 </mapper>

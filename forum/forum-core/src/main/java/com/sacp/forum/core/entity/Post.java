@@ -13,7 +13,7 @@ public class Post {
 
     private Integer classifyId;
 
-    private Integer order;
+    private Integer orders;
 
     private Integer viewerNumber;
 
@@ -23,9 +23,27 @@ public class Post {
 
     private Date createTime;
 
-    private Byte idDelete;
+    private Integer idDelete;
+
+    private String txt;
 
     private String context;
+
+    public String getTxt() {
+        return txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
 
     public Integer getId() {
         return id;
@@ -67,12 +85,12 @@ public class Post {
         this.classifyId = classifyId;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrders() {
+        return orders;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrders(Integer orders) {
+        this.orders = orders;
     }
 
     public Integer getViewerNumber() {
@@ -107,19 +125,11 @@ public class Post {
         this.createTime = createTime;
     }
 
-    public Byte getIdDelete() {
+    public Integer getIdDelete() {
         return idDelete;
     }
 
-    public void setIdDelete(Byte idDelete) {
+    public void setIdDelete(Integer idDelete) {
         this.idDelete = idDelete;
-    }
-
-    public String getContext() {
-        return context;
-    }
-
-    public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
     }
 }

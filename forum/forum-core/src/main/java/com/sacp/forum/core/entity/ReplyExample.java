@@ -356,62 +356,62 @@ public class ReplyExample {
         }
 
         public Criteria andOrderIsNull() {
-            addCriterion("order is null");
+            addCriterion("orders is null");
             return (Criteria) this;
         }
 
         public Criteria andOrderIsNotNull() {
-            addCriterion("order is not null");
+            addCriterion("orders is not null");
             return (Criteria) this;
         }
 
         public Criteria andOrderEqualTo(Integer value) {
-            addCriterion("order =", value, "order");
+            addCriterion("orders =", value, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderNotEqualTo(Integer value) {
-            addCriterion("order <>", value, "order");
+            addCriterion("orders <>", value, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderGreaterThan(Integer value) {
-            addCriterion("order >", value, "order");
+            addCriterion("orders >", value, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderGreaterThanOrEqualTo(Integer value) {
-            addCriterion("order >=", value, "order");
+            addCriterion("orders >=", value, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderLessThan(Integer value) {
-            addCriterion("order <", value, "order");
+            addCriterion("orders <", value, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderLessThanOrEqualTo(Integer value) {
-            addCriterion("order <=", value, "order");
+            addCriterion("orders <=", value, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderIn(List<Integer> values) {
-            addCriterion("order in", values, "order");
+            addCriterion("orders in", values, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderNotIn(List<Integer> values) {
-            addCriterion("order not in", values, "order");
+            addCriterion("orders not in", values, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderBetween(Integer value1, Integer value2) {
-            addCriterion("order between", value1, value2, "order");
+            addCriterion("orders between", value1, value2, "orders");
             return (Criteria) this;
         }
 
         public Criteria andOrderNotBetween(Integer value1, Integer value2) {
-            addCriterion("order not between", value1, value2, "order");
+            addCriterion("orders not between", value1, value2, "orders");
             return (Criteria) this;
         }
 
@@ -485,52 +485,52 @@ public class ReplyExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteEqualTo(Byte value) {
+        public Criteria andIsDeleteEqualTo(Integer value) {
             addCriterion("is_delete =", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotEqualTo(Byte value) {
+        public Criteria andIsDeleteNotEqualTo(Integer value) {
             addCriterion("is_delete <>", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteGreaterThan(Byte value) {
+        public Criteria andIsDeleteGreaterThan(Integer value) {
             addCriterion("is_delete >", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteGreaterThanOrEqualTo(Byte value) {
+        public Criteria andIsDeleteGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_delete >=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteLessThan(Byte value) {
+        public Criteria andIsDeleteLessThan(Integer value) {
             addCriterion("is_delete <", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteLessThanOrEqualTo(Byte value) {
+        public Criteria andIsDeleteLessThanOrEqualTo(Integer value) {
             addCriterion("is_delete <=", value, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteIn(List<Byte> values) {
+        public Criteria andIsDeleteIn(List<Integer> values) {
             addCriterion("is_delete in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotIn(List<Byte> values) {
+        public Criteria andIsDeleteNotIn(List<Integer> values) {
             addCriterion("is_delete not in", values, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteBetween(Byte value1, Byte value2) {
+        public Criteria andIsDeleteBetween(Integer value1, Integer value2) {
             addCriterion("is_delete between", value1, value2, "isDelete");
             return (Criteria) this;
         }
 
-        public Criteria andIsDeleteNotBetween(Byte value1, Byte value2) {
+        public Criteria andIsDeleteNotBetween(Integer value1, Integer value2) {
             addCriterion("is_delete not between", value1, value2, "isDelete");
             return (Criteria) this;
         }

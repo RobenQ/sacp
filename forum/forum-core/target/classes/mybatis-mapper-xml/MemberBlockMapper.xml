@@ -194,4 +194,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getMbBySacpIdLimit" resultMap="BaseResultMap">
+    select * from member_block where sacp_id=#{sacpId} order by create_time desc limit 10
+  </select>
 </mapper>

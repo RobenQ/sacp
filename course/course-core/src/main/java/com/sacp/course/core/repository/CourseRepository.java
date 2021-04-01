@@ -19,6 +19,65 @@ public class CourseRepository {
     @Autowired
     private MemberCourseMapper memberCourseMapper;
 
+    public boolean deleteMcNoFact(String sacpId,Integer courseId){
+        MemberCourseExample example = new MemberCourseExample();
+        example.createCriteria().andSacpIdEqualTo(sacpId).andCourseIdEqualTo(courseId);
+        List<MemberCourse> memberCourses = memberCourseMapper.selectByExample(example);
+        if (memberCourses.size()==0)
+            return true;
+        else {
+            MemberCourse memberCourse = new MemberCourse();
+            memberCourse.setIsDelete(1);
+            example.clear();
+            example.createCriteria().andIdEqualTo(memberCourses.get(0).getId());
+            int i = memberCourseMapper.updateByExampleSelective(memberCourse, example);
+            return i==1?true:false;
+        }
+    }
+
+    public List<MemberCourse> getMcByPage(String sacpId,int pagesize,int currentPage){
+        int start = (currentPage-1)*pagesize;
+        return memberCourseMapper.selectBySacpIdAndPage(sacpId,start,pagesize);
+    }
+
+    public long getMcTotalPage(String sacpId){
+        MemberCourseExample example = new MemberCourseExample();
+        example.createCriteria().andSacpIdEqualTo(sacpId);
+        List<MemberCourse> memberCourses = memberCourseMapper.selectByExample(example);
+        long res = memberCourses.size();
+        for (MemberCourse mc:memberCourses) {
+            CourseInfo courseById = this.getCourseById(mc.getCourseId());
+            if (courseById.getIsDelete()==1)
+                res--;
+        }
+        return res;
+    }
+
+    public boolean addOneLearnerNum(Integer courseId){
+        CourseInfo courseById = this.getCourseById(courseId);
+
+        CourseInfo courseInfo = new CourseInfo();
+        courseInfo.setLearnerNumber(courseById.getLearnerNumber()+1);
+
+        CourseInfoExample example = new CourseInfoExample();
+        example.createCriteria().andIdEqualTo(courseId);
+        int i = courseInfoMapper.updateByExampleSelective(courseInfo, example);
+        return i==1?true:false;
+    }
+
+    public boolean subOneLearnerNum(Integer courseId){
+        CourseInfo courseById = this.getCourseById(courseId);
+        CourseInfo courseInfo = new CourseInfo();
+        if (courseById.getLearnerNumber()>=1)
+            courseInfo.setLearnerNumber(courseById.getLearnerNumber()-1);
+        else
+            courseInfo.setLearnerNumber(0);
+        CourseInfoExample example = new CourseInfoExample();
+        example.createCriteria().andIdEqualTo(courseId);
+        int i = courseInfoMapper.updateByExampleSelective(courseInfo, example);
+        return i==1?true:false;
+    }
+
     public boolean addOneReplyNum(Integer courseId){
         CourseInfo courseById = this.getCourseById(courseId);
         CourseInfo courseInfo = new CourseInfo();

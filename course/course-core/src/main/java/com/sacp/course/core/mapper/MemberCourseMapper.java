@@ -1,5 +1,6 @@
 package com.sacp.course.core.mapper;
 
+import com.sacp.course.core.entity.CourseInfo;
 import com.sacp.course.core.entity.MemberCourse;
 import com.sacp.course.core.entity.MemberCourseExample;
 import java.util.List;
@@ -30,4 +31,6 @@ public interface MemberCourseMapper {
     int updateByPrimaryKeySelective(MemberCourse record);
 
     int updateByPrimaryKey(MemberCourse record);
+
+    List<MemberCourse> selectBySacpIdAndPage(@Param("sacpId")String sacpId, @Param("start") int start, @Param("pageSize") int pageSize);
 }

@@ -8,27 +8,25 @@
           <div class="post-wrap">
             <div class="post-header">
               <div>
-                <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
+                <el-avatar :size="40" :src="member.avatar"></el-avatar>
               </div>
               <div class="poster">
-                <div class="poster-name">哎Coding</div>
-                <div class="post-time">发表于：{{postTime}}</div>
+                <div class="poster-name">{{member.nickName}}</div>
+                <div class="post-time">发表于：{{post.createTime}}</div>
               </div>
             </div>
-            <div class="post-text">
-              截止目前，我还没有发现比米10u好的手机。
-              我这款米10u目前找不到替代品，想换机都没办法(3x120，16+512)，无可挑剔的设计(不大不小的圆角、高端工艺封装的下巴、凸出不高的后置相机、非常舒服的曲面。。。)
-              等等MIX4看看会不会超越它了。。
-            </div>
+            <div class="post-text" v-html="post.context"></div>
             <div class="post-footer">
               <div class="post-footer-left">
-                <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
+                <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i>
+                  <div>{{ block.blockName }}</div>
+                </div>
                 <div class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
               </div>
               <div class="post-footer-right">
-                <div><i class="el-icon-view" style="margin-right: 3px"></i>232</div>
-                <div><i class="el-icon-chat-dot-square" style="margin-right: 3px"></i>67</div>
-                <div><i class="el-icon-star-off" style="margin-right: 3px"></i>18</div>
+                <div><i class="el-icon-view" style="margin-right: 3px"></i>{{ post.viewerNumber }}</div>
+                <div><i class="el-icon-chat-dot-square" style="margin-right: 3px"></i>{{ post.replyNumber }}</div>
+                <div><i class="el-icon-star-off" style="margin-right: 3px"></i>{{ post.likesNumber }}</div>
               </div>
             </div>
           </div>
@@ -48,69 +46,24 @@
             </div>
           </div>
           <div class="replay-wrap">
-            <div class="post-wrap2">
+            <div class="post-wrap2" v-for="item in replyList">
               <div class="post-header">
                 <div>
-                  <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
+                  <el-avatar :size="40" :src="item.member.avatar"></el-avatar>
                 </div>
                 <div class="poster">
-                  <div class="poster-name">哎Coding</div>
-                  <div class="post-time">发表于：{{postTime}}</div>
+                  <div class="poster-name">{{ item.member.nickName }}</div>
+                  <div class="post-time">发表于：{{ item.reply.createTime }}</div>
                 </div>
               </div>
               <div class="post-text">
-                截止目前，我还没有发现比米10u好的手机。
-                我这款米10u目前找不到替代品，想换机都没办法(3x120，16+512)，无可挑剔的设计(不大不小的圆角、高端工艺封装的下巴、凸出不高的后置相机、非常舒服的曲面。。。)
-                等等MIX4看看会不会超越它了。。
+                {{ item.reply.context }}
               </div>
               <div class="post-footer">
                 <div class="post-footer-left">
                 </div>
                 <div class="post-footer-right">
-                  <div><i class="el-icon-star-off" style="margin-right: 3px"></i>18</div>
-                </div>
-              </div>
-            </div>
-            <div class="post-wrap2">
-              <div class="post-header">
-                <div>
-                  <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
-                </div>
-                <div class="poster">
-                  <div class="poster-name">哎Coding</div>
-                  <div class="post-time">发表于：{{postTime}}</div>
-                </div>
-              </div>
-              <div class="post-text">
-                截止目前，我还没有发现比米10u好的手机。
-                我这款米10u目前找不到替代品.
-              </div>
-              <div class="post-footer">
-                <div class="post-footer-left">
-                </div>
-                <div class="post-footer-right">
-                  <div><i class="el-icon-star-off" style="margin-right: 3px"></i>18</div>
-                </div>
-              </div>
-            </div>
-            <div class="post-wrap2">
-              <div class="post-header">
-                <div>
-                  <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
-                </div>
-                <div class="poster">
-                  <div class="poster-name">哎Coding</div>
-                  <div class="post-time">发表于：{{postTime}}</div>
-                </div>
-              </div>
-              <div class="post-text">
-                截止目前，我还没有发现比米10u好的手机。
-              </div>
-              <div class="post-footer">
-                <div class="post-footer-left">
-                </div>
-                <div class="post-footer-right">
-                  <div><i class="el-icon-star-off" style="margin-right: 3px"></i>18</div>
+                  <div><i class="el-icon-star-off" style="margin-right: 3px"></i>{{ item.reply.likesNumber }}</div>
                 </div>
               </div>
             </div>
@@ -120,9 +73,9 @@
       <div class="post-detail-right">
         <el-card class="box-card course-card" shadow="hover">
           <div class="course-info">
-            <div class="block"><el-avatar :size="90" src="http://sacp.moeneko.top/face.gif"></el-avatar></div>
-            <div class="d1">Java进阶</div>
-            <div class="d2">2617人加入学习</div>
+            <div class="block"><el-avatar :size="90" :src="course.courseAvatar"></el-avatar></div>
+            <div class="d1">{{ course.courseName }}</div>
+            <div class="d2">{{course.learnerNumber}}人加入学习</div>
             <div class="d3"><el-button type="primary" round @click="goCourse">课程详情</el-button></div>
           </div>
         </el-card>
@@ -133,26 +86,70 @@
 </template>
 
 <script>
+import {getPost,replyPost,getPostReply} from '../mjs/forum.mjs'
 export default {
   name: "postDetail",
   data(){
     return{
+      post:{},
+      member:{},
+      block:{},
+      course:{},
       textarea:'',
-      postTime:new Date().format("yyyy-MM-dd HH:mm:ss")
+      replyList:[]
     }
   },
+  created(){
+    this.init()
+  },
   methods:{
-    postReply(){
+    async init(){
+      const res = await getPost(this.$route.params.postId)
+      this.post = res.result.post
+      this.member = res.result.memeber
+      this.block = res.result.block
+      this.course = res.result.course
+      const res2 = await getPostReply(this.$route.params.postId)
+      this.replyList = res2.result
+    },
+    async postReply(){
+      if (!this.$store.state.sacpId || this.$store.state.sacpId===''){
+        this.$message({
+          showClose: false,
+          message: '请先登录!',
+          type: "warning",
+          duration:3000
+        })
+        return
+      }
+      if (this.textarea===''){
+        this.$message({
+          showClose: false,
+          message: '回复内容不能为空!',
+          type: "warning",
+          duration:3000
+        })
+        return
+      }
+      const datas = {
+        postId:this.$route.params.postId,
+        sacpId:this.$store.state.sacpId,
+        context:this.textarea
+      }
+      await replyPost(datas)
       this.$message({
         showClose: false,
         message: '发表成功!',
         type: "success",
         duration:5000
-      });
-
+      })
+      this.textarea = ''
+      const res2 = await getPostReply(this.$route.params.postId)
+      this.replyList = res2.result
     },
     goCourse(){
-      this.$router.push({path: '/courseDetail'})
+      const newPage = this.$router.resolve({path: '/courseDetail/'+this.block.courseId})
+      window.open(newPage.href,'_blank')
     }
   }
 }

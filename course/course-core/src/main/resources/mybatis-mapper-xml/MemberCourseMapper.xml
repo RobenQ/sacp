@@ -209,4 +209,7 @@
       is_delete = #{isDelete,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectBySacpIdAndPage" resultMap="BaseResultMap">
+    select * from member_course where sacp_id = #{sacpId} and is_delete=0 order by create_time desc limit #{start}, #{pageSize}
+  </select>
 </mapper>

@@ -13,7 +13,7 @@ public class BlockRequest implements Serializable {
 
     private String desc;
 
-    private Byte isDelete;
+    private Integer isDelete;
 
     public Integer getId() {
         return id;
@@ -55,11 +55,11 @@ public class BlockRequest implements Serializable {
         this.desc = desc;
     }
 
-    public Byte getIsDelete() {
+    public Integer getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Byte isDelete) {
+    public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
 }

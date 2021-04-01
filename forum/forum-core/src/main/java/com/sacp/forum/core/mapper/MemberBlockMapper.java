@@ -30,4 +30,6 @@ public interface MemberBlockMapper {
     int updateByPrimaryKeySelective(MemberBlock record);
 
     int updateByPrimaryKey(MemberBlock record);
+
+    List<MemberBlock> getMbBySacpIdLimit(@Param("sacpId") String sacpId);
 }

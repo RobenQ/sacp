@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -143,6 +144,17 @@ public class UserController {
             return UserResponse.buildSuccess("注册成功！");
         else
             return UserResponse.buildFaild("注册失败！");
+    }
+
+    @GetMapping("getUserInfo")
+    public UserResponse getUserInfo(@RequestParam String sacpId){
+        MemberRequest request = new MemberRequest();
+        request.setSacpId(sacpId);
+        List<MemberResponse> account = memberApi.getAccount(request);
+        if (account.size()==0)
+            return UserResponse.buildSuccess();
+        else
+            return UserResponse.buildSuccess(account.get(0));
     }
 
 }

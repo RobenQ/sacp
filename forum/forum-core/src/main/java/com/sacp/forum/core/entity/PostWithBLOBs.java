@@ -1,16 +1,16 @@
 package com.sacp.forum.core.entity;
 
 public class PostWithBLOBs extends Post {
-    private String reply;
+    private String txt;
 
     private String context;
 
-    public String getReply() {
-        return reply;
+    public String getTxt() {
+        return txt;
     }
 
-    public void setReply(String reply) {
-        this.reply = reply == null ? null : reply.trim();
+    public void setTxt(String txt) {
+        this.txt = txt == null ? null : txt.trim();
     }
 
     public String getContext() {

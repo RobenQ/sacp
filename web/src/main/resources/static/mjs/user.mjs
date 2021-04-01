@@ -7,3 +7,13 @@ export function login(data){
         data
     })
 }
+
+export function getUserInfo(data){
+    return request({
+        url:"/getUserInfo",
+        method:"get",
+        params:{
+            sacpId:data
+        }
+    })
+}

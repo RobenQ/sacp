@@ -16,6 +16,16 @@ public class MemberRepository {
     @Autowired
     private AccountMapper accountMapper;
 
+    public boolean updatePasswordBysacpId(String sacpId,String newPassword){
+        AccountExample example = new AccountExample();
+        example.createCriteria().andSacpIdEqualTo(sacpId);
+        Account account = new Account();
+        account.setPassword(newPassword);
+        account.setModifyTime(new Date());
+        int i = accountMapper.updateByExampleSelective(account, example);
+        return i==1?true:false;
+    }
+
     public Account getInfoByNickName(String nickName){
         AccountExample example = new AccountExample();
         example.createCriteria().andNickNameEqualTo(nickName);

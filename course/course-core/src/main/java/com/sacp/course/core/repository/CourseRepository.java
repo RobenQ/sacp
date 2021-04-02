@@ -19,6 +19,14 @@ public class CourseRepository {
     @Autowired
     private MemberCourseMapper memberCourseMapper;
 
+    public List<CourseInfo> getHot5(){
+        return courseInfoMapper.getHot5();
+    }
+
+    public List<CourseInfo> getNew5(){
+        return courseInfoMapper.getNew5();
+    }
+
     public boolean deleteMcNoFact(String sacpId,Integer courseId){
         MemberCourseExample example = new MemberCourseExample();
         example.createCriteria().andSacpIdEqualTo(sacpId).andCourseIdEqualTo(courseId);

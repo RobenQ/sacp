@@ -42,6 +42,30 @@ public class CourseService implements CourseApi {
     private MemberApi memberApi;
 
     @Override
+    public List<CourseResponse> getHotCourse() {
+        List<CourseInfo> allCourse = courseRepository.getHot5();
+        List<CourseResponse>  courseResponses = new ArrayList<>(allCourse.size());
+        for (CourseInfo course:allCourse) {
+            CourseResponse response = new CourseResponse();
+            BeanUtils.copyProperties(course,response);
+            courseResponses.add(response);
+        }
+        return courseResponses;
+    }
+
+    @Override
+    public List<CourseResponse> getNewCourse() {
+        List<CourseInfo> allCourse = courseRepository.getNew5();
+        List<CourseResponse>  courseResponses = new ArrayList<>(allCourse.size());
+        for (CourseInfo course:allCourse) {
+            CourseResponse response = new CourseResponse();
+            BeanUtils.copyProperties(course,response);
+            courseResponses.add(response);
+        }
+        return courseResponses;
+    }
+
+    @Override
     public boolean outCourse(String sacpId, Integer courseId) {
         courseRepository.subOneLearnerNum(courseId);
         forumApi.outBlock(this.getCourseById(courseId).getForumId(),sacpId);

@@ -17,3 +17,11 @@ export function getUserInfo(data){
         }
     })
 }
+
+export function modifyPassword(data){
+    return request({
+        url:"/modifyPassword",
+        method:"post",
+        data
+    })
+}

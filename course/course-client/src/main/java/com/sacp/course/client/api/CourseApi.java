@@ -33,6 +33,10 @@ public interface CourseApi {
 
     public boolean outCourse(String sacpId,Integer courseId);
 
+    public List<CourseResponse> getHotCourse();
+
+    public List<CourseResponse> getNewCourse();
+
 
     //courseClassify==========================================================================
     public List<CourseClassifyResponse> getAllClassify();
@@ -66,6 +70,6 @@ public interface CourseApi {
     public List<DiscussionResponse> getreplybyCourseId(Integer courseId);
 
 
-    //discussion==========================================================================
+    //member-Course==========================================================================
     public long getMcTotalPage(String sacpId);
 }

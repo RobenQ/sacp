@@ -198,6 +198,11 @@ public class ForumService implements ForumApi {
     }
 
     @Override
+    public List<ReplyResponse> getHotBlock() {
+        return null;
+    }
+
+    @Override
     public Integer createBlock(BlockRequest request) {
         BlockInfo blockInfo = new BlockInfo();
         BeanUtils.copyProperties(request,blockInfo);

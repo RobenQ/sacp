@@ -34,4 +34,8 @@ public interface CourseInfoMapper {
     List<CourseInfo> selectByPage(@Param("sacpId")String sacpId,@Param("start") int start,@Param("pageSize") int pageSize);
 
     List<CourseInfo> selectByClassifyAndPage(@Param("classifyId")Integer classifyId,@Param("start") int start,@Param("pageSize") int pageSize);
+
+    List<CourseInfo> getHot5();
+
+    List<CourseInfo> getNew5();
 }

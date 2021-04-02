@@ -45,5 +45,4 @@ public interface PostMapper {
     List<Post> getPostByPage(@Param("blockId")Integer blockId,@Param("start") Integer start,@Param("pageSize") Integer pageSize);
 
     List<Post> getPostByPage2(@Param("sacpId")String sacpId,@Param("start") Integer start,@Param("pageSize") Integer pageSize);
-
 }

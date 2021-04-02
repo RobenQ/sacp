@@ -1,9 +1,13 @@
 <template>
 <div id="co-container">
-  <el-carousel class="co-img" height="200px" interval="4000" direction="vertical"
-               :autoplay="true" arrow="always">
+  <el-carousel class="co-img" height="200px" arrow="always" indicator-position="outside">
     <el-carousel-item v-for="item in urls" :key="item.id">
-      <el-image style="width: 100%; height: 100%" :src="item.img" fit="fit"></el-image>
+      <el-tooltip placement="top">
+        <template #content>
+          点击进入社区：{{ item.courseName }}
+        </template>
+        <el-image style="width: 100%; height: 100%" :src="item.courseAvatar" fit="fit" @click="goBlock(item.forumId)"></el-image>
+      </el-tooltip>
     </el-carousel-item>
   </el-carousel>
 
@@ -47,7 +51,7 @@
         <div class="post-wrap">
           <div class="post-header">
             <div>
-              <el-avatar :size="40" src="http://scap.moeneko.top/face.gif"></el-avatar>
+              <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
             </div>
             <div class="poster">
               <div class="poster-name">哎Coding</div>
@@ -134,30 +138,13 @@
 
 <script>
 
-import {getJoinMb} from "./mjs/course.mjs";
+import {getJoinMb, getNew} from "./mjs/course.mjs";
 
 export default {
   name: "communicate",
   data(){
     return{
-      urls:[
-        {
-          id:1,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E9%9B%A8%E5%B9%95.071d2514.jpg"
-        },
-        {
-          id:2,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E4%B8%8B%E5%B1%B1.a2153639.jpg"
-        },
-        {
-          id:3,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E9%BA%BB%E9%9B%80.5397f335.jpg"
-        },
-        {
-          id:4,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E4%B8%8B%E5%B1%B1.a2153639.jpg"
-        },
-      ],
+      urls:[],
       islogin:false,
       mbList:[]
     }
@@ -168,9 +155,12 @@ export default {
   methods:{
     async init(){
       if (this.$store.state.sacpId === ''){
+        const res2 = await getNew()
+        this.urls = res2.result
         this.islogin = false;
-        return
       }else {
+        const res2 = await getNew()
+        this.urls = res2.result
         const res = await getJoinMb(this.$store.state.sacpId)
         this.mbList = res.result
         this.islogin = true;

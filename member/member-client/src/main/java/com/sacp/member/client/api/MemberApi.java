@@ -11,4 +11,5 @@ public interface MemberApi {
     public LoginResponse getAuthInfo(String nickName);
     public List<MemberResponse> getAccount(MemberRequest request);
     public boolean createMember(MemberRequest request) throws NoSuchAlgorithmException;
+    public boolean modifyPassword(String sacpId,String newPassword);
 }

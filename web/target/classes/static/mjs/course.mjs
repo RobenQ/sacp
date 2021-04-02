@@ -224,3 +224,17 @@ export function outCourse(data){
         data
     })
 }
+
+export function getHot(){
+    return request({
+        url:"/hotCourse",
+        method:"get"
+    })
+}
+
+export function getNew(){
+    return request({
+        url:"/newCourse",
+        method:"get"
+    })
+}

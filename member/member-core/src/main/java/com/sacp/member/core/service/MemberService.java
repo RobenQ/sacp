@@ -33,6 +33,11 @@ public class MemberService implements MemberApi {
     private RoleApi roleApi;
 
     @Override
+    public boolean modifyPassword(String sacpId, String newPassword) {
+        return memberRepository.updatePasswordBysacpId(sacpId,newPassword);
+    }
+
+    @Override
     public List<MemberResponse> getAccount(MemberRequest request) {
         Account account = new Account();
         BeanUtils.copyProperties(request,account);

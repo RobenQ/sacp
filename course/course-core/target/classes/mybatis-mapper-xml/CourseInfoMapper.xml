@@ -342,4 +342,10 @@
   <select id="selectByClassifyAndPage" resultMap="BaseResultMap">
     select * from course_info where classify_id = #{classifyId} and is_delete=0 order by create_time desc limit #{start}, #{pageSize}
   </select>
+  <select id="getHot5" resultMap="BaseResultMap">
+    select * from course_info where is_delete=0 order by learner_number desc limit 5
+  </select>
+  <select id="getNew5" resultMap="BaseResultMap">
+    select * from course_info where is_delete=0 order by create_time desc limit 5
+  </select>
 </mapper>

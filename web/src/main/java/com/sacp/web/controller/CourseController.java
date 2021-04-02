@@ -26,6 +26,18 @@ public class CourseController {
     @DubboReference(version = "1.0")
     private ForumApi forumApi;
 
+    @GetMapping("hotCourse")
+    public UserResponse hotCourse(){
+        List<CourseResponse> hotCourse = courseApi.getHotCourse();
+        return UserResponse.buildSuccess(hotCourse);
+    }
+
+    @GetMapping("newCourse")
+    public UserResponse newCourse(){
+        List<CourseResponse> hotCourse = courseApi.getNewCourse();
+        return UserResponse.buildSuccess(hotCourse);
+    }
+
     @GetMapping("getAllClassify")
     public UserResponse getAllClassify(){
         List<CourseClassifyResponse> allClassify = courseApi.getAllClassify();

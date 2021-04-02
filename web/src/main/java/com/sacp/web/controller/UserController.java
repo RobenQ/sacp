@@ -157,4 +157,27 @@ public class UserController {
             return UserResponse.buildSuccess(account.get(0));
     }
 
+    @PostMapping("modifyPassword")
+    public UserResponse modifyPassword(@RequestBody JSONObject object) throws NoSuchAlgorithmException {
+        String sacpId = object.getString("sacpId");
+        String newPassword = object.getString("np");
+        String oldPassword = object.getString("op");
+        MemberRequest request = new MemberRequest();
+        request.setSacpId(sacpId);
+        List<MemberResponse> account = memberApi.getAccount(request);
+        if (account.size()==0)
+            return UserResponse.buildSuccess("账号不存在");
+        else{
+            if (account.get(0).getPassword().equals(SecurityUtil.securityPassword(oldPassword))){
+                boolean b = memberApi.modifyPassword(sacpId, SecurityUtil.securityPassword(newPassword));
+                if (b)
+                    return UserResponse.buildSuccess("修改成功！");
+                else
+                    return UserResponse.buildSuccess("修改失败！");
+            }else{
+                return UserResponse.buildSuccess("原密码输入错误！");
+            }
+        }
+    }
+
 }

@@ -2,7 +2,12 @@
 <div id="container" class="container">
   <el-carousel class="img-wap" height="200px" interval="4000" type="card">
     <el-carousel-item v-for="item in urls" :key="item.id">
-      <el-image style="width: 100%; height: 100%" :src="item.img" fit="fit"></el-image>
+      <el-tooltip placement="top">
+        <template #content>
+          点击进入课程：{{ item.courseName }}
+        </template>
+        <el-image style="width: 100%; height: 100%" :src="item.courseAvatar" fit="fit" @click="goCourse(item.id)"></el-image>
+      </el-tooltip>
     </el-carousel-item>
   </el-carousel>
   <div class="course-wrap">
@@ -30,29 +35,12 @@
 
 <script>
 import courseList from './components/courseList.vue'
-import {getAllClassify} from './mjs/course.mjs'
+import {getAllClassify,getHot} from './mjs/course.mjs'
 export default {
   name: "study",
   data(){
     return{
-      urls:[
-        {
-          id:1,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E9%9B%A8%E5%B9%95.071d2514.jpg"
-        },
-        {
-          id:2,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E4%B8%8B%E5%B1%B1.a2153639.jpg"
-        },
-        {
-          id:3,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E9%BA%BB%E9%9B%80.5397f335.jpg"
-        },
-        {
-          id:4,
-          img:"http://qpt5cenoi.hb-bkt.clouddn.com/%E4%B8%8B%E5%B1%B1.a2153639.jpg"
-        }
-      ],
+      urls:[],
       classifyList:[],
       classifyId: ''
     }
@@ -77,12 +65,20 @@ export default {
       this.$router.replace({
         path: path
       })
+      const res2 = await getHot()
+      this.urls = res2.result
     },
     queryCourse(data){
       const path = '/study/myCourse/'+data
       this.$router.replace({
         path: path
       })
+    },
+    goCourse(data){
+      const newPage = this.$router.resolve({path: '/courseDetail/'+data})
+      window.open(newPage.href,'_blank')
+      // this.$router.push({path: '/courseDetail/'+data})
+
     }
   }
 }

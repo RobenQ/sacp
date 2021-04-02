@@ -14,6 +14,7 @@ public interface ForumApi {
     public Integer createBlock(BlockRequest request);
     public boolean fullBlockCourseId(Integer blockId,Integer courseId);
     public BlockResponse getById(Integer id);
+    public List<ReplyResponse> getHotBlock();
 
 
     //memberBlock

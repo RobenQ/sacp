@@ -13,7 +13,7 @@ import com.sacp.forum.client.response.BlockResponse;
 import com.sacp.web.response.CourseInfoResponse;
 import com.sacp.web.response.UserResponse;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public class CourseController {
         return UserResponse.buildSuccess(allClassify);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("createCourse")
     public UserResponse createCourse(@RequestBody CourseRequest request){
         boolean course = courseApi.createCourse(request);
@@ -55,7 +55,7 @@ public class CourseController {
             return UserResponse.buildFaild();
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("getTotalPage")
     public UserResponse getTotalPage(@RequestParam String sacpId){
         long totalBySacpId = courseApi.getTotalBySacpId(sacpId);
@@ -69,7 +69,7 @@ public class CourseController {
     }
 
     //sacpId查询分页
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("getUserCourse")
     public UserResponse getUserCourse(@RequestBody CourseRequest request){
         List<CourseResponse> courseByPage = courseApi.getCourseByPage(request);
@@ -83,7 +83,7 @@ public class CourseController {
         return UserResponse.buildSuccess(courseByPage);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("getCourseById")
     public UserResponse getCourseById(@RequestBody JSONObject courseId){
         CourseInfoResponse courseInfoResponse = new CourseInfoResponse();
@@ -97,7 +97,7 @@ public class CourseController {
         return UserResponse.buildSuccess(courseInfoResponse);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("addVideo")
     public UserResponse addVideo(@RequestBody CourseVideoRequest request){
         boolean b = courseApi.addVideo(request);
@@ -107,7 +107,7 @@ public class CourseController {
             return UserResponse.buildFaild();
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("addRes")
     public UserResponse addRes(@RequestBody CourseResRequest request){
         boolean b = courseApi.addRes(request);
@@ -143,7 +143,7 @@ public class CourseController {
         return UserResponse.buildSuccess(courseVideoResponses);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("deleteVideo")
     public UserResponse deleteVideo(@RequestParam Integer videoId){
         boolean b = courseApi.deleteVideoByAuthor(videoId);
@@ -153,7 +153,7 @@ public class CourseController {
             return UserResponse.buildFaild();
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("deleteRes")
     public UserResponse deleteRes(@RequestParam Integer resId){
         boolean b = courseApi.deleteResByAuthor(resId);
@@ -175,7 +175,7 @@ public class CourseController {
         return UserResponse.buildSuccess(responses);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("joinCourse")
     public UserResponse joinCourse(@RequestBody JSONObject object){
         String sacpId = object.getString("sacpId");
@@ -192,7 +192,7 @@ public class CourseController {
         }
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("addDiscussion")
     public UserResponse addDiscussion(@RequestBody DiscussionRequest request){
         boolean joinCourse = courseApi.isJoinCourse(request.getCourseId(), request.getSacpId());
@@ -225,21 +225,21 @@ public class CourseController {
     }
 
     //sacpId分页查询用户加入的课程
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("getJoinTotalPage")
     public UserResponse getJoinTotalPage(@RequestParam String sacpId){
         long res = courseApi.getMcTotalPage(sacpId);
         return UserResponse.buildSuccess(res);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("getJoinCourse")
     public UserResponse getJoinCourse(@RequestBody CourseRequest request){
         List<CourseResponse> courseByPage = courseApi.getJoinCourseByPage(request);
         return UserResponse.buildSuccess(courseByPage);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("outCourse")
     public UserResponse outCourse(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");

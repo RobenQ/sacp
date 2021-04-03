@@ -149,7 +149,6 @@ window.onload = function (){
             },
             autoLogin(){
                 if (Cookies.get("nickName")){
-                    console.log(Cookies.get("nickName"))
                     var that = this
                     axios({
                         method:'post',

@@ -16,7 +16,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,22 +60,52 @@ public class UserController {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = null;
         try{
+            //if (subject.isRemembered() || subject.isAuthenticated()){
+            //    String nickName = (String) subject.getPrincipal();
+            //    LoginResponse loginResponse = memberApi.getAuthInfo(nickName);
+            //    if (loginResponse==null){
+            //        return UserResponse.buildFaild();
+            //    }
+            //    token = new UsernamePasswordToken(loginResponse.getNickName(),
+            //            loginResponse.getPassword(),true);
+            //
+            //}else {
+            //    if (user.getString("password")==null || user.getString("nickName")==null){
+            //        return UserResponse.buildFaild();
+            //    }
+            //    token = new UsernamePasswordToken(user.getString("nickName"),
+            //            SecurityUtil.securityPassword(user.getString("password")),true);
+            //}
             if (subject.isRemembered() || subject.isAuthenticated()){
                 String nickName = (String) subject.getPrincipal();
                 LoginResponse loginResponse = memberApi.getAuthInfo(nickName);
                 if (loginResponse==null){
                     return UserResponse.buildFaild();
                 }
-                token = new UsernamePasswordToken(loginResponse.getNickName(),
-                        loginResponse.getPassword(),true);
+                userResponse.setCode(200);
+                userResponse.setToken(subject.getSession().getId().toString());
+                String sacpId = memberApi.getAuthInfo((String) subject.getPrincipal()).getSacpId();
+                userResponse.setSacpId(sacpId);
+                userResponse.setMessage("自动登录成功！");
+                userResponse.setStatus("OK");
 
-            }else {
-                if (user.getString("password")==null || user.getString("nickName")==null){
-                    return UserResponse.buildFaild();
-                }
-                token = new UsernamePasswordToken(user.getString("nickName"),
-                        SecurityUtil.securityPassword(user.getString("password")),true);
+                LoginResponse loginResponse2 = memberApi.getAuthInfo(user.getString("nickName"));
+                MemberRequest memberRequest = new MemberRequest();
+                memberRequest.setSacpId(loginResponse2.getSacpId());
+                MemberResponse memberResponse = memberApi.getAccount(memberRequest).get(0);
+                memberResponse.setPassword(null);
+
+                userResponse.setResult(memberResponse);
+                log.info("自动登录成功：{}",subject.getPrincipal());
+                return userResponse;
+
             }
+            if (user.getString("password")==null || user.getString("nickName")==null){
+                return UserResponse.buildFaild();
+            }
+            token = new UsernamePasswordToken(user.getString("nickName"),
+                    SecurityUtil.securityPassword(user.getString("password")),true);
+            token.setRememberMe(true);
             subject.login(token);
             log.info("账号：{} 登录成功",subject.getPrincipal());
             userResponse.setCode(200);
@@ -123,7 +153,7 @@ public class UserController {
         }
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("/logout")
     public UserResponse logout(){
         UserResponse adminResponse = new UserResponse();
@@ -161,7 +191,7 @@ public class UserController {
             return UserResponse.buildFaild("注册失败！");
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("getUserInfo")
     public UserResponse getUserInfo(@RequestParam String sacpId){
         MemberRequest request = new MemberRequest();
@@ -173,7 +203,7 @@ public class UserController {
             return UserResponse.buildSuccess(account.get(0));
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("modifyPassword")
     public UserResponse modifyPassword(@RequestBody JSONObject object) throws NoSuchAlgorithmException {
         String sacpId = object.getString("sacpId");

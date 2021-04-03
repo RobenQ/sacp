@@ -16,7 +16,7 @@ import com.sacp.web.response.PostInfoResponse;
 import com.sacp.web.response.ReplyInfoResponse;
 import com.sacp.web.response.UserResponse;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class ForumController {
         return UserResponse.buildSuccess(byId);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("postPost")
     public UserResponse postPost(@RequestBody PostRequest request){
         boolean b = forumApi.post(request);
@@ -129,7 +129,7 @@ public class ForumController {
         return UserResponse.buildSuccess(response);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("replyPost")
     public UserResponse replyPost(@RequestBody ReplyRequest request){
         boolean b = forumApi.replyPost(request);
@@ -158,7 +158,7 @@ public class ForumController {
         return UserResponse.buildSuccess(responses);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("getReplyBySacpId")
     public UserResponse getReplyBySacpId(@RequestParam String sacpId){
         List<ReplyResponse> replyByPostId = forumApi.getReplyBySacpId(sacpId);
@@ -178,7 +178,7 @@ public class ForumController {
         return UserResponse.buildSuccess(responses);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @GetMapping("getPostBySacpId")
     public UserResponse getPostBySacpId(@RequestParam String sacpId){
         List<PostResponse> postTop5 = forumApi.getPostBySacpId(sacpId);
@@ -200,7 +200,7 @@ public class ForumController {
     }
 
     //分页查询用户发表的内容
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("getPostByPage2")
     public UserResponse getPostByPage2(@RequestBody JSONObject page){
         String blockId = page.getString("sacpId");
@@ -225,7 +225,7 @@ public class ForumController {
         return UserResponse.buildSuccess(responses);
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("deletePost")
     public UserResponse deletePost(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");
@@ -242,7 +242,7 @@ public class ForumController {
         }
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("deleteReply")
     public UserResponse deleteReply(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");
@@ -259,7 +259,7 @@ public class ForumController {
         }
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("likePost")
     public UserResponse likePost(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");
@@ -268,7 +268,7 @@ public class ForumController {
         return UserResponse.buildSuccess();
     }
 
-    @RequiresAuthentication
+    @RequiresUser
     @PostMapping("unLikePost")
     public UserResponse unLikePost(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");

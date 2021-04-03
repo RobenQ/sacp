@@ -4,7 +4,7 @@ const message = window.ElementPlus.ElMessage
 
 // create an axios instance
 const service = axios.create({
-  baseURL: "http://sacp.com", // url = base url + request url
+  baseURL: "http://www.sacp.com", // url = base url + request url
   timeout: 50000,
   withCredentials: true
 })

@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="replay-wrap">
-            <div class="post-wrap2" v-for="item in replyList">
+            <div class="post-wrap2" v-for="(item,index) in replyList">
               <div class="post-header">
                 <div>
                   <el-avatar :size="40" :src="item.member.avatar"></el-avatar>
@@ -63,7 +63,12 @@
                 <div class="post-footer-left">
                 </div>
                 <div class="post-footer-right">
-                  <div><i class="el-icon-star-off" style="margin-right: 3px"></i>{{ item.reply.likesNumber }}</div>
+                  <div v-if="!item.like">
+                    <i @click="like(item.reply.id,index)" class="el-icon-star-off" style="margin-right: 3px"></i>{{ item.reply.likesNumber }}
+                  </div>
+                  <div v-if="item.like">
+                    <i @click="unLike(item.reply.id,index)" class="el-icon-star-on" style="margin-right: 3px;color: #E6A23C;font-size: 16px;"></i>{{ item.reply.likesNumber }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -86,7 +91,7 @@
 </template>
 
 <script>
-import {getPost,replyPost,getPostReply} from '../mjs/forum.mjs'
+import {getPost, replyPost, getPostReply, likeReply, unLikeReply} from '../mjs/forum.mjs'
 export default {
   name: "postDetail",
   data(){
@@ -109,7 +114,7 @@ export default {
       this.member = res.result.memeber
       this.block = res.result.block
       this.course = res.result.course
-      const res2 = await getPostReply(this.$route.params.postId)
+      const res2 = await getPostReply(this.$route.params.postId,this.$store.state.sacpId,)
       this.replyList = res2.result
     },
     async postReply(){
@@ -146,6 +151,24 @@ export default {
       this.textarea = ''
       const res2 = await getPostReply(this.$route.params.postId)
       this.replyList = res2.result
+    },
+    async like(replyId,index){
+      const datas = {
+        sacpId:this.$store.state.sacpId,
+        replyId:replyId
+      }
+      await likeReply(datas)
+      this.replyList[index].reply.likesNumber = this.replyList[index].reply.likesNumber+1
+      this.replyList[index].like = true
+    },
+    async unLike(replyId,index){
+      const datas = {
+        sacpId:this.$store.state.sacpId,
+        replyId:replyId
+      }
+      await unLikeReply(datas)
+      this.replyList[index].reply.likesNumber = this.replyList[index].reply.likesNumber-1
+      this.replyList[index].like = false
     },
     goCourse(){
       const newPage = this.$router.resolve({path: '/courseDetail/'+this.block.courseId})

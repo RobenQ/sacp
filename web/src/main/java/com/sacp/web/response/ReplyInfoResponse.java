@@ -8,6 +8,15 @@ import java.io.Serializable;
 public class ReplyInfoResponse implements Serializable {
     private ReplyResponse reply;
     private MemberResponse member;
+    private boolean isLike;
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
 
     public ReplyResponse getReply() {
         return reply;

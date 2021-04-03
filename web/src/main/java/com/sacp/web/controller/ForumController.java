@@ -140,7 +140,7 @@ public class ForumController {
     }
 
     @GetMapping("getPostReply")
-    public UserResponse getPostReply(@RequestParam Integer postId){
+    public UserResponse getPostReply(@RequestParam Integer postId,@RequestParam(required = false) String sacpId){
         List<ReplyResponse> replyByPostId = forumApi.getReplyByPostId(postId);
 
         List<ReplyInfoResponse> responses = new ArrayList<>(replyByPostId.size());
@@ -152,6 +152,12 @@ public class ForumController {
             request.setSacpId(reply.getSacpId());
             MemberResponse memberResponse = memberApi.getAccount(request).get(0);
             response.setMember(memberResponse);
+
+            if (sacpId!=null){
+                response.setLike(forumApi.isLikeReply(sacpId,reply.getId()));
+            }else {
+                response.setLike(false);
+            }
 
             responses.add(response);
         }
@@ -269,11 +275,29 @@ public class ForumController {
     }
 
     @RequiresUser
+    @PostMapping("likeReply")
+    public UserResponse likeReply(@RequestBody JSONObject request){
+        String sacpId = request.getString("sacpId");
+        Integer replyId = request.getInteger("replyId");
+        forumApi.likeReply(sacpId,replyId);
+        return UserResponse.buildSuccess();
+    }
+
+    @RequiresUser
     @PostMapping("unLikePost")
     public UserResponse unLikePost(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");
         Integer postId = request.getInteger("postId");
         forumApi.unLikePost(sacpId,postId);
+        return UserResponse.buildSuccess();
+    }
+
+    @RequiresUser
+    @PostMapping("unLikeReply")
+    public UserResponse unLikeReply(@RequestBody JSONObject request){
+        String sacpId = request.getString("sacpId");
+        Integer replyId = request.getInteger("replyId");
+        forumApi.unLikeReply(sacpId,replyId);
         return UserResponse.buildSuccess();
     }
 

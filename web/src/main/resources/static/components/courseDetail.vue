@@ -153,7 +153,6 @@ export default {
       const res = await joinCourse(datas)
       if (res.code===200){
         var i = this.courseInfo.course.learnerNumber
-        this.courseInfo.course.learnerNumber = i+1
         this.$message.success(res.message)
       }else {
         this.$message.warning("加入课程失败！")

@@ -83,7 +83,6 @@ public class CourseController {
         return UserResponse.buildSuccess(courseByPage);
     }
 
-    @RequiresUser
     @PostMapping("getCourseById")
     public UserResponse getCourseById(@RequestBody JSONObject courseId){
         CourseInfoResponse courseInfoResponse = new CourseInfoResponse();

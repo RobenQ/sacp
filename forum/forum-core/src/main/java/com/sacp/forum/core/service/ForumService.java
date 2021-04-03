@@ -30,6 +30,25 @@ public class ForumService implements ForumApi {
     private PostRepository postRepository;
 
     @Override
+    public boolean likeReply(String sacpId, Integer replyId) {
+        postRepository.insertReplyLikes(sacpId,replyId);
+        postRepository.addOneReplyLike(replyId);
+        return true;
+    }
+
+    @Override
+    public boolean unLikeReply(String sacpId, Integer replyId) {
+        postRepository.deleteReplyLikes(sacpId,replyId);
+        postRepository.subOneReplyLike(replyId);
+        return true;
+    }
+
+    @Override
+    public boolean isLikeReply(String sacpId, Integer replyId) {
+        return postRepository.selectReplyLikes(sacpId,replyId);
+    }
+
+    @Override
     public boolean isLikePost(String sacpId, Integer postId) {
         return postRepository.selectLikes(sacpId,postId);
     }

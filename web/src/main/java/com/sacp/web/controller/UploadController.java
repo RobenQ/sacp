@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("upload")
 public class UploadController {
 
-    @RequiresUser
     @RequestMapping("avatar")
     public String getToken(){
         String token = QiNiuUploadUtil.getDefaultToken();

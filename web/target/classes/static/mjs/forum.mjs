@@ -63,12 +63,13 @@ export function replyPost(data){
     })
 }
 
-export function getPostReply(data){
+export function getPostReply(data1,data2){
     return request({
         url:"/getPostReply",
         method:"get",
         params:{
-            postId:data
+            postId:data1,
+            sacpId:data2
         }
     })
 }
@@ -125,9 +126,25 @@ export function likePost(data){
     })
 }
 
+export function likeReply(data){
+    return request({
+        url:"/likeReply",
+        method:"post",
+        data
+    })
+}
+
 export function unLikePost(data){
     return request({
         url:"/unLikePost",
+        method:"post",
+        data
+    })
+}
+
+export function unLikeReply(data){
+    return request({
+        url:"/unLikeReply",
         method:"post",
         data
     })

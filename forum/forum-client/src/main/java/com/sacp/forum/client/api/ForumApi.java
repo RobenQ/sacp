@@ -170,4 +170,11 @@ public interface ForumApi {
     public boolean unLikePost(String sacpId,Integer postId);
 
     public boolean isLikePost(String sacpId,Integer postId);
+
+    //reply like===================================================================
+    public boolean likeReply(String sacpId,Integer replyId);
+
+    public boolean unLikeReply(String sacpId,Integer replyId);
+
+    public boolean isLikeReply(String sacpId,Integer replyId);
 }

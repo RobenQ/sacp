@@ -26,12 +26,13 @@ export function postPost(data){
     })
 }
 
-export function getTop5(data){
+export function getTop5(data1,data2){
     return request({
         url:"/getTop5",
         method:"get",
         params:{
-            blockId:data
+            blockId:data1,
+            sacpId:data2
         }
     })
 }
@@ -111,6 +112,22 @@ export function getReplyBySacpId(data){
 export function deleteReply(data){
     return request({
         url:"/deleteReply",
+        method:"post",
+        data
+    })
+}
+
+export function likePost(data){
+    return request({
+        url:"/likePost",
+        method:"post",
+        data
+    })
+}
+
+export function unLikePost(data){
+    return request({
+        url:"/unLikePost",
         method:"post",
         data
     })

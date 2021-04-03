@@ -16,6 +16,7 @@ import com.sacp.web.response.PostInfoResponse;
 import com.sacp.web.response.ReplyInfoResponse;
 import com.sacp.web.response.UserResponse;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class ForumController {
         return UserResponse.buildSuccess(byId);
     }
 
+    @RequiresAuthentication
     @PostMapping("postPost")
     public UserResponse postPost(@RequestBody PostRequest request){
         boolean b = forumApi.post(request);
@@ -48,7 +50,7 @@ public class ForumController {
     }
 
     @GetMapping("getTop5")
-    public UserResponse getTop5(@RequestParam Integer blockId){
+    public UserResponse getTop5(@RequestParam Integer blockId,@RequestParam(required = false) String sacpId){
         List<PostResponse> postTop5 = forumApi.getPostTop5(blockId);
         List<PostInfoResponse> responses = new ArrayList<>(postTop5.size());
         for (PostResponse post:postTop5) {
@@ -62,6 +64,13 @@ public class ForumController {
 
             BlockResponse block = forumApi.getById(blockId);
             response.setBlock(block);
+
+            if (sacpId!=null){
+                response.setLike(forumApi.isLikePost(sacpId,post.getId()));
+            }else {
+                response.setLike(false);
+            }
+
             responses.add(response);
         }
         return UserResponse.buildSuccess(responses);
@@ -72,6 +81,7 @@ public class ForumController {
         Integer blockId = page.getInteger("blockId");
         Integer currentPage = page.getInteger("currentPage");
         Integer pageSize = page.getInteger("pageSize");
+        String sacpId = page.getString("sacpId");
 
         List<PostResponse> postTop5 = forumApi.getPostByPage(blockId,currentPage,pageSize);
         List<PostInfoResponse> responses = new ArrayList<>(postTop5.size());
@@ -86,6 +96,13 @@ public class ForumController {
 
             BlockResponse block = forumApi.getById(blockId);
             response.setBlock(block);
+
+            if (sacpId!=null){
+                response.setLike(forumApi.isLikePost(sacpId,post.getId()));
+            }else {
+                response.setLike(false);
+            }
+
             responses.add(response);
         }
         return UserResponse.buildSuccess(responses);
@@ -112,6 +129,7 @@ public class ForumController {
         return UserResponse.buildSuccess(response);
     }
 
+    @RequiresAuthentication
     @PostMapping("replyPost")
     public UserResponse replyPost(@RequestBody ReplyRequest request){
         boolean b = forumApi.replyPost(request);
@@ -140,6 +158,7 @@ public class ForumController {
         return UserResponse.buildSuccess(responses);
     }
 
+    @RequiresAuthentication
     @GetMapping("getReplyBySacpId")
     public UserResponse getReplyBySacpId(@RequestParam String sacpId){
         List<ReplyResponse> replyByPostId = forumApi.getReplyBySacpId(sacpId);
@@ -159,6 +178,7 @@ public class ForumController {
         return UserResponse.buildSuccess(responses);
     }
 
+    @RequiresAuthentication
     @GetMapping("getPostBySacpId")
     public UserResponse getPostBySacpId(@RequestParam String sacpId){
         List<PostResponse> postTop5 = forumApi.getPostBySacpId(sacpId);
@@ -180,6 +200,7 @@ public class ForumController {
     }
 
     //分页查询用户发表的内容
+    @RequiresAuthentication
     @PostMapping("getPostByPage2")
     public UserResponse getPostByPage2(@RequestBody JSONObject page){
         String blockId = page.getString("sacpId");
@@ -204,6 +225,7 @@ public class ForumController {
         return UserResponse.buildSuccess(responses);
     }
 
+    @RequiresAuthentication
     @PostMapping("deletePost")
     public UserResponse deletePost(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");
@@ -220,6 +242,7 @@ public class ForumController {
         }
     }
 
+    @RequiresAuthentication
     @PostMapping("deleteReply")
     public UserResponse deleteReply(@RequestBody JSONObject request){
         String sacpId = request.getString("sacpId");
@@ -234,6 +257,24 @@ public class ForumController {
         }else {
             return UserResponse.buildSuccess("你没有权限");
         }
+    }
+
+    @RequiresAuthentication
+    @PostMapping("likePost")
+    public UserResponse likePost(@RequestBody JSONObject request){
+        String sacpId = request.getString("sacpId");
+        Integer postId = request.getInteger("postId");
+        forumApi.likePost(sacpId,postId);
+        return UserResponse.buildSuccess();
+    }
+
+    @RequiresAuthentication
+    @PostMapping("unLikePost")
+    public UserResponse unLikePost(@RequestBody JSONObject request){
+        String sacpId = request.getString("sacpId");
+        Integer postId = request.getInteger("postId");
+        forumApi.unLikePost(sacpId,postId);
+        return UserResponse.buildSuccess();
     }
 
 }

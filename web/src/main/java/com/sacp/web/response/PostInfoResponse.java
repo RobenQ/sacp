@@ -13,6 +13,15 @@ public class PostInfoResponse implements Serializable {
     private MemberResponse memeber;
     private BlockResponse block;
     private CourseResponse course;
+    private boolean isLike;
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
 
     public CourseResponse getCourse() {
         return course;

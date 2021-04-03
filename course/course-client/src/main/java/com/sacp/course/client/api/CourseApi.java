@@ -67,9 +67,21 @@ public interface CourseApi {
 
     //discussion==========================================================================
     public boolean addDiscussion(DiscussionRequest request);
+
+    /**
+     *
+     * @param courseId
+     * @return
+     */
     public List<DiscussionResponse> getreplybyCourseId(Integer courseId);
 
 
     //member-Course==========================================================================
+
+    /**
+     * 查询用户加入课程的数量
+     * @param sacpId 用户账户sacpId
+     * @return 用户加入课程的数量
+     */
     public long getMcTotalPage(String sacpId);
 }

@@ -23,7 +23,7 @@
         <el-tabs type="border-card">
           <el-tab-pane label="全部">
             <div class="post-list" v-infinite-scroll="load">
-              <div v-for="item in postList" class="post-wrap">
+              <div v-for="(item,index) in postList" class="post-wrap">
                 <div class="post-header">
                   <div>
                     <el-avatar :size="40" :src="item.memeber.avatar"></el-avatar>
@@ -45,7 +45,12 @@
                   <div class="post-footer-right">
                     <div><i class="el-icon-view" style="margin-right: 3px"></i>{{ item.post.viewerNumber }}</div>
                     <div><i class="el-icon-chat-dot-square" style="margin-right: 3px"></i>{{ item.post.replyNumber }}</div>
-                    <div><i class="el-icon-star-off" style="margin-right: 3px"></i>{{ item.post.likesNumber }}</div>
+                    <div v-if="!item.like">
+                      <i @click="like(item.post.id,index)" class="el-icon-star-off" style="margin-right: 3px"></i>{{ item.post.likesNumber }}
+                    </div>
+                    <div v-if="item.like">
+                      <i @click="unLike(item.post.id,index)" class="el-icon-star-on" style="margin-right: 3px;color: #E6A23C;font-size: 16px;"></i>{{ item.post.likesNumber }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -176,13 +181,13 @@
 
 <script>
 import {getJoinMb} from "../mjs/course.mjs";
-import {getBlockInfo,postPost,getTop5,getPostByPage} from "../mjs/forum.mjs";
+import {getBlockInfo,postPost,getTop5,getPostByPage,likePost,unLikePost} from "../mjs/forum.mjs";
 
 export default {
   name: "courseBlock",
   data(){
     return{
-      postTime:new Date().format("yyyy-MM-dd HH:mm:ss"),
+      isLike:false,
       mbList:[],
       blckInfo:{},
       postList:[],
@@ -228,7 +233,7 @@ export default {
       this.mbList = res.result
       const res2 = await getBlockInfo(this.$route.params.blockId)
       this.blckInfo = res2.result
-      const res3 = await getTop5(this.blckInfo.id)
+      const res3 = await getTop5(this.blckInfo.id,this.$store.state.sacpId)
       this.postList = res3.result
       if (this.postList.length<=5){
         this.end = true
@@ -331,7 +336,7 @@ export default {
       await postPost(datas)
       this.$message.success("发表成功");
       this.dialogVisible = false
-      const res3 = await getTop5(this.blckInfo.id)
+      const res3 = await getTop5(this.blckInfo.id,this.$store.state.sacpId)
       this.postList = res3.result
       if (this.postList.length<=5){
         this.end = true
@@ -342,7 +347,8 @@ export default {
         const datas = {
           blockId: this.$route.params.blockId,
           currentPage:this.currentPage,
-          pageSize:this.pageSize
+          pageSize:this.pageSize,
+          sacpId:this.$store.state.sacpId
         }
         const res = await getPostByPage(datas)
         const newPost = res.result
@@ -353,6 +359,24 @@ export default {
           this.postList.push(newPost[i])
         }
       }
+    },
+    async like(postId,index){
+      const datas = {
+        sacpId:this.$store.state.sacpId,
+        postId:postId
+      }
+      await likePost(datas)
+      this.postList[index].post.likesNumber = this.postList[index].post.likesNumber+1
+      this.postList[index].like = true
+    },
+    async unLike(postId,index){
+      const datas = {
+        sacpId:this.$store.state.sacpId,
+        postId:postId
+      }
+      await unLikePost(datas)
+      this.postList[index].post.likesNumber = this.postList[index].post.likesNumber-1
+      this.postList[index].like = false
     },
     goCourse(data){
       const newPage = this.$router.resolve({path: '/courseDetail/'+data})
@@ -619,7 +643,7 @@ export default {
   color: #606266;
 }
 
-.post-footer-right div:nth-child(1),.post-footer-right div:nth-child(2){
+.post-footer-right div:nth-child(1),.post-footer-right div:nth-child(2),.post-footer-right div:nth-child(3){
   margin-right: 20px;
 }
 

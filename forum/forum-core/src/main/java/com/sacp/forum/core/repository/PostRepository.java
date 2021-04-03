@@ -1,12 +1,13 @@
 package com.sacp.forum.core.repository;
 
 import com.sacp.forum.core.entity.*;
+import com.sacp.forum.core.mapper.PostLikesMapper;
 import com.sacp.forum.core.mapper.PostMapper;
 import com.sacp.forum.core.mapper.ReplyMapper;
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -16,6 +17,52 @@ public class PostRepository {
     private PostMapper postMapper;
     @Autowired
     private ReplyMapper replyMapper;
+    @Autowired
+    private PostLikesMapper postLikesMapper;
+
+    public boolean selectLikes(String sacpId,Integer postId){
+        PostLikesExample example = new PostLikesExample();
+        example.createCriteria().andSacpIdEqualTo(sacpId).andPostIdEqualTo(postId);
+        List<PostLikes> postLikes = postLikesMapper.selectByExample(example);
+        return postLikes.size()==0?false:true;
+    }
+
+    public boolean insertPostLikes(String sacpId,Integer postId){
+        PostLikes postLikes = new PostLikes();
+        postLikes.setPostId(postId);
+        postLikes.setSacpId(sacpId);
+        postLikes.setCreateTime(new Date());
+        int i = postLikesMapper.insertSelective(postLikes);
+        return i==1?true:false;
+    }
+
+    public boolean deletePostLikes(String sacpId,Integer postId){
+        PostLikesExample example = new PostLikesExample();
+        example.createCriteria().andSacpIdEqualTo(sacpId).andPostIdEqualTo(postId);
+        int i = postLikesMapper.deleteByExample(example);
+        return i==1?true:false;
+    }
+
+    public boolean addOnePostLike(Integer postId){
+        PostWithBLOBs byId = this.getById(postId);
+        PostWithBLOBs post = new PostWithBLOBs();
+        post.setLikesNumber(byId.getLikesNumber()+1);
+        PostExample example = new PostExample();
+        example.createCriteria().andIdEqualTo(postId);
+        int i = postMapper.updateByExampleSelective(post, example);
+        return i==1?true:false;
+    }
+
+    public boolean subOnePostLike(Integer postId){
+        PostWithBLOBs byId = this.getById(postId);
+        PostWithBLOBs post = new PostWithBLOBs();
+        post.setLikesNumber(byId.getLikesNumber()-1);
+        PostExample example = new PostExample();
+        example.createCriteria().andIdEqualTo(postId);
+        int i = postMapper.updateByExampleSelective(post, example);
+        return i==1?true:false;
+    }
+
 
     public Reply selectReplyById(Integer replyId){
         ReplyExample example = new ReplyExample();

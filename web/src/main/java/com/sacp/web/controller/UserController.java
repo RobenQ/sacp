@@ -16,6 +16,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,19 @@ public class UserController {
 
     @DubboReference(version = "1.0")
     private RoleApi roleApi;
+
+    @GetMapping("/tologin")
+    public UserResponse<String> toLogin(HttpServletRequest request){
+        log.info("get login");
+        UserResponse userResponse = new UserResponse();
+        userResponse.setCode(301);
+        Subject subject = SecurityUtils.getSubject();
+        userResponse.setToken(subject.getSession().getId().toString());
+        userResponse.setMessage("未登录或登录身份失效，请登录！");
+        userResponse.setStatus("faild");
+        userResponse.setResult("请登录");
+        return userResponse;
+    }
 
     @PostMapping("login")
     public UserResponse login(HttpServletRequest request, @RequestBody JSONObject user) throws Exception {
@@ -109,6 +123,7 @@ public class UserController {
         }
     }
 
+    @RequiresAuthentication
     @GetMapping("/logout")
     public UserResponse logout(){
         UserResponse adminResponse = new UserResponse();
@@ -146,6 +161,7 @@ public class UserController {
             return UserResponse.buildFaild("注册失败！");
     }
 
+    @RequiresAuthentication
     @GetMapping("getUserInfo")
     public UserResponse getUserInfo(@RequestParam String sacpId){
         MemberRequest request = new MemberRequest();
@@ -157,6 +173,7 @@ public class UserController {
             return UserResponse.buildSuccess(account.get(0));
     }
 
+    @RequiresAuthentication
     @PostMapping("modifyPassword")
     public UserResponse modifyPassword(@RequestBody JSONObject object) throws NoSuchAlgorithmException {
         String sacpId = object.getString("sacpId");

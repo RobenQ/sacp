@@ -63,7 +63,7 @@ public class ShiroConfig {
         //使用注入的安全管理器
         shiroFilterFactoryBean.setSecurityManager(myWebSecurityManager());
         //设置登录的URL
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/tologin");
         //设置未授权提示的URL
         shiroFilterFactoryBean.setUnauthorizedUrl("/unauthoriz");
         //设置登录成功的URL

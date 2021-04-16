@@ -42,4 +42,18 @@ public interface MemberApi {
      * @return 密码是否修改成功
      */
     public boolean modifyPassword(String sacpId,String newPassword);
+
+    /**
+     * 修改用户账户状态
+     * @param sacpId sacp平台用户ID
+     * @param status 新状态
+     * @return 用户账户状态是否修改成功
+     */
+    public boolean modifyStatus(String sacpId,Integer status);
+
+    /**
+     * 获取所有会员的数量
+     * @return 所有会员的数量值
+     */
+    public long countMember();
 }

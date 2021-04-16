@@ -35,6 +35,11 @@ public class CourseService implements CourseApi {
     @Autowired
     private CourseDiscussionRepository discussionRepository;
 
+    @Override
+    public long countCourse() {
+        return courseRepository.countCourse();
+    }
+
     @DubboReference(version = "1.0")
     private ForumApi forumApi;
 

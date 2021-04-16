@@ -29,6 +29,12 @@ public class PermissionRespository {
     @Autowired
     private RolePermissionMapper rolePermissionMapper;
 
+    public long countPermission(){
+        Permission_infoExample example = new Permission_infoExample();
+        example.createCriteria().andIdIsNotNull();
+        return permissionInfoMapper.countByExample(example);
+    }
+
     //获取所有权限信息
     public List<Permission_info> getAllPermission(){
         Permission_infoExample example = new Permission_infoExample();

@@ -19,6 +19,12 @@ public class CourseRepository {
     @Autowired
     private MemberCourseMapper memberCourseMapper;
 
+    public long countCourse(){
+        CourseInfoExample example = new CourseInfoExample();
+        example.createCriteria().andIdIsNotNull();
+        return courseInfoMapper.countByExample(example);
+    }
+
     public List<CourseInfo> getHot5(){
         return courseInfoMapper.getHot5();
     }

@@ -84,4 +84,6 @@ public interface CourseApi {
      * @return 用户加入课程的数量
      */
     public long getMcTotalPage(String sacpId);
+
+    public long countCourse();
 }

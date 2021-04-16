@@ -16,11 +16,27 @@ public class MemberRepository {
     @Autowired
     private AccountMapper accountMapper;
 
+    public long countMember(){
+        AccountExample example = new AccountExample();
+        example.createCriteria().andIdIsNotNull();
+        return accountMapper.countByExample(example);
+    }
+
     public boolean updatePasswordBysacpId(String sacpId,String newPassword){
         AccountExample example = new AccountExample();
         example.createCriteria().andSacpIdEqualTo(sacpId);
         Account account = new Account();
         account.setPassword(newPassword);
+        account.setModifyTime(new Date());
+        int i = accountMapper.updateByExampleSelective(account, example);
+        return i==1?true:false;
+    }
+
+    public boolean updateStatusBysacpId(String sacpId,Integer status){
+        AccountExample example = new AccountExample();
+        example.createCriteria().andSacpIdEqualTo(sacpId);
+        Account account = new Account();
+        account.setStatus(status);
         account.setModifyTime(new Date());
         int i = accountMapper.updateByExampleSelective(account, example);
         return i==1?true:false;

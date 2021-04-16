@@ -40,4 +40,6 @@ public interface PermissionApi {
      * @return 是否删除成功
      */
     public boolean deletePermission(Integer id);
+
+    public long countPermission();
 }

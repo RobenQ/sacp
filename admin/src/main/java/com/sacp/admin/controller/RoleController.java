@@ -169,9 +169,11 @@ public class RoleController {
                 UserAndRoleResponse userAndRoleResponse = new UserAndRoleResponse();
                 userAndRoleResponse.setRole(roleApi.getRoleById(memberRole.getRoleId()));
                 MemberRequest memberRequest = new MemberRequest();
-                memberRequest.setSacpId(request.getSacpId());
-                userAndRoleResponse.setMember(memberApi.getAccount(memberRequest).get(0));
-                response.add(userAndRoleResponse);
+                memberRequest.setSacpId(memberRole.getSacpId());
+                if (memberApi.getAccount(memberRequest).size()!=0){
+                    userAndRoleResponse.setMember(memberApi.getAccount(memberRequest).get(0));
+                    response.add(userAndRoleResponse);
+                }
             }
             return AdminResponse.buildSuccess(response);
         }

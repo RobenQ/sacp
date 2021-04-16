@@ -38,6 +38,11 @@ public class RoleService implements RoleApi {
     private MemberRoleRepository memberRoleRepository;
 
     @Override
+    public long countRole() {
+        return roleRepository.countRole();
+    }
+
+    @Override
     public boolean updateRolePermission(ChangeRolePermissionRequest request) {
         List<Integer> permissionId = request.getPermissionId();
         int roleId = request.getRoleId();

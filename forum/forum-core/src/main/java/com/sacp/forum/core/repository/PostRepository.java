@@ -23,6 +23,12 @@ public class PostRepository {
     @Autowired
     private ReplyLikesMapper replyLikesMapper;
 
+    public long countPost(){
+        PostExample example = new PostExample();
+        example.createCriteria().andIdIsNotNull();
+        return postMapper.countByExample(example);
+    }
+
     public boolean selectLikes(String sacpId,Integer postId){
         PostLikesExample example = new PostLikesExample();
         example.createCriteria().andSacpIdEqualTo(sacpId).andPostIdEqualTo(postId);

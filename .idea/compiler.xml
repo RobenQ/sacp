@@ -11,8 +11,8 @@
         <module name="forum-client" />
         <module name="course-client" />
         <module name="member-core" />
-        <module name="web" />
         <module name="course-core" />
+        <module name="web-client" />
         <module name="permission-client" />
         <module name="admin" />
         <module name="permission-core" />

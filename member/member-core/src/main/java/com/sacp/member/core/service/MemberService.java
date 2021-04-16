@@ -33,8 +33,18 @@ public class MemberService implements MemberApi {
     private RoleApi roleApi;
 
     @Override
+    public long countMember() {
+        return memberRepository.countMember();
+    }
+
+    @Override
     public boolean modifyPassword(String sacpId, String newPassword) {
         return memberRepository.updatePasswordBysacpId(sacpId,newPassword);
+    }
+
+    @Override
+    public boolean modifyStatus(String sacpId, Integer status) {
+        return memberRepository.updateStatusBysacpId(sacpId,status);
     }
 
     @Override

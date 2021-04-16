@@ -21,6 +21,12 @@ public class RoleRepository {
     @Autowired
     private MemberRoleMapper memberRoleMapper;
 
+    public long countRole(){
+        RoleExample example = new RoleExample();
+        example.createCriteria().andIdIsNotNull();
+        return roleMapper.countByExample(example);
+    }
+
     //获取所有角色
     public List<Role> getAllRole(){
         RoleExample example = new RoleExample();

@@ -177,4 +177,7 @@ public interface ForumApi {
     public boolean unLikeReply(String sacpId,Integer replyId);
 
     public boolean isLikeReply(String sacpId,Integer replyId);
+
+    public long countPost();
+
 }

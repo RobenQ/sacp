@@ -23,6 +23,11 @@ public class PermissionService implements PermissionApi {
     private MemberRoleRepository memberRoleRepository;
 
     @Override
+    public long countPermission() {
+        return permissionRespository.countPermission();
+    }
+
+    @Override
     public List<String> getPermissionBySacpId(String sacpId) {
         List<String> permissions = new ArrayList<>();
         int roleId = memberRoleRepository.getRoleIdBySacpId(sacpId);

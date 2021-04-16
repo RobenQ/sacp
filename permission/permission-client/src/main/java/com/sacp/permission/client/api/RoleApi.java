@@ -106,4 +106,6 @@ public interface RoleApi {
      */
     public boolean addMemberRole(MemberRoleRequest request);
 
+    public long countRole();
+
 }

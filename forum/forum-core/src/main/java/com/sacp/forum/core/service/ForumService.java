@@ -30,6 +30,11 @@ public class ForumService implements ForumApi {
     private PostRepository postRepository;
 
     @Override
+    public long countPost() {
+        return postRepository.countPost();
+    }
+
+    @Override
     public boolean likeReply(String sacpId, Integer replyId) {
         postRepository.insertReplyLikes(sacpId,replyId);
         postRepository.addOneReplyLike(replyId);

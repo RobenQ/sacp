@@ -4,11 +4,9 @@ import com.sacp.member.client.api.MemberApi;
 import com.sacp.member.client.response.LoginResponse;
 import com.sacp.permission.client.api.PermissionApi;
 import com.sacp.permission.client.api.RoleApi;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -16,6 +14,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import java.util.List;
 
+@Slf4j
 public class MyRealm extends AuthorizingRealm {
 
     @DubboReference(version = "1.0")
@@ -52,6 +51,12 @@ public class MyRealm extends AuthorizingRealm {
         if (loginResponse==null){
             return null;
         }
+
+        if (loginResponse.getStatusCode()==102){
+            log.info("该账号被冻结");
+            throw new LockedAccountException("账号被冻结");
+        }
+
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(loginResponse.getNickName(),
                 loginResponse.getPassword(),getName());
         return info;

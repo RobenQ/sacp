@@ -11,11 +11,13 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/web/pom.xml" />
         <option value="$PROJECT_DIR$/permission/permission-client/permission-client/pom.xml" />
+        <option value="$PROJECT_DIR$/web-client/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/permission-core/pom.xml" />
+        <option value="$PROJECT_DIR$/web/web-client/pom.xml" />
       </set>
     </option>
   </component>

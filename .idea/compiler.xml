@@ -12,6 +12,7 @@
         <module name="course-client" />
         <module name="member-core" />
         <module name="course-core" />
+        <module name="web" />
         <module name="web-client" />
         <module name="permission-client" />
         <module name="admin" />

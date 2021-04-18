@@ -57,6 +57,10 @@ public class MyRealm extends AuthorizingRealm {
             log.info("没有该账号信息");
             return null;
         }
+        if (loginResponse.getStatusCode()==102){
+            log.info("该账号被冻结");
+            throw new LockedAccountException("账号被冻结");
+        }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(loginResponse.getNickName(),
                 loginResponse.getPassword(),getName());
         return info;

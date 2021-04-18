@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -131,7 +132,15 @@ public class LoginController {
                 adminResponse.setResult("密码错误");
                 log.info("密码错误");
                 return adminResponse;
-            }else {
+            }else if (LockedAccountException.class.getName().equals(exceptionClassName)) {
+                log.info("该账号被冻结");
+                adminResponse.setCode(202);
+                adminResponse.setMessage("该账号被冻结！");
+                adminResponse.setStatus("faild");
+                adminResponse.setResult("该账号被冻结");
+                log.info("该账号被冻结");
+                return adminResponse;
+            } else {
                 adminResponse.setCode(201);
                 log.info(subject.getSession().getId().toString());
                 adminResponse.setToken(subject.getSession().getId().toString());

@@ -10,18 +10,26 @@ import com.sacp.member.client.response.MemberResponse;
 import com.sacp.member.client.util.SecurityUtil;
 import com.sacp.permission.client.api.RoleApi;
 import com.sacp.web.response.UserResponse;
+import com.sacp.web.util.OffLineUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +39,10 @@ import java.util.Map;
 public class UserController {
     @Resource
     private HttpServletRequest httpServletRequest;
+    @Autowired
+    private DefaultWebSessionManager sessionManager;
+    @Autowired
+    private OffLineUtil offLineUtil;
 
     @DubboReference(version = "1.0")
     private MemberApi memberApi;
@@ -60,27 +72,33 @@ public class UserController {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = null;
         try{
-            //if (subject.isRemembered() || subject.isAuthenticated()){
-            //    String nickName = (String) subject.getPrincipal();
-            //    LoginResponse loginResponse = memberApi.getAuthInfo(nickName);
-            //    if (loginResponse==null){
-            //        return UserResponse.buildFaild();
-            //    }
-            //    token = new UsernamePasswordToken(loginResponse.getNickName(),
-            //            loginResponse.getPassword(),true);
-            //
-            //}else {
-            //    if (user.getString("password")==null || user.getString("nickName")==null){
-            //        return UserResponse.buildFaild();
-            //    }
-            //    token = new UsernamePasswordToken(user.getString("nickName"),
-            //            SecurityUtil.securityPassword(user.getString("password")),true);
-            //}
             if (subject.isRemembered() || subject.isAuthenticated()){
+                //兼容强制下线功能
+                if (offLineUtil.hasSubject(subject)){
+                    offLineUtil.logout(subject);
+                    log.info("该账号被强制下线");
+                    userResponse.setCode(203);
+                    userResponse.setMessage("你登录的账号被强制下线！");
+                    userResponse.setStatus("faild");
+                    userResponse.setResult("你登录的账号被强制下线！");
+                    log.info("该账号被冻结");
+                    return userResponse;
+                }
                 String nickName = (String) subject.getPrincipal();
                 LoginResponse loginResponse = memberApi.getAuthInfo(nickName);
                 if (loginResponse==null){
                     return UserResponse.buildFaild();
+                }
+                //兼容账号冻结功能
+                if (loginResponse.getStatusCode()==102){
+                    subject.logout();
+                    log.info("该账号被冻结");
+                    userResponse.setCode(202);
+                    userResponse.setMessage("该账号被冻结！");
+                    userResponse.setStatus("faild");
+                    userResponse.setResult("该账号被冻结");
+                    log.info("该账号被冻结");
+                    return userResponse;
                 }
                 userResponse.setCode(200);
                 userResponse.setToken(subject.getSession().getId().toString());
@@ -100,6 +118,18 @@ public class UserController {
                 return userResponse;
 
             }
+            //兼容强制下线功能
+            if (offLineUtil.hasSubject(subject)){
+                offLineUtil.logout(subject);
+                log.info("该账号被强制下线");
+                userResponse.setCode(203);
+                userResponse.setMessage("你登录的账号被强制下线！");
+                userResponse.setStatus("faild");
+                userResponse.setResult("你登录的账号被强制下线！");
+                log.info("该账号被冻结");
+                return userResponse;
+            }
+
             if (user.getString("password")==null || user.getString("nickName")==null){
                 return UserResponse.buildFaild();
             }
@@ -140,8 +170,17 @@ public class UserController {
                 userResponse.setResult("密码错误");
                 log.info("密码错误");
                 return userResponse;
+            }else if (LockedAccountException.class.getName().equals(exceptionClassName)) {
+                log.info("该账号被冻结");
+                userResponse.setCode(202);
+                userResponse.setMessage("该账号被冻结！");
+                userResponse.setStatus("faild");
+                userResponse.setResult("该账号被冻结");
+                log.info("该账号被冻结");
+                return userResponse;
             }else {
-                userResponse.setCode(201);
+                e.printStackTrace();
+                userResponse.setCode(500);
                 log.info(subject.getSession().getId().toString());
                 userResponse.setToken(subject.getSession().getId().toString());
                 userResponse.setMessage("系统异常！");

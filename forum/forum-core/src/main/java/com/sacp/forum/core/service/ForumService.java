@@ -196,6 +196,18 @@ public class ForumService implements ForumApi {
     }
 
     @Override
+    public List<PostResponse> getNewPostTop20() {
+        List<Post> top20 = postRepository.getNewTop20();
+        List<PostResponse> responses = new ArrayList<>(top20.size());
+        for (Post post:top20) {
+            PostResponse postResponse = new PostResponse();
+            BeanUtils.copyProperties(post,postResponse);
+            responses.add(postResponse);
+        }
+        return responses;
+    }
+
+    @Override
     public boolean post(PostRequest request) {
         PostWithBLOBs post2 = new PostWithBLOBs();
         post2.setSacpId(request.getSacpId());
@@ -243,6 +255,11 @@ public class ForumService implements ForumApi {
     @Override
     public List<ReplyResponse> getHotBlock() {
         return null;
+    }
+
+    @Override
+    public boolean deleteBlockByAuthor(Integer courseId) {
+        return blockRepository.deleteBlockCourseId(courseId);
     }
 
     @Override

@@ -1,11 +1,14 @@
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\config\MimeConfig.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\controller\CheckOkController.java
+E:\bishe\code\sacp\web\src\main\java\com\sacp\web\annotation\CheckMemberCourse.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\controller\UploadController.java
+E:\bishe\code\sacp\web\src\main\java\com\sacp\web\aspect\CheckAspect.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\response\ReplyInfoResponse.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\controller\CourseController.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\response\UserResponse.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\response\CourseInfoResponse.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\response\PostInfoResponse.java
+E:\bishe\code\sacp\web\src\main\java\com\sacp\web\util\OffLineUtil.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\WebApp.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\config\MyRealm.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\util\QiNiuUploadUtil.java
@@ -13,5 +16,6 @@ E:\bishe\code\sacp\web\src\main\java\com\sacp\web\controller\UserController.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\response\GlobalExceptionHandler.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\config\ShiroConfig.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\api\ActiveUserService.java
+E:\bishe\code\sacp\web\src\main\java\com\sacp\web\annotation\CheckAllowPost.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\config\CorsConfig.java
 E:\bishe\code\sacp\web\src\main\java\com\sacp\web\controller\ForumController.java

@@ -37,6 +37,8 @@ public interface CourseApi {
 
     public List<CourseResponse> getNewCourse();
 
+    public boolean deleteCourseByAuthor(Integer courseId);
+
 
     //courseClassify==========================================================================
     public List<CourseClassifyResponse> getAllClassify();

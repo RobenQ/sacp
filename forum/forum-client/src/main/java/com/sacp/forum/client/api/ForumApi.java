@@ -46,6 +46,13 @@ public interface ForumApi {
      */
     public List<ReplyResponse> getHotBlock();
 
+    /**
+     * 删除版块
+     * @param courseId 版块对应的课程ID
+     * @return
+     */
+    public boolean deleteBlockByAuthor(Integer courseId);
+
 
     //memberBlock===================================================================
 
@@ -88,6 +95,12 @@ public interface ForumApi {
      * @return 最新的前5个帖子的信息列表
      */
     public List<PostResponse> getPostTop5(Integer blockId);
+
+    /**
+     * 获取最新的20个帖子
+     * @return
+     */
+    public List<PostResponse> getNewPostTop20();
 
     /**
      * 根据版块ID分页查询帖子

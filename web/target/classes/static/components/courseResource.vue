@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {getAllRes} from "../mjs/course.mjs";
+import {checkUserCourse, getAllRes} from "../mjs/course.mjs";
 
 export default {
   name: "courseResource",
@@ -33,7 +33,8 @@ export default {
       const res = await getAllRes(this.courseId)
       this.resourceList = res.result
     },
-    downloadRes(data){
+    async downloadRes(data){
+      await checkUserCourse({courseId:this.courseId})
       const str = data.url.split(".")
       const ext = str[str.length-1]
       window.location.href = data.url+"?attname="+data.name+"."+ext

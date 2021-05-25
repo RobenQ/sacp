@@ -40,6 +40,8 @@ public interface PostMapper {
 
     List<Post> getPostTop5(@Param("blockId") Integer blockId);
 
+    List<Post> getNewPostTop20();
+
     List<Post> getPostTop5BySacpId(@Param("sacpId") String sacpId);
 
     List<Post> getPostByPage(@Param("blockId")Integer blockId,@Param("start") Integer start,@Param("pageSize") Integer pageSize);

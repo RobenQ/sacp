@@ -37,6 +37,13 @@ export function getTop5(data1,data2){
     })
 }
 
+export function getNewTop20(data1,data2){
+    return request({
+        url:"/getNewTop20",
+        method:"get"
+    })
+}
+
 export function getPostByPage(data){
     return request({
         url:"/getPostByPage",
@@ -147,5 +154,12 @@ export function unLikeReply(data){
         url:"/unLikeReply",
         method:"post",
         data
+    })
+}
+
+export function checkAllowPost(){
+    return request({
+        url:"/checkAllowPost",
+        method:"post"
     })
 }

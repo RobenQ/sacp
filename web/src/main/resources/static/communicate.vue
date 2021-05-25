@@ -15,107 +15,42 @@
   <div class="co-main">
     <div class="co-left">
       <el-card class="box-card post-card">
-        <div class="post-wrap">
-          <div class="post-header">
-            <div>
-              <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
+        <div class="post-list" v-infinite-scroll="load">
+          <div v-for="(item,index) in postList" class="post-wrap">
+            <div class="post-header">
+              <div>
+                <el-avatar :size="40" :src="item.memeber.avatar"></el-avatar>
+              </div>
+              <div class="poster">
+                <div class="poster-name">{{ item.memeber.nickName }}</div>
+                <div class="post-time">发表于：{{item.post.createTime}}</div>
+              </div>
             </div>
-            <div class="poster">
-              <div class="poster-name">哎Coding</div>
-              <div class="post-time">发表于：{{postTime}}</div>
-            </div>
-          </div>
-          <el-image
-              style="width: 100%; height: 200px;border-radius: 5px"
-              src="http://qpt5cenoi.hb-bkt.clouddn.com/%E9%9B%A8%E5%B9%95.071d2514.jpg"
-              fit="fit">
-          </el-image>
-          <span class="post-text">
-            截止目前，我还没有发现比米10u好的手机。
-            我这款米10u目前找不到替代品，想换机都没办法(3x120，16+512)，无可挑剔的设计(不大不小的圆角、高端工艺封装的下巴、凸出不高的后置相机、非常舒服的曲面。。。)
-            等等MIX4看看会不会超越它了。。
-          </span>
-          <div class="post-footer">
-            <div class="post-footer-left">
-              <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
-              <div class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
-            </div>
-            <div class="post-footer-right">
-              <div><i class="el-icon-view" style="margin-right: 3px"></i>232</div>
-              <div><i class="el-icon-chat-dot-square" style="margin-right: 3px"></i>67</div>
-              <div><i class="el-icon-star-off" style="margin-right: 3px"></i>18</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="post-wrap">
-          <div class="post-header">
-            <div>
-              <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
-            </div>
-            <div class="poster">
-              <div class="poster-name">哎Coding</div>
-              <div class="post-time">发表于：{{postTime}}</div>
+            <span class="post-text" @click="goPost(item.post.id)">
+                  {{ item.post.txt }}
+                </span>
+            <div class="post-footer">
+              <div class="post-footer-left">
+                <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>{{ item.block.blockName }}</div></div>
+                <div v-if="item.post.classifyId === 1" class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
+                <div v-if="item.post.classifyId === 2" class="post-block3"><i class="el-icon-bell" style="margin-right: 3px"></i><div>展示</div></div>
+              </div>
+              <div class="post-footer-right">
+                <div><i class="el-icon-view" style="margin-right: 3px"></i>{{ item.post.viewerNumber }}</div>
+                <div><i class="el-icon-chat-dot-square" style="margin-right: 3px"></i>{{ item.post.replyNumber }}</div>
+                <div v-if="!item.like">
+                  <i @click="like(item.post.id,index)" class="el-icon-star-off" style="margin-right: 3px"></i>{{ item.post.likesNumber }}
+                </div>
+                <div v-if="item.like">
+                  <i @click="unLike(item.post.id,index)" class="el-icon-star-on" style="margin-right: 3px;color: #E6A23C;font-size: 16px;"></i>{{ item.post.likesNumber }}
+                </div>
+              </div>
             </div>
           </div>
-          <el-image
-              style="width: 100%; height: 200px;border-radius: 5px"
-              src="http://qpt5cenoi.hb-bkt.clouddn.com/%E9%9B%A8%E5%B9%95.071d2514.jpg"
-              fit="fit">
-          </el-image>
-          <span class="post-text">
-            截止目前，我还没有发现比米10u好的手机。
-            我这款米10u目前找不到替代品，想换机都没办法(3x120，16+512)，无可挑剔的设计(不大不小的圆角、高端工艺封装的下巴、凸出不高的后置相机、非常舒服的曲面。。。)
-            等等MIX4看看会不会超越它了。。
-          </span>
-          <div class="post-footer">
-            <div class="post-footer-left">
-              <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
-              <div class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
-            </div>
-            <div class="post-footer-right">
-              <div><i class="el-icon-view" style="margin-right: 3px"></i>232</div>
-              <div><i class="el-icon-chat-dot-square" style="margin-right: 3px"></i>67</div>
-              <div><i class="el-icon-star-off" style="margin-right: 3px"></i>18</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="post-wrap">
-          <div class="post-header">
-            <div>
-              <el-avatar :size="40" src="http://sacp.moeneko.top/face.gif"></el-avatar>
-            </div>
-            <div class="poster">
-              <div class="poster-name">哎Coding</div>
-              <div class="post-time">发表于：{{postTime}}</div>
-            </div>
-          </div>
-          <el-image
-              style="width: 100%; height: 200px;border-radius: 5px"
-              src="http://qpt5cenoi.hb-bkt.clouddn.com/%E9%9B%A8%E5%B9%95.071d2514.jpg"
-              fit="fit">
-          </el-image>
-          <span class="post-text">
-            截止目前，我还没有发现比米10u好的手机。
-            我这款米10u目前找不到替代品，想换机都没办法(3x120，16+512)，无可挑剔的设计(不大不小的圆角、高端工艺封装的下巴、凸出不高的后置相机、非常舒服的曲面。。。)
-            等等MIX4看看会不会超越它了。。
-          </span>
-          <div class="post-footer">
-            <div class="post-footer-left">
-              <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
-              <div class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
-            </div>
-            <div class="post-footer-right">
-              <div><i class="el-icon-view" style="margin-right: 3px"></i>232</div>
-              <div><i class="el-icon-chat-dot-square" style="margin-right: 3px"></i>67</div>
-              <div><i class="el-icon-star-off" style="margin-right: 3px"></i>18</div>
-            </div>
-          </div>
+          <div v-if="end" style="width: 100%;text-align: center;margin-top: 10px;color: #909399;font-size: 12px">主页只展示最新的20条创作内容</div>
         </div>
       </el-card>
     </div>
-
 
     <div class="co-right">
       <el-card class="box-card post-card">
@@ -139,6 +74,7 @@
 <script>
 
 import {getJoinMb, getNew} from "./mjs/course.mjs";
+import {checkAllowPost, getNewTop20, likePost, unLikePost} from "./mjs/forum.mjs";
 
 export default {
   name: "communicate",
@@ -146,7 +82,9 @@ export default {
     return{
       urls:[],
       islogin:false,
-      mbList:[]
+      mbList:[],
+      postList:[],
+      end:true
     }
   },
   created(){
@@ -158,18 +96,46 @@ export default {
         const res2 = await getNew()
         this.urls = res2.result
         this.islogin = false;
+        const res3 = await getNewTop20()
+        this.postList = res3.result
       }else {
         const res2 = await getNew()
         this.urls = res2.result
         const res = await getJoinMb(this.$store.state.sacpId)
         this.mbList = res.result
         this.islogin = true;
+        const res3 = await getNewTop20()
+        this.postList = res3.result
       }
     },
     goBlock(data){
       const newPage = this.$router.resolve({path: '/courseBlock/'+data})
       window.open(newPage.href,'_blank')
       // this.$router.push({path: '/courseDetail'})
+    },
+    async like(postId,index){
+      await checkAllowPost()
+      const datas = {
+        sacpId:this.$store.state.sacpId,
+        postId:postId
+      }
+      await likePost(datas)
+      this.postList[index].post.likesNumber = this.postList[index].post.likesNumber+1
+      this.postList[index].like = true
+    },
+    async unLike(postId,index){
+      await checkAllowPost()
+      const datas = {
+        sacpId:this.$store.state.sacpId,
+        postId:postId
+      }
+      await unLikePost(datas)
+      this.postList[index].post.likesNumber = this.postList[index].post.likesNumber-1
+      this.postList[index].like = false
+    },
+    goPost(data){
+      const newPage = this.$router.resolve({path: '/postDetail/'+data})
+      window.open(newPage.href,'_blank')
     }
   }
 }
@@ -230,8 +196,8 @@ export default {
 
 .post-wrap{
   width: 100%;
-  height: 400px;
-  padding: 10px 0px 10px 0px;
+  /*height: 200px;*/
+  padding: 10px 10px 10px 10px;
   border-bottom: #DCDFE6 2px solid;
   display: flex;
   flex-direction: column;
@@ -270,7 +236,6 @@ export default {
 .post-time{
   font-size: 12px;
   color: #909399;
-  margin-top: 5px;
 }
 
 .post-wrap:last-child{
@@ -279,7 +244,7 @@ export default {
 
 .post-text{
   width: 100%;
-  margin-top: 10px;
+  min-height: 65px;
   font-size: 16px;
   font-weight: 540;
   color: #303133;
@@ -287,6 +252,11 @@ export default {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+}
+
+.post-text:hover{
+  cursor: pointer;
+  color: #409EFF;
 }
 
 .post-text::selection {
@@ -340,6 +310,21 @@ export default {
   font-size: 12px;
   color: #fff;
   background-color: #E6A23C;
+  border-radius: 13px;
+}
+
+.post-block3{
+  height: 100%;
+  padding: 5px 10px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: #fff;
+  background-color: #67C23A;
   border-radius: 13px;
 }
 

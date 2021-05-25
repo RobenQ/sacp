@@ -1,9 +1,6 @@
 package com.sacp.course.core.repository;
 
-import com.sacp.course.core.entity.CourseResource;
-import com.sacp.course.core.entity.CourseResourceExample;
-import com.sacp.course.core.entity.CourseVideo;
-import com.sacp.course.core.entity.CourseVideoExample;
+import com.sacp.course.core.entity.*;
 import com.sacp.course.core.mapper.CourseResourceMapper;
 import com.sacp.course.core.mapper.CourseVideoMapper;
 import org.springframework.beans.factory.annotation.Autowired;

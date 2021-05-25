@@ -23,6 +23,7 @@
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
+                    <el-dropdown-item @click="deleteCourse((item.id))">删除课程</el-dropdown-item>
                     <el-dropdown-item @click="resOp((item.id))">资源管理</el-dropdown-item>
                     <el-dropdown-item @click="videoOp((item.id))">视频管理</el-dropdown-item>
                     <el-dropdown-item @click="gocCourse(item.id)">进入课程</el-dropdown-item>
@@ -276,7 +277,7 @@ import {
   addVideo,
   getVideoByCourseId,
   getTotalVideoPage,
-  addRes
+  addRes, deleteCourse
 } from "../mjs/course.mjs";
 
 export default {
@@ -542,6 +543,17 @@ export default {
       this.videoList = res.result
       console.log(res)
       this.videoManage = true
+    },
+    async deleteCourse(data){
+      await deleteCourse(data)
+      this.$message.success("删除成功！")
+      this.init()
+      const data2 = {
+        sacpId:this.$store.state.sacpId,
+        currentPage:this.currentPage,
+        pageSize:this.pageSize
+      }
+      this.getCourse(data2)
     },
     async resOp(data) {
       this.form4.courseId = data

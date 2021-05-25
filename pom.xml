@@ -116,7 +116,17 @@
         <artifactId>dubbo-spring-boot-starter</artifactId>
         <version>${springboot-dubbo.version}</version>
       </dependency>
-<!--     curator framework -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-aop</artifactId>
+        <version>${springboot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>1.9.6</version>
+      </dependency>
+      <!--     curator framework -->
       <dependency>
         <groupId>org.apache.curator</groupId>
         <artifactId>curator-framework</artifactId>

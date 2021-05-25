@@ -133,6 +133,16 @@ export function deleteRes(data){
     })
 }
 
+export function deleteCourse(data){
+    return request({
+        url:"/deleteCourse",
+        method:"get",
+        params:{
+            courseId:data
+        }
+    })
+}
+
 export function getAllVideo(data){
     return request({
         url:"/getAllVideo",
@@ -236,5 +246,13 @@ export function getNew(){
     return request({
         url:"/newCourse",
         method:"get"
+    })
+}
+
+export function checkUserCourse(data){
+    return request({
+        url:"/checkUserCourse",
+        method:"post",
+        data
     })
 }

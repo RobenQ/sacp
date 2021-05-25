@@ -63,6 +63,15 @@ public class BlockRepository {
         return i==1?true:false;
     }
 
+    public boolean deleteBlockCourseId(Integer courseId){
+        BlockInfo blockInfo = new BlockInfo();
+        blockInfo.setIsDelete(1);
+        BlockInfoExample example = new BlockInfoExample();
+        example.createCriteria().andCourseIdEqualTo(courseId);
+        int i = blockInfoMapper.updateByExampleSelective(blockInfo,example);
+        return i==1?true:false;
+    }
+
     public BlockInfo selectById(Integer id){
         BlockInfoExample example = new BlockInfoExample();
         example.createCriteria().andIdEqualTo(id);

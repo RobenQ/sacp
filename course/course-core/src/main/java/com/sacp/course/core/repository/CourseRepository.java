@@ -19,6 +19,15 @@ public class CourseRepository {
     @Autowired
     private MemberCourseMapper memberCourseMapper;
 
+    public boolean deleteCourseById(Integer courseId){
+        CourseInfoExample example = new CourseInfoExample();
+        example.createCriteria().andIdEqualTo(courseId);
+        CourseInfo courseInfo = new CourseInfo();
+        courseInfo.setIsDelete(1);
+        int i = courseInfoMapper.updateByExampleSelective(courseInfo,example);
+        return i==1?true:false;
+    }
+
     public long countCourse(){
         CourseInfoExample example = new CourseInfoExample();
         example.createCriteria().andIdIsNotNull();

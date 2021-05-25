@@ -26,7 +26,7 @@
 
 <script>
 import videoPlayer from './videoPlayer.vue'
-import {getAllVideo} from '../mjs/course.mjs'
+import {checkUserCourse, getAllVideo} from '../mjs/course.mjs'
 export default {
   name: "courseVideo",
   props:['courseId','face'],
@@ -49,7 +49,8 @@ export default {
       const res = await getAllVideo(this.courseId)
       this.videoList = res.result
     },
-    play(data){
+    async play(data){
+      await checkUserCourse({courseId:this.courseId})
       this.videoUrl = data
       this.poster = this.face
       this.dialogTableVisible = true

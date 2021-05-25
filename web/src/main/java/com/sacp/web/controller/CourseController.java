@@ -10,6 +10,7 @@ import com.sacp.course.client.request.DiscussionRequest;
 import com.sacp.course.client.response.*;
 import com.sacp.forum.client.api.ForumApi;
 import com.sacp.forum.client.response.BlockResponse;
+import com.sacp.web.annotation.CheckMemberCourse;
 import com.sacp.web.response.CourseInfoResponse;
 import com.sacp.web.response.UserResponse;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -153,6 +154,16 @@ public class CourseController {
     }
 
     @RequiresUser
+    @GetMapping("deleteCourse")
+    public UserResponse deleteCourse(@RequestParam Integer courseId){
+        boolean b = courseApi.deleteCourseByAuthor(courseId);
+        if (b)
+            return UserResponse.buildSuccess();
+        else
+            return UserResponse.buildFaild();
+    }
+
+    @RequiresUser
     @GetMapping("deleteRes")
     public UserResponse deleteRes(@RequestParam Integer resId){
         boolean b = courseApi.deleteResByAuthor(resId);
@@ -248,6 +259,12 @@ public class CourseController {
             return UserResponse.buildSuccess("已退出课程！");
         else
             return UserResponse.buildSuccess("退出课程失败！");
+    }
+
+    @CheckMemberCourse
+    @PostMapping("checkUserCourse")
+    public UserResponse checkUserCourse(@RequestBody JSONObject request){
+        return UserResponse.buildSuccess("允许播放视频");
     }
 
 }

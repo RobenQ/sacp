@@ -411,6 +411,9 @@
   <select id="getPostTop5" resultMap="BaseResultMap2">
     select * from post where block_id=#{blockId} and id_delete=0 order by create_time desc limit 5;
   </select>
+  <select id="getNewPostTop20" resultMap="BaseResultMap2">
+    select * from post where id_delete=0 order by create_time desc limit 20;
+  </select>
   <select id="getPostTop5BySacpId" resultMap="BaseResultMap2">
     select * from post where sacp_id=#{sacpId} and id_delete=0 order by create_time desc limit 5;
   </select>

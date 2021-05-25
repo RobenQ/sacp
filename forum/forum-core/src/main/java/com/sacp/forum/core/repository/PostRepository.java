@@ -196,6 +196,10 @@ public class PostRepository {
         return postMapper.getPostTop5(blockId);
     }
 
+    public List<Post> getNewTop20(){
+        return postMapper.getNewPostTop20();
+    }
+
     public boolean insertPost(PostWithBLOBs post){
         int i = postMapper.insertSelective(post);
         return i==1?true:false;

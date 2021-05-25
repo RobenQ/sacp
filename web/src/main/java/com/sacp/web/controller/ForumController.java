@@ -12,6 +12,8 @@ import com.sacp.forum.client.response.ReplyResponse;
 import com.sacp.member.client.api.MemberApi;
 import com.sacp.member.client.request.MemberRequest;
 import com.sacp.member.client.response.MemberResponse;
+import com.sacp.web.annotation.CheckAllowPost;
+import com.sacp.web.annotation.CheckMemberCourse;
 import com.sacp.web.response.PostInfoResponse;
 import com.sacp.web.response.ReplyInfoResponse;
 import com.sacp.web.response.UserResponse;
@@ -63,6 +65,33 @@ public class ForumController {
             response.setMemeber(memberResponse);
 
             BlockResponse block = forumApi.getById(blockId);
+            response.setBlock(block);
+
+            if (sacpId!=null){
+                response.setLike(forumApi.isLikePost(sacpId,post.getId()));
+            }else {
+                response.setLike(false);
+            }
+
+            responses.add(response);
+        }
+        return UserResponse.buildSuccess(responses);
+    }
+
+    @GetMapping("getNewTop20")
+    public UserResponse getNewTop20(@RequestParam(required = false) String sacpId){
+        List<PostResponse> postTop20 = forumApi.getNewPostTop20();
+        List<PostInfoResponse> responses = new ArrayList<>(postTop20.size());
+        for (PostResponse post:postTop20) {
+            PostInfoResponse response = new PostInfoResponse();
+            response.setPost(post);
+
+            MemberRequest request = new MemberRequest();
+            request.setSacpId(post.getSacpId());
+            MemberResponse memberResponse = memberApi.getAccount(request).get(0);
+            response.setMemeber(memberResponse);
+
+            BlockResponse block = forumApi.getById(post.getBlockId());
             response.setBlock(block);
 
             if (sacpId!=null){
@@ -300,5 +329,12 @@ public class ForumController {
         forumApi.unLikeReply(sacpId,replyId);
         return UserResponse.buildSuccess();
     }
+
+    @CheckAllowPost
+    @PostMapping("checkAllowPost")
+    public UserResponse checkAllowPost(){
+        return UserResponse.buildSuccess("允许内容操作");
+    }
+
 
 }

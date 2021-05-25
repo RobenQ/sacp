@@ -37,10 +37,6 @@ import java.util.Map;
 @Slf4j
 @RestController
 public class UserController {
-    @Resource
-    private HttpServletRequest httpServletRequest;
-    @Autowired
-    private DefaultWebSessionManager sessionManager;
     @Autowired
     private OffLineUtil offLineUtil;
 
@@ -67,7 +63,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public UserResponse login(HttpServletRequest request, @RequestBody JSONObject user) throws Exception {
+    public UserResponse login(@RequestBody JSONObject user) throws Exception {
         UserResponse userResponse = new UserResponse();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = null;

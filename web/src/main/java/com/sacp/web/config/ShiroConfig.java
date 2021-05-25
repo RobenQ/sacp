@@ -3,6 +3,7 @@ package com.sacp.web.config;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -79,6 +80,20 @@ public class ShiroConfig {
         //把过滤规则放入shiro
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinition);
         return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 极其重要，不加入此配置，controller中的方法如果加了shiro的注解，并且项目中导入了aop的包，
+     * 会导致整个controller的url报404
+     * @return
+     */
+    @Bean
+    public static DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator(){
+
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator=new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setUsePrefix(true);
+
+        return defaultAdvisorAutoProxyCreator;
     }
 
 }

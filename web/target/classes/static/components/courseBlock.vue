@@ -34,8 +34,8 @@
                   </div>
                 </div>
                 <span class="post-text" @click="goPost(item.post.id)">
-              {{ item.post.txt }}
-            </span>
+                  {{ item.post.txt }}
+                </span>
                 <div class="post-footer">
                   <div class="post-footer-left">
                     <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
@@ -105,7 +105,7 @@
             </span>
                 <div class="post-footer">
                   <div class="post-footer-left">
-                    <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
+                    <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>{{ item.block.blockName }}</div></div>
                     <div v-if="item.post.classifyId === 1" class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
                     <div v-if="item.post.classifyId === 2" class="post-block3"><i class="el-icon-bell" style="margin-right: 3px"></i><div>展示</div></div>
                   </div>
@@ -181,7 +181,7 @@
 
 <script>
 import {getJoinMb} from "../mjs/course.mjs";
-import {getBlockInfo,postPost,getTop5,getPostByPage,likePost,unLikePost} from "../mjs/forum.mjs";
+import {getBlockInfo, postPost, getTop5, getPostByPage, likePost, unLikePost, checkAllowPost} from "../mjs/forum.mjs";
 
 export default {
   name: "courseBlock",
@@ -322,6 +322,7 @@ export default {
       })
     },
     async surePost(){
+      await checkAllowPost()
       if (this.textarea===''){
         this.$message.warning("内容不能为空");
         return
@@ -361,6 +362,7 @@ export default {
       }
     },
     async like(postId,index){
+      await checkAllowPost()
       const datas = {
         sacpId:this.$store.state.sacpId,
         postId:postId
@@ -370,6 +372,7 @@ export default {
       this.postList[index].like = true
     },
     async unLike(postId,index){
+      await checkAllowPost()
       const datas = {
         sacpId:this.$store.state.sacpId,
         postId:postId

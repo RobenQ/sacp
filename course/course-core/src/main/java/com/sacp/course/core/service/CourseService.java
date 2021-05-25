@@ -174,6 +174,13 @@ public class CourseService implements CourseApi {
     }
 
     @Override
+    public boolean deleteCourseByAuthor(Integer courseId) {
+        courseRepository.deleteCourseById(courseId);
+        forumApi.deleteBlockByAuthor(courseId);
+        return true;
+    }
+
+    @Override
     public boolean deleteResByAuthor(Integer resourceId) {
         return courseResourcesRepository.deleteResById(resourceId);
     }

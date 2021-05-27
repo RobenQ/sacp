@@ -38,7 +38,7 @@
                 </span>
                 <div class="post-footer">
                   <div class="post-footer-left">
-                    <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
+                    <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>{{ item.block.blockName }}</div></div>
                     <div v-if="item.post.classifyId === 1" class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
                     <div v-if="item.post.classifyId === 2" class="post-block3"><i class="el-icon-bell" style="margin-right: 3px"></i><div>展示</div></div>
                   </div>
@@ -74,7 +74,7 @@
             </span>
                 <div class="post-footer">
                   <div class="post-footer-left">
-                    <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>Java进阶</div></div>
+                    <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>{{ item.block.blockName }}</div></div>
                     <div v-if="item.post.classifyId === 1" class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
                     <div v-if="item.post.classifyId === 2" class="post-block3"><i class="el-icon-bell" style="margin-right: 3px"></i><div>展示</div></div>
                   </div>
@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import {getJoinMb} from "../mjs/course.mjs";
+import {checkUserCourse, getJoinMb} from "../mjs/course.mjs";
 import {getBlockInfo, postPost, getTop5, getPostByPage, likePost, unLikePost, checkAllowPost} from "../mjs/forum.mjs";
 
 export default {
@@ -322,8 +322,10 @@ export default {
       })
     },
     async surePost(){
+      await checkUserCourse({courseId:this.blckInfo.courseId})
       await checkAllowPost()
-      if (this.textarea===''){
+      console.log(this.txt)
+      if (this.textarea==='' || this.txt.replaceAll("&nbsp;",'').trim() === ''){
         this.$message.warning("内容不能为空");
         return
       }

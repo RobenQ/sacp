@@ -4,7 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.sacp.admin.response.AdminResponse;
 import com.sacp.course.client.api.CourseApi;
 import com.sacp.course.client.request.CourseClassifyRequest;
+import com.sacp.course.client.request.CourseRequest;
 import com.sacp.course.client.response.CourseClassifyResponse;
+import com.sacp.course.client.response.CourseResponse;
+import com.sacp.member.client.api.MemberApi;
+import com.sacp.member.client.response.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,8 @@ public class CourseController {
 
     @DubboReference(version = "1.0")
     private CourseApi courseApi;
+    @DubboReference(version = "1.0")
+    private MemberApi memberApi;
 
     @GetMapping("getallclassify")
     public AdminResponse getAllClassify() {
@@ -60,4 +66,48 @@ public class CourseController {
         List<CourseClassifyResponse> classifys = courseApi.getClassify(request);
         return AdminResponse.buildSuccess(classifys);
     }
+
+    @PostMapping("searchCourse")
+    public AdminResponse searchCourse(@RequestBody JSONObject request){
+        String nickName = request.getString("author");
+        String courseName = request.getString("courseName");
+        int classifyId = request.getIntValue("classifyId");
+        String sacpId = null;
+        if (nickName!=null && !("".equals(nickName))){
+            LoginResponse authInfo = memberApi.getAuthInfo(nickName);
+            if (authInfo!=null)
+                sacpId = authInfo.getSacpId();
+        }
+        CourseRequest courseRequest = new CourseRequest();
+        if (sacpId!=null)
+            courseRequest.setSacpId(sacpId);
+        if (courseName!=null)
+            courseRequest.setCourseName(courseName);
+        if (classifyId!=0)
+            courseRequest.setClassifyId(classifyId);
+        List<CourseResponse> courseResponses = courseApi.getCourse(courseRequest);
+
+        return AdminResponse.buildSuccess(courseResponses);
+    }
+
+    @PostMapping("offLineCourse")
+    public AdminResponse offLineCourse(@RequestBody JSONObject request){
+        Integer courseId = request.getInteger("courseId");
+        boolean b = courseApi.deleteCourseByAuthor(courseId);
+        if (b)
+            return AdminResponse.buildSuccess();
+        else
+            return AdminResponse.buildFaild();
+    }
+
+    @PostMapping("onLineCourse")
+    public AdminResponse onLineCourse(@RequestBody JSONObject request){
+        Integer courseId = request.getInteger("courseId");
+        boolean b = courseApi.recoveryCourseById(courseId);
+        if (b)
+            return AdminResponse.buildSuccess();
+        else
+            return AdminResponse.buildFaild();
+    }
+
 }

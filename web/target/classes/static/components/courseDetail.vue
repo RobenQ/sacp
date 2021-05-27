@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import {getCourseById,joinCourse,addDiscussion,getReply} from '../mjs/course.mjs'
+import {getCourseById, joinCourse, addDiscussion, getReply, checkUserCourse} from '../mjs/course.mjs'
 import courseVideo from "./courseVideo.vue";
 import courseResource from "./courseResource.vue";
 export default {
@@ -115,10 +115,11 @@ export default {
       this.discussionList = res2.result
     },
     async postReply(){
+      await checkUserCourse({courseId:this.$route.params.courseId})
       if (!this.$store.state.sacpId || this.$store.state.sacpId === ''){
         this.$message.warning("请登录！登陆后刷新页面。")
         return
-      }else if (this.textarea === ''){
+      }else if (this.textarea === '' || this.textarea.trim() === ''){
         this.$message.warning("评论内容不能为空！")
         return;
       }else{
@@ -158,7 +159,8 @@ export default {
         this.$message.warning("加入课程失败！")
       }
     },
-    goCommunicate(data){
+    async goCommunicate(data){
+      await checkUserCourse({courseId:this.$route.params.courseId})
       const newPage = this.$router.resolve({path: '/courseBlock/'+data})
       window.open(newPage.href,'_blank')
     }

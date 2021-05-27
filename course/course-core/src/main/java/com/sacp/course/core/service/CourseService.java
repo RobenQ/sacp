@@ -47,6 +47,23 @@ public class CourseService implements CourseApi {
     private MemberApi memberApi;
 
     @Override
+    public List<DiscussionResponse> getAllDiscussionBySacpId(String sacpId) {
+        List<Discussion> discussionBySacpId = discussionRepository.getAllDiscussionBySacpId(sacpId);
+        List<DiscussionResponse> responses = new ArrayList<>(discussionBySacpId.size());
+        for (Discussion discussion:discussionBySacpId) {
+            DiscussionResponse response = new DiscussionResponse();
+            BeanUtils.copyProperties(discussion,response);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    @Override
+    public boolean deleteDiscussionById(Integer discussionId) {
+        return discussionRepository.updateDiscussionById(discussionId);
+    }
+
+    @Override
     public List<CourseResponse> getHotCourse() {
         List<CourseInfo> allCourse = courseRepository.getHot5();
         List<CourseResponse>  courseResponses = new ArrayList<>(allCourse.size());
@@ -181,6 +198,13 @@ public class CourseService implements CourseApi {
     }
 
     @Override
+    public boolean recoveryCourseById(Integer courseId) {
+        courseRepository.recoveryCourseById(courseId);
+        forumApi.recoveryBlockByAuthor(courseId);
+        return true;
+    }
+
+    @Override
     public boolean deleteResByAuthor(Integer resourceId) {
         return courseResourcesRepository.deleteResById(resourceId);
     }
@@ -269,6 +293,20 @@ public class CourseService implements CourseApi {
     @Override
     public List<CourseResponse> getCourseByPage(CourseRequest request) {
         List<CourseInfo> allCourse = courseRepository.getCourseByPage(request.getSacpId(),request.getPageSize(),request.getCurrentPage());
+        List<CourseResponse>  courseResponses = new ArrayList<>(allCourse.size());
+        for (CourseInfo course:allCourse) {
+            CourseResponse response = new CourseResponse();
+            BeanUtils.copyProperties(course,response);
+            courseResponses.add(response);
+        }
+        return courseResponses;
+    }
+
+    @Override
+    public List<CourseResponse> getCourse(CourseRequest request) {
+        CourseInfo courseInfo = new CourseInfo();
+        BeanUtils.copyProperties(request,courseInfo);
+        List<CourseInfo> allCourse = courseRepository.getCourse(courseInfo);
         List<CourseResponse>  courseResponses = new ArrayList<>(allCourse.size());
         for (CourseInfo course:allCourse) {
             CourseResponse response = new CourseResponse();

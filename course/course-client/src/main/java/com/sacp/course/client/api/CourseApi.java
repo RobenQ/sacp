@@ -23,6 +23,8 @@ public interface CourseApi {
 
     public List<CourseResponse> getCourseByPage(CourseRequest request);
 
+    public List<CourseResponse> getCourse(CourseRequest request);
+
     public List<CourseResponse> getCourseByClassifyIdAndPage(CourseRequest request);
 
     public boolean joinCourse(Integer courseId,String sacpId);
@@ -38,6 +40,8 @@ public interface CourseApi {
     public List<CourseResponse> getNewCourse();
 
     public boolean deleteCourseByAuthor(Integer courseId);
+
+    public boolean recoveryCourseById(Integer courseId);
 
 
     //courseClassify==========================================================================
@@ -69,6 +73,10 @@ public interface CourseApi {
 
     //discussion==========================================================================
     public boolean addDiscussion(DiscussionRequest request);
+
+    public List<DiscussionResponse> getAllDiscussionBySacpId(String sacpId);
+
+    public boolean deleteDiscussionById(Integer discussionId);
 
     /**
      *

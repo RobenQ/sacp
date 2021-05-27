@@ -72,6 +72,15 @@ public class BlockRepository {
         return i==1?true:false;
     }
 
+    public boolean recoveryBlockCourseId(Integer courseId){
+        BlockInfo blockInfo = new BlockInfo();
+        blockInfo.setIsDelete(0);
+        BlockInfoExample example = new BlockInfoExample();
+        example.createCriteria().andCourseIdEqualTo(courseId);
+        int i = blockInfoMapper.updateByExampleSelective(blockInfo,example);
+        return i==1?true:false;
+    }
+
     public BlockInfo selectById(Integer id){
         BlockInfoExample example = new BlockInfoExample();
         example.createCriteria().andIdEqualTo(id);

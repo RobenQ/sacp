@@ -256,3 +256,21 @@ export function checkUserCourse(data){
         data
     })
 }
+
+export function getCourseReplyBySacpId(data){
+    return request({
+        url:"/getCourseReplyBySacpId",
+        method:"get",
+        params:{
+            sacpId:data
+        }
+    })
+}
+
+export function deleteCourseReply(data){
+    return request({
+        url:"/deleteCourseReply",
+        method:"post",
+        data
+    })
+}

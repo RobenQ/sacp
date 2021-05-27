@@ -1,6 +1,6 @@
 <template>
 <div id="co-container">
-  <el-carousel class="co-img" height="200px" arrow="always" indicator-position="outside">
+  <el-carousel class="co-img" height="200px" arrow="always" interval="4000" indicator-position="outside">
     <el-carousel-item v-for="item in urls" :key="item.id">
       <el-tooltip placement="top">
         <template #content>
@@ -31,7 +31,7 @@
                 </span>
             <div class="post-footer">
               <div class="post-footer-left">
-                <div class="post-block1"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>{{ item.block.blockName }}</div></div>
+                <div class="post-block1" @click="goBlock(item.block.courseId,item.block.id)"><i class="el-icon-location-information" style="margin-right: 3px"></i><div>{{ item.block.blockName }}</div></div>
                 <div v-if="item.post.classifyId === 1" class="post-block2"><i class="el-icon-sugar" style="margin-right: 3px"></i><div>提问</div></div>
                 <div v-if="item.post.classifyId === 2" class="post-block3"><i class="el-icon-bell" style="margin-right: 3px"></i><div>展示</div></div>
               </div>
@@ -73,7 +73,7 @@
 
 <script>
 
-import {getJoinMb, getNew} from "./mjs/course.mjs";
+import {checkUserCourse, getJoinMb, getNew} from "./mjs/course.mjs";
 import {checkAllowPost, getNewTop20, likePost, unLikePost} from "./mjs/forum.mjs";
 
 export default {
@@ -93,23 +93,22 @@ export default {
   methods:{
     async init(){
       if (this.$store.state.sacpId === ''){
-        const res2 = await getNew()
-        this.urls = res2.result
         this.islogin = false;
-        const res3 = await getNewTop20()
+        const res3 = await getNewTop20(this.$store.state.sacpId)
         this.postList = res3.result
       }else {
-        const res2 = await getNew()
-        this.urls = res2.result
         const res = await getJoinMb(this.$store.state.sacpId)
         this.mbList = res.result
         this.islogin = true;
-        const res3 = await getNewTop20()
+        const res3 = await getNewTop20(this.$store.state.sacpId)
         this.postList = res3.result
       }
+      const res2 = await getNew()
+      this.urls = res2.result
     },
-    goBlock(data){
-      const newPage = this.$router.resolve({path: '/courseBlock/'+data})
+    async goBlock(data,data2){
+      await checkUserCourse({courseId:data})
+      const newPage = this.$router.resolve({path: '/courseBlock/'+data2})
       window.open(newPage.href,'_blank')
       // this.$router.push({path: '/courseDetail'})
     },
@@ -296,6 +295,10 @@ export default {
   color: #fff;
   background-color: #00A8F3;
   border-radius: 13px;
+}
+
+.post-block1:hover{
+  cursor: pointer;
 }
 
 .post-block2{

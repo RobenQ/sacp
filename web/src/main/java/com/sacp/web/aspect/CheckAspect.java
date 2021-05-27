@@ -62,8 +62,8 @@ public class CheckAspect {
             return point.proceed();
         }else {
             response.setCode(401);
-            response.setMessage("加入课程后才能观看或下载！");
-            response.setResult("加入课程后才能观看或下载！");
+            response.setMessage("需要先加入课程！");
+            response.setResult("需要先加入课程！");
             return response;
         }
     }

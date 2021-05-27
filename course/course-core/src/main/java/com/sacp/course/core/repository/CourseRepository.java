@@ -28,6 +28,15 @@ public class CourseRepository {
         return i==1?true:false;
     }
 
+    public boolean recoveryCourseById(Integer courseId){
+        CourseInfoExample example = new CourseInfoExample();
+        example.createCriteria().andIdEqualTo(courseId);
+        CourseInfo courseInfo = new CourseInfo();
+        courseInfo.setIsDelete(0);
+        int i = courseInfoMapper.updateByExampleSelective(courseInfo,example);
+        return i==1?true:false;
+    }
+
     public long countCourse(){
         CourseInfoExample example = new CourseInfoExample();
         example.createCriteria().andIdIsNotNull();
@@ -188,6 +197,20 @@ public class CourseRepository {
     public List<CourseInfo> getCourseByPage(String sacpId,int pagesize,int currentPage){
         int start = (currentPage-1)*pagesize;
         return courseInfoMapper.selectByPage(sacpId,start,pagesize);
+    }
+
+    public List<CourseInfo> getCourse(CourseInfo courseInfo){
+        CourseInfoExample example = new CourseInfoExample();
+        CourseInfoExample.Criteria criteria = example.createCriteria();
+        if (courseInfo.getClassifyId()!=null && courseInfo.getClassifyId()!=0)
+            criteria.andClassifyIdEqualTo(courseInfo.getClassifyId());
+        if (courseInfo.getSacpId()!=null && !("".equals(courseInfo.getSacpId())))
+            criteria.andSacpIdEqualTo(courseInfo.getSacpId());
+        if (courseInfo.getCourseName()!=null && !("".equals(courseInfo.getCourseName())))
+            criteria.andCourseNameEqualTo(courseInfo.getCourseName());
+        if (courseInfo.getCreateTime()!=null)
+            criteria.andCreateTimeEqualTo(courseInfo.getCreateTime());
+        return courseInfoMapper.selectByExample(example);
     }
 
     public List<CourseInfo> getCourseByPage(Integer classifyId,int pagesize,int currentPage){

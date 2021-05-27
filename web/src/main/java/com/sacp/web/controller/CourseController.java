@@ -10,6 +10,7 @@ import com.sacp.course.client.request.DiscussionRequest;
 import com.sacp.course.client.response.*;
 import com.sacp.forum.client.api.ForumApi;
 import com.sacp.forum.client.response.BlockResponse;
+import com.sacp.forum.client.response.ReplyResponse;
 import com.sacp.web.annotation.CheckMemberCourse;
 import com.sacp.web.response.CourseInfoResponse;
 import com.sacp.web.response.UserResponse;
@@ -259,6 +260,25 @@ public class CourseController {
             return UserResponse.buildSuccess("已退出课程！");
         else
             return UserResponse.buildSuccess("退出课程失败！");
+    }
+
+    @RequiresUser
+    @GetMapping("getCourseReplyBySacpId")
+    public UserResponse getCourseReplyBySacpId(@RequestParam String sacpId){
+        List<DiscussionResponse> responses = courseApi.getAllDiscussionBySacpId(sacpId);
+        return UserResponse.buildSuccess(responses);
+    }
+
+    @RequiresUser
+    @PostMapping("deleteCourseReply")
+    public UserResponse getCourseReplyBySacpId(@RequestBody JSONObject request){
+        String sacpId = request.getString("sacpId");
+        Integer replyId = request.getInteger("replyId");
+        boolean b = courseApi.deleteDiscussionById(replyId);
+        if (b)
+            return UserResponse.buildSuccess("删除成功！");
+        else
+            return UserResponse.buildSuccess("删除失败！");
     }
 
     @CheckMemberCourse

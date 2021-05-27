@@ -263,6 +263,11 @@ public class ForumService implements ForumApi {
     }
 
     @Override
+    public boolean recoveryBlockByAuthor(Integer courseId) {
+        return blockRepository.recoveryBlockCourseId(courseId);
+    }
+
+    @Override
     public Integer createBlock(BlockRequest request) {
         BlockInfo blockInfo = new BlockInfo();
         BeanUtils.copyProperties(request,blockInfo);

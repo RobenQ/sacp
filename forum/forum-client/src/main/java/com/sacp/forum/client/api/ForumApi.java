@@ -53,6 +53,8 @@ public interface ForumApi {
      */
     public boolean deleteBlockByAuthor(Integer courseId);
 
+    public boolean recoveryBlockByAuthor(Integer courseId);
+
 
     //memberBlock===================================================================
 

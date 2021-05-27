@@ -37,10 +37,13 @@ export function getTop5(data1,data2){
     })
 }
 
-export function getNewTop20(data1,data2){
+export function getNewTop20(data1){
     return request({
         url:"/getNewTop20",
-        method:"get"
+        method:"get",
+        params:{
+            sacpId:data1
+        }
     })
 }
 

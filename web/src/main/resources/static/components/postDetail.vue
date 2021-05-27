@@ -127,7 +127,7 @@ export default {
         })
         return
       }
-      if (this.textarea===''){
+      if (this.textarea==='' || this.textarea.trim() === ''){
         this.$message({
           showClose: false,
           message: '回复内容不能为空!',

@@ -59,8 +59,32 @@ public class CourseService implements CourseApi {
     }
 
     @Override
+    public List<DiscussionResponse> getDiscussion(DiscussionRequest request,List<Date> timeRange) {
+        Discussion discussion = new Discussion();
+        BeanUtils.copyProperties(request,discussion);
+        if (timeRange.size()<2){
+            timeRange.add(0,null);
+            timeRange.add(1,null);
+        }
+        List<Discussion> discussion1 = discussionRepository.getDiscussion(discussion,
+                timeRange.get(0), timeRange.get(1));
+        List<DiscussionResponse> responses = new ArrayList<>(discussion1.size());
+        for (Discussion discussion2:discussion1) {
+            DiscussionResponse response = new DiscussionResponse();
+            BeanUtils.copyProperties(discussion2,response);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    @Override
     public boolean deleteDiscussionById(Integer discussionId) {
         return discussionRepository.updateDiscussionById(discussionId);
+    }
+
+    @Override
+    public boolean recoveryDiscussionById(Integer discussionId) {
+        return discussionRepository.recoveryDiscussionById(discussionId);
     }
 
     @Override

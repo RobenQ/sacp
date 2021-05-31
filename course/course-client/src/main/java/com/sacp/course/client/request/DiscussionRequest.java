@@ -93,4 +93,19 @@ public class DiscussionRequest implements Serializable {
     public void setContext(String context) {
         this.context = context == null ? null : context.trim();
     }
+
+    @Override
+    public String toString() {
+        return "DiscussionRequest{" +
+                "id=" + id +
+                ", courseId=" + courseId +
+                ", sacpId='" + sacpId + '\'' +
+                ", memberNickname='" + memberNickname + '\'' +
+                ", memberAvatar='" + memberAvatar + '\'' +
+                ", likesNumber=" + likesNumber +
+                ", createTime=" + createTime +
+                ", isDelete=" + isDelete +
+                ", context='" + context + '\'' +
+                '}';
+    }
 }

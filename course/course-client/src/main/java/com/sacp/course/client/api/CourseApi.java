@@ -3,6 +3,7 @@ package com.sacp.course.client.api;
 import com.sacp.course.client.request.*;
 import com.sacp.course.client.response.*;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CourseApi {
@@ -76,7 +77,11 @@ public interface CourseApi {
 
     public List<DiscussionResponse> getAllDiscussionBySacpId(String sacpId);
 
+    public List<DiscussionResponse> getDiscussion(DiscussionRequest request, List<Date> timeRange);
+
     public boolean deleteDiscussionById(Integer discussionId);
+
+    public boolean recoveryDiscussionById(Integer discussionId);
 
     /**
      *

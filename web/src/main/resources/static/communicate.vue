@@ -61,7 +61,7 @@
           <el-menu-item index="1" disabled>
             <template #title><span style="color:#e60a0a;font-size: 18px;font-weight: 800">我加入的课程</span></template>
           </el-menu-item>
-          <el-menu-item v-for="(item,index) in mbList" index="index+1" @click="goBlock(item.id)">
+          <el-menu-item v-for="(item,index) in mbList" index="index+1" @click="goBlock(item.courseId,item.id)">
             <template #title>{{ item.blockName }}</template>
           </el-menu-item>
         </el-menu>

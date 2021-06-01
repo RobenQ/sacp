@@ -88,8 +88,32 @@ public class ForumService implements ForumApi {
     }
 
     @Override
+    public List<PostResponse> getPost(PostRequest request, List<Date> timeRange) {
+        Post post = new Post();
+        BeanUtils.copyProperties(request,post);
+        if (timeRange.size()<2){
+            timeRange.add(0,null);
+            timeRange.add(1,null);
+        }
+        List<PostWithBLOBs> posts = postRepository.getPost(post,
+                timeRange.get(0), timeRange.get(1));
+        List<PostResponse> responses = new ArrayList<>(posts.size());
+        for (PostWithBLOBs post1:posts) {
+            PostResponse response = new PostResponse();
+            BeanUtils.copyProperties(post1,response);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    @Override
     public boolean deletePost(Integer postId) {
         return postRepository.deletePost(postId);
+    }
+
+    @Override
+    public boolean recoveryPost(Integer postId) {
+        return postRepository.recoveryPost(postId);
     }
 
     @Override
@@ -142,6 +166,26 @@ public class ForumService implements ForumApi {
     public PostResponse getPostById(Integer postId) {
         PostWithBLOBs byId = postRepository.getById(postId);
         postRepository.updateViewer(postId);
+        PostResponse post = new PostResponse();
+        post.setId(byId.getId());
+        post.setSacpId(byId.getSacpId());
+        post.setBlockId(byId.getBlockId());
+        post.setTitle(byId.getTitle());
+        post.setTxt(byId.getTxt());
+        post.setContext(byId.getContext());
+        post.setClassifyId(byId.getClassifyId());
+        post.setOrders(byId.getOrders());
+        post.setViewerNumber(byId.getViewerNumber());
+        post.setReplyNumber(byId.getReplyNumber());
+        post.setLikesNumber(byId.getLikesNumber());
+        post.setCreateTime(byId.getCreateTime());
+        post.setIdDelete(byId.getIdDelete());
+        return post;
+    }
+
+    @Override
+    public PostResponse getPostById2(Integer postId) {
+        PostWithBLOBs byId = postRepository.getById2(postId);
         PostResponse post = new PostResponse();
         post.setId(byId.getId());
         post.setSacpId(byId.getSacpId());

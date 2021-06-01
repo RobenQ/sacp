@@ -144,6 +144,15 @@ public class PostRepository {
         return i==1?true:false;
     }
 
+    public boolean recoveryPost(Integer postId){
+        PostExample postExample = new PostExample();
+        postExample.createCriteria().andIdEqualTo(postId);
+        PostWithBLOBs post = new PostWithBLOBs();
+        post.setIdDelete(0);
+        int i = postMapper.updateByExampleSelective(post,postExample);
+        return i==1?true:false;
+    }
+
     public List<Post> getPostTop5BySacpId(String sacpId){
         return postMapper.getPostTop5BySacpId(sacpId);
     }
@@ -192,6 +201,13 @@ public class PostRepository {
         return postWithBLOBs.get(0);
     }
 
+    public PostWithBLOBs getById2(Integer postId){
+        PostExample example = new PostExample();
+        example.createCriteria().andIdEqualTo(postId);
+        List<PostWithBLOBs> postWithBLOBs = postMapper.selectByExampleWithBLOBs(example);
+        return postWithBLOBs.get(0);
+    }
+
     public List<Post> getTop5(Integer blockId){
         return postMapper.getPostTop5(blockId);
     }
@@ -213,5 +229,17 @@ public class PostRepository {
     public List<Post> getPostByPage2(String sacpId,Integer currentPage,Integer pageSize){
         Integer start = (currentPage-1)*pageSize+5;
         return postMapper.getPostByPage2(sacpId, start, pageSize);
+    }
+
+    public List<PostWithBLOBs> getPost(Post post, Date startTime,Date endTime){
+        PostExample example = new PostExample();
+        PostExample.Criteria criteria = example.createCriteria();
+        if (post.getBlockId()!=null && post.getBlockId()!=0)
+            criteria.andBlockIdEqualTo(post.getBlockId());
+        if (post.getSacpId()!=null && !(post.getSacpId().isEmpty()))
+            criteria.andSacpIdEqualTo(post.getSacpId());
+        if (startTime!=null && endTime!=null)
+            criteria.andCreateTimeBetween(startTime,endTime);
+        return postMapper.selectByExampleWithBLOBs(example);
     }
 }

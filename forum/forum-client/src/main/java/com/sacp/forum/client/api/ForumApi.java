@@ -7,6 +7,7 @@ import com.sacp.forum.client.response.BlockResponse;
 import com.sacp.forum.client.response.PostResponse;
 import com.sacp.forum.client.response.ReplyResponse;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -137,6 +138,13 @@ public interface ForumApi {
     public PostResponse getPostById(Integer postId);
 
     /**
+     * 根据帖子ID获取帖子信息
+     * @param postId 帖子ID
+     * @return 查询的帖子信息
+     */
+    public PostResponse getPostById2(Integer postId);
+
+    /**
      * 回复帖子
      * @param request 回复帖子请求对象
      * @return 是否回复成功
@@ -172,11 +180,20 @@ public interface ForumApi {
     public boolean deletePost(Integer postId);
 
     /**
+     * 恢复帖子
+     * @param postId 帖子ID
+     * @return 是否恢复成功
+     */
+    public boolean recoveryPost(Integer postId);
+
+    /**
      * 删除回复
      * @param replyId 回复ID
      * @return 是否删除成功
      */
     public boolean deleteReply(Integer replyId);
+
+    public List<PostResponse> getPost(PostRequest request, List<Date> timeRange);
 
 
     //post like===================================================================

@@ -1,5 +1,6 @@
 <template>
   <div style="width: 600px;height: 400px">
+<!--    视频播放器组件，视频封面和视频地址通过父组件传入，在props域中-->
     <div id="video" style="width: 100%;height: 100%;"></div>
   </div>
 </template>

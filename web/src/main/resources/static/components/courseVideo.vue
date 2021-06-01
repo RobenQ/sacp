@@ -1,5 +1,6 @@
 <template>
 <div class="course-video-container">
+<!--  课程视频列表页-->
   <div class="video-list-wrap" v-for="(video,index) in videoList" :key="video.id">
     <el-card class="box-card list" shadow="hover" style="width: 100%" @click="play(video.videoUrl)">
       <div class="video-list">

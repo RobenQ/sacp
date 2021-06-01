@@ -1,5 +1,6 @@
 <template>
   <div class="course-resource-container">
+<!--    课程学习资料列表页-->
     <div class="video-list-wrap" v-for="(res,index) in resourceList" :key="res">
       <el-card class="box-card list" shadow="hover" style="width: 100%">
         <div class="video-list">

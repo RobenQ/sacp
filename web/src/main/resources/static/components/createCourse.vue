@@ -1,5 +1,6 @@
 <template>
   <div id="courseList-wrap">
+<!--    用户创建的课程列表页-->
     <div class="create">
       <el-button type="warning" @click="createVisible = true">创建课程</el-button>
     </div>

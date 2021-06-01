@@ -1,5 +1,6 @@
 <template>
 <div id="co-container">
+<!--  互动社区主页，分为上、左、右结构，上为轮播图，展示最新创建的5个课程版块，左为最新发表的20个帖子，右为用户关注的课程版块列表，只展示最新关注的10个-->
   <el-carousel class="co-img" height="200px" arrow="always" interval="4000" indicator-position="outside">
     <el-carousel-item v-for="item in urls" :key="item.id">
       <el-tooltip placement="top">

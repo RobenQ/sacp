@@ -1,5 +1,6 @@
 <template>
 <div>
+<!--  个人中心我的课程页面-->
   <el-tabs v-model="activeName">
     <el-tab-pane label="我参加的" name="first">
       <joined-course></joined-course>

@@ -1,5 +1,6 @@
 <template>
   <div class="info-container">
+<!--    个人中心我的信息页面-->
     <div class="face-wrap">
       <el-avatar :size="150" :src="member.avatar"></el-avatar>
     </div>

@@ -262,4 +262,28 @@ public class UserController {
         }
     }
 
+    @RequiresUser
+    @PostMapping("modifyAvatar")
+    public UserResponse modifyAvatar(@RequestBody JSONObject object) throws NoSuchAlgorithmException {
+        String sacpId = object.getString("sacpId");
+        String avatar = object.getString("avatar");
+        MemberRequest request = new MemberRequest();
+        request.setSacpId(sacpId);
+        List<MemberResponse> account = memberApi.getAccount(request);
+        if (account.size()==0)
+            return UserResponse.buildSuccess("账号不存在");
+        else{
+
+            if (!avatar.isEmpty()){
+                boolean b = memberApi.modifyAvatar(sacpId, avatar);
+                if (b)
+                    return UserResponse.buildSuccess("头像更换成功！");
+                else
+                    return UserResponse.buildSuccess("头像更换失败！");
+            }else{
+                return UserResponse.buildSuccess("头像更换失败！");
+            }
+        }
+    }
+
 }

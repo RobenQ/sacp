@@ -43,6 +43,11 @@ public class MemberService implements MemberApi {
     }
 
     @Override
+    public boolean modifyAvatar(String sacpId, String avatar) {
+        return memberRepository.updateAvatarBysacpId(sacpId,avatar);
+    }
+
+    @Override
     public boolean modifyStatus(String sacpId, Integer status) {
         return memberRepository.updateStatusBysacpId(sacpId,status);
     }

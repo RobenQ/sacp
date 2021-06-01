@@ -25,3 +25,11 @@ export function modifyPassword(data){
         data
     })
 }
+
+export function modifyAvatar(data){
+    return request({
+        url:"/modifyAvatar",
+        method:"post",
+        data
+    })
+}

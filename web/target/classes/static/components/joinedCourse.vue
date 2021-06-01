@@ -1,5 +1,6 @@
 <template>
   <div id="courseList-wrap">
+<!--    用户已经加入的课程列表页-->
     <div id="course-container">
 <!--      课程容器-->
       <div class="card-wrap" v-for="item in courseList" :key="item.id">

@@ -1,5 +1,6 @@
 <template>
   <div>
+<!--    个人中心我的互动页面-->
     <el-tabs v-model="activeName">
       <el-tab-pane label="我的发布" name="first">
         <div class="post-list" v-infinite-scroll="load">

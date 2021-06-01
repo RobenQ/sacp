@@ -1,5 +1,6 @@
 <template>
   <div class="page-not-found">
+<!--    404页面，当请求的路由不存在是显示该页面-->
     <el-image
         style="width: 300px; height: 300px"
         src="http://sacp.moeneko.top/404.png"

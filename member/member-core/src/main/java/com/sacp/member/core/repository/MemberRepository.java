@@ -32,6 +32,16 @@ public class MemberRepository {
         return i==1?true:false;
     }
 
+    public boolean updateAvatarBysacpId(String sacpId,String avatar){
+        AccountExample example = new AccountExample();
+        example.createCriteria().andSacpIdEqualTo(sacpId);
+        Account account = new Account();
+        account.setAvatar(avatar);
+        account.setModifyTime(new Date());
+        int i = accountMapper.updateByExampleSelective(account, example);
+        return i==1?true:false;
+    }
+
     public boolean updateStatusBysacpId(String sacpId,Integer status){
         AccountExample example = new AccountExample();
         example.createCriteria().andSacpIdEqualTo(sacpId);

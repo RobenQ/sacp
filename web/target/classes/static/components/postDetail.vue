@@ -1,6 +1,6 @@
 <template>
   <div id="post-container">
-
+<!--创作内容详情页-->
     <div class="post-detail">
 
       <div class="post-detail-left">

@@ -1,5 +1,6 @@
 <template>
 <div id="container" class="container">
+<!--  学习中心页面，为上、左、右结构，上为轮播图，展示学习人数最多的的5个课程，左为课程分类列表，右为选中的课程分类对应的课程列表-->
   <el-carousel class="img-wap" height="200px" interval="4000" type="card">
     <el-carousel-item v-for="item in urls" :key="item.id">
       <el-tooltip placement="top">

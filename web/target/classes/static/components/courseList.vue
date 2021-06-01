@@ -1,6 +1,6 @@
 <template>
-<!--  学习中心的课程列表，通过路由参数传递课程分类ID，展示对应分类的课程列表-->
   <div id="courseList-wrap">
+    <!--  学习中心的课程列表，通过路由参数传递课程分类ID，展示对应分类的课程列表-->
     <div id="course-container">
       <div class="card-wrap" v-for="item in courseList">
         <el-card :body-style="{ padding: '0px' }" shadow="hover" class="card">

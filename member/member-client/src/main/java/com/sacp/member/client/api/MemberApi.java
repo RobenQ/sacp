@@ -44,6 +44,14 @@ public interface MemberApi {
     public boolean modifyPassword(String sacpId,String newPassword);
 
     /**
+     * 修改用户头像
+     * @param sacpId sacp平台用户ID
+     * @param avatar 新头像地址
+     * @return 密码是否修改成功
+     */
+    public boolean modifyAvatar(String sacpId,String avatar);
+
+    /**
      * 修改用户账户状态
      * @param sacpId sacp平台用户ID
      * @param status 新状态

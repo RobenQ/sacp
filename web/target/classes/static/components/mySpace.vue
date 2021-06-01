@@ -1,5 +1,6 @@
 <template>
   <div class="space-container">
+<!--    个人中心首页-->
     <div class="sapce-wrap">
       <div class="space-left">
         <el-card class="box-card">

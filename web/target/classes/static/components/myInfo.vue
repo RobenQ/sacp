@@ -1,7 +1,20 @@
 <template>
   <div class="info-container">
+<!--    个人中心我的信息页面-->
     <div class="face-wrap">
-      <el-avatar :size="150" :src="member.avatar"></el-avatar>
+
+      <el-upload
+          class="upload-demo"
+          action="https://upload-z1.qiniup.com"
+          auto-upload="false"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+          :http-request="uploadRequest">
+        <el-tooltip content="点击更换头像" placement="top">
+          <el-avatar :size="150" :src="member.avatar"></el-avatar>
+        </el-tooltip>
+      </el-upload>
     </div>
     <div class="nickName">
       {{member.nickName}}
@@ -37,7 +50,7 @@
 </template>
 
 <script>
-import {getUserInfo,modifyPassword} from '../mjs/user.mjs'
+import {getUserInfo,modifyPassword,modifyAvatar} from '../mjs/user.mjs'
 export default {
   name: "myInfo",
   data(){
@@ -49,7 +62,8 @@ export default {
         np:'',
         np2:'',
         op:''
-      }
+      },
+      avatar:''
     }
   },
   created(){
@@ -105,7 +119,58 @@ export default {
         duration:3000
       })
       this.dialogVisible = false
-    }
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+        return false
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+        return false
+      }
+      return true
+    },
+    async handleAvatarSuccess(res, file) {
+      this.$message.success('头像更换成功!')
+    },
+    async uploadRequest(request){
+      axios.post("/upload/avatar").then(res=>{
+        console.log(res.data)
+        const putExtra = {}
+        const config = {}
+        const observable = qiniu.upload(request.file, new Date().format("yyyyMMddHHmmss")+request.file.name, res.data, putExtra, config)
+        // const subscription = observable.subscribe(observer) // 上传开始
+        // console.log(subscription)
+        const subscription = observable.subscribe(next=>{
+              console.log("正在上传......")
+            },
+            error=>{
+              this.form2.avatar = ''
+              console.log(error)
+            },
+            complete=>{
+              let hash = complete.hash;
+              let key = complete.key;
+              this.avatar = "http://sacp.moeneko.top/" + key;
+              const datas = {
+                sacpId: this.$store.state.sacpId,
+                avatar:this.avatar
+              }
+              modifyAvatar(datas)
+              this.$store.commit('setAvatar',this.avatar)
+              Cookies.set("avatar",this.avatar,{ expires: 7 })
+              this.member.avatar = this.avatar
+            })
+        return true
+      }).catch(e=>{
+        this.$message.error('上传头像失败!');
+        return false
+      })
+    },
   }
 }
 </script>

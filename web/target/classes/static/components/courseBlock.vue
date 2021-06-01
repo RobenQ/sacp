@@ -1,5 +1,6 @@
 <template>
 <div id="block-container">
+<!--  课程版块详情页，展示某一个课程版块的信息和创作内容-->
   <div class="course-block-wrap">
     <el-card shadow="always" class="block-card">
       <div class="block-info">

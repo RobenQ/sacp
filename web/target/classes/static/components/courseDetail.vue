@@ -1,5 +1,6 @@
 <template>
 <div id="courseDetail-wrap">
+<!--  课程信息详情页-->
   <div class="courseInfo-warp">
     <div class="course-face">
       <el-image

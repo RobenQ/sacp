@@ -135,6 +135,15 @@ public class PostRepository {
         return i==1?true:false;
     }
 
+    public boolean recoveryReply(Integer replyId){
+        ReplyExample replyExample = new ReplyExample();
+        replyExample.createCriteria().andIdEqualTo(replyId);
+        Reply reply = new Reply();
+        reply.setIsDelete(0);
+        int i = replyMapper.updateByExampleSelective(reply,replyExample);
+        return i==1?true:false;
+    }
+
     public boolean deletePost(Integer postId){
         PostExample postExample = new PostExample();
         postExample.createCriteria().andIdEqualTo(postId);
@@ -241,5 +250,17 @@ public class PostRepository {
         if (startTime!=null && endTime!=null)
             criteria.andCreateTimeBetween(startTime,endTime);
         return postMapper.selectByExampleWithBLOBs(example);
+    }
+
+    public List<Reply> getPostReply(Reply reply, Date startTime,Date endTime){
+        ReplyExample example = new ReplyExample();
+        ReplyExample.Criteria criteria = example.createCriteria();
+        if (reply.getPostId()!=null && reply.getPostId()!=0)
+            criteria.andPostIdEqualTo(reply.getPostId());
+        if (reply.getSacpId()!=null && !(reply.getSacpId().isEmpty()))
+            criteria.andSacpIdEqualTo(reply.getSacpId());
+        if (startTime!=null && endTime!=null)
+            criteria.andCreateTimeBetween(startTime,endTime);
+        return replyMapper.selectByExampleWithBLOBs(example);
     }
 }

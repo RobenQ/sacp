@@ -7,7 +7,9 @@ import com.sacp.course.client.request.CourseRequest;
 import com.sacp.course.client.response.CourseResponse;
 import com.sacp.forum.client.api.ForumApi;
 import com.sacp.forum.client.request.PostRequest;
+import com.sacp.forum.client.request.ReplyRequest;
 import com.sacp.forum.client.response.PostResponse;
+import com.sacp.forum.client.response.ReplyResponse;
 import com.sacp.member.client.api.MemberApi;
 import com.sacp.member.client.response.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +62,30 @@ public class ForumController {
         return AdminResponse.buildSuccess(postResponses);
     }
 
+    @PostMapping("searchPostReply")
+    public AdminResponse searchPostReply(@RequestBody JSONObject request){
+        int postId = request.getIntValue("postId");
+        String nickName = request.getString("author");
+        JSONArray createTime1 = request.getJSONArray("createTime");
+        List<Date> createTime = null;
+        if (createTime1!=null){
+            createTime = createTime1.toJavaList(Date.class);
+        }
+        String sacpId = null;
+        if (nickName!=null && !("".equals(nickName))){
+            LoginResponse authInfo = memberApi.getAuthInfo(nickName);
+            if (authInfo!=null)
+                sacpId = authInfo.getSacpId();
+        }
+        ReplyRequest replyRequest = new ReplyRequest();
+        if (sacpId!=null)
+            replyRequest.setSacpId(sacpId);
+        if (postId!=0)
+            replyRequest.setPostId(postId);
+        List<ReplyResponse> postResponses = forumApi.getPostReply(replyRequest,createTime);
+        return AdminResponse.buildSuccess(postResponses);
+    }
+
     @PostMapping("offLinePost")
     public AdminResponse offLinePost(@RequestBody JSONObject request){
         int postId = request.getIntValue("postId");
@@ -71,10 +97,32 @@ public class ForumController {
         }
     }
 
+    @PostMapping("offLinePostReply")
+    public AdminResponse offLinePostReply(@RequestBody JSONObject request){
+        int replyId = request.getIntValue("replyId");
+        boolean b = forumApi.deleteReply(replyId);
+        if (b){
+            return AdminResponse.buildSuccess();
+        } else {
+            return AdminResponse.buildFaild();
+        }
+    }
+
     @PostMapping("onLinePost")
     public AdminResponse onLinePost(@RequestBody JSONObject request){
         int postId = request.getIntValue("postId");
         boolean b = forumApi.recoveryPost(postId);
+        if (b){
+            return AdminResponse.buildSuccess();
+        } else {
+            return AdminResponse.buildFaild();
+        }
+    }
+
+    @PostMapping("onLinePostReply")
+    public AdminResponse onLinePostReply(@RequestBody JSONObject request){
+        int replyId = request.getIntValue("replyId");
+        boolean b = forumApi.recoveryReply(replyId);
         if (b){
             return AdminResponse.buildSuccess();
         } else {

@@ -193,8 +193,11 @@ public interface ForumApi {
      */
     public boolean deleteReply(Integer replyId);
 
+    public boolean recoveryReply(Integer replyId);
+
     public List<PostResponse> getPost(PostRequest request, List<Date> timeRange);
 
+    public List<ReplyResponse> getPostReply(ReplyRequest request, List<Date> timeRange);
 
     //post like===================================================================
     public boolean likePost(String sacpId,Integer postId);

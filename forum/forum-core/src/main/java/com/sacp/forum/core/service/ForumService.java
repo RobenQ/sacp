@@ -88,6 +88,11 @@ public class ForumService implements ForumApi {
     }
 
     @Override
+    public boolean recoveryReply(Integer replyId) {
+        return postRepository.recoveryReply(replyId);
+    }
+
+    @Override
     public List<PostResponse> getPost(PostRequest request, List<Date> timeRange) {
         Post post = new Post();
         BeanUtils.copyProperties(request,post);
@@ -101,6 +106,25 @@ public class ForumService implements ForumApi {
         for (PostWithBLOBs post1:posts) {
             PostResponse response = new PostResponse();
             BeanUtils.copyProperties(post1,response);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    @Override
+    public List<ReplyResponse> getPostReply(ReplyRequest request, List<Date> timeRange) {
+        Reply reply = new Reply();
+        BeanUtils.copyProperties(request,reply);
+        if (timeRange.size()<2){
+            timeRange.add(0,null);
+            timeRange.add(1,null);
+        }
+        List<Reply> replies = postRepository.getPostReply(reply,
+                timeRange.get(0), timeRange.get(1));
+        List<ReplyResponse> responses = new ArrayList<>(replies.size());
+        for (Reply reply1:replies) {
+            ReplyResponse response = new ReplyResponse();
+            BeanUtils.copyProperties(reply1,response);
             responses.add(response);
         }
         return responses;

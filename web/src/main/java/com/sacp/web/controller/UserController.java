@@ -4,12 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.qiniu.util.StringUtils;
 import com.sacp.member.client.api.IPTransferApi;
 import com.sacp.member.client.api.MemberApi;
+import com.sacp.member.client.request.IpRecordeRequest;
 import com.sacp.member.client.request.MemberRequest;
 import com.sacp.member.client.response.LoginResponse;
 import com.sacp.member.client.response.MemberResponse;
 import com.sacp.member.client.util.SecurityUtil;
 import com.sacp.permission.client.api.RoleApi;
 import com.sacp.web.response.UserResponse;
+import com.sacp.web.util.CheckIp;
 import com.sacp.web.util.OffLineUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -63,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public UserResponse login(@RequestBody JSONObject user) throws Exception {
+    public UserResponse login(@RequestBody JSONObject user,HttpServletRequest request) throws Exception {
         UserResponse userResponse = new UserResponse();
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = null;
@@ -111,6 +113,13 @@ public class UserController {
 
                 userResponse.setResult(memberResponse);
                 log.info("自动登录成功：{}",subject.getPrincipal());
+                try{
+                    String ip = CheckIp.getIP(request);
+                    IpRecordeRequest ipRecordeRequest = new IpRecordeRequest(ip,sacpId);
+                    ipTransferApi.recoreLogin(ipRecordeRequest);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 return userResponse;
 
             }

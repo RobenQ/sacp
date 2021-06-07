@@ -4,6 +4,10 @@ import java.util.Calendar;
 import java.util.Random;
 
 public class SacpIdUtil {
+    /**
+     * 生成SacpID：年份后两位+三位随机数+当前时间戳
+     * @return SacpID
+     */
     public static String generateSacpId(){
         int weekYear = Calendar.getInstance().getWeekYear();
         String header =  String.valueOf(weekYear).substring(2);

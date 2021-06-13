@@ -15,6 +15,11 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        String address = "国家|大区|省份|城市|运营商";
+        String[] addressList = address.split("\\|");
+        for (String str:addressList
+             ) {
+            System.out.println(str);
+        }
     }
 }

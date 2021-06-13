@@ -334,7 +334,7 @@ export default {
         blockId:this.blckInfo.id,
         classifyId:this.classifyId,
         sacpId:this.$store.state.sacpId,
-        txt:this.txt,
+        txt:this.txt.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&nbsp;/g, " "),
         context:this.textarea
       }
       await postPost(datas)

@@ -172,7 +172,7 @@ export default {
 }
 
 .card-wrap{
-  width: 225px;
+  width: 218px;
 }
 
 .time {

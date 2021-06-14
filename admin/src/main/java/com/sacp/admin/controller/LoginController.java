@@ -16,8 +16,10 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -104,6 +106,8 @@ public class LoginController {
         token.setRememberMe(true);
         try{
             subject.login(token);
+            if (!subject.hasRole("admin"))
+                throw new AuthorizationException("你没有管理员权限，无法进入管理后台！");
             log.info("账号：{} 登录成功",subject.getPrincipal());
             adminResponse.setCode(200);
             adminResponse.setToken(subject.getSession().getId().toString());
@@ -138,6 +142,14 @@ public class LoginController {
                 adminResponse.setMessage("该账号被冻结！");
                 adminResponse.setStatus("faild");
                 adminResponse.setResult("该账号被冻结");
+                log.info("该账号被冻结");
+                return adminResponse;
+            }else if (AuthorizationException.class.getName().equals(exceptionClassName)) {
+                log.info("没有管理员权限，无法进入管理后台！");
+                adminResponse.setCode(204);
+                adminResponse.setMessage("你没有管理员权限，无法进入管理后台！");
+                adminResponse.setStatus("faild");
+                adminResponse.setResult("你没有管理员权限，无法进入管理后台！");
                 log.info("该账号被冻结");
                 return adminResponse;
             } else {

@@ -5,22 +5,37 @@
     <file url="file://$PROJECT_DIR$/admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/admin/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/course/course-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/course/course-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/course/course-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/course/course-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/course/course-core/src/test/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/course/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/course/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/forum/forum-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forum/forum-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/forum/forum-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/forum/forum-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/forum/forum-core/src/test/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forum/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/forum/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member/member-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/member/member-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member/member-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member/member-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/member/member-core/src/test/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/member/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/member/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/permission/permission-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/permission/permission-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/permission/permission-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/permission/permission-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/permission/permission-core/src/test/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/permission/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/permission/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/src/main/resources" charset="UTF-8" />
   </component>
